@@ -1,17 +1,5 @@
-/*jslint browser : true, continue : true,
-
-  devel : true, indent : 2, maxerr : 50,
-
-  newcap : true, nomen : true, plusplus : true,
-
-  regexp : true, sloppy : true, vars : false,
-
-  white : true, es6 : true
-
-*/
-
 /*
-jshint esversion:6 
+jshint esversion:6
 */
 /*
 jshint asi:true
@@ -266,3 +254,5 @@ jasmine.addSpec("child of  child spec 3")
 var childOfchild = jasmine.addSuite("childOfChild Suite")
 
 console.log(jasmine)
+
+new Controller()
