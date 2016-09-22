@@ -1,0 +1,17 @@
+/*Website designed by Zach Christensen*/
+
+*{
+	margin:0;
+	box-sizing: border-box;
+	font-family:Arial;
+}
+
+.suite{
+	margin:1em;
+	padding:1em;
+	border: 1px solid #444;
+}
+
+.spec{
+	border: 1px solid #943;
+}
