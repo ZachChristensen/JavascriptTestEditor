@@ -50,14 +50,34 @@ class TestItem {
 		
 		if (this.parent !== "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
-			if (this.parent.parent !== "None"){
-				newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveOut()'>←</button>"
+			
+			//out
+			newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveOut()'"
+			if (this.parent.parent == "None"){
+				newText += " disabled"
 			}
-			if (index != 0 && this.parent.allMyChildren[index-1].type == "Suite"){
-				newText += "<button title='Move object into a suite above' onclick='jasmine.find(\"" + this.id + "\").moveIn()'>→</button>"
+			newText += ">←</button>"
+			
+			//in
+			newText += "<button title='Move object into a suite above' onclick='jasmine.find(\"" + this.id + "\").moveIn()'"
+			if (index == 0 || this.parent.allMyChildren[index-1].type !== "Suite"){
+				newText += " disabled"
 			}
-			newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveUp()'>↑</button>"
-			newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveDown()'>↓</button>"
+			newText += ">→</button>"
+			
+			//up
+			newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveUp()'"
+			if (index == 0){
+				newText += " disabled"
+			}
+			newText += ">↑</button>"
+			
+			//down
+			newText += "<button onclick='jasmine.find(\"" + this.id + "\").moveDown()'"
+			if (index == (this.parent.allMyChildren.length - 1)){
+				newText += " disabled"
+			}
+			newText += ">↓</button>"
 		}
 		
 		let HTMLParent = document.getElementById(Parent)
@@ -134,7 +154,7 @@ class Spec extends TestItem {
 	constructor (newDesc, newParent = "None") {
 		super(newDesc, "Spec", newParent)
 	}
-} 
+}
 
 
 class Suite extends TestItem{
