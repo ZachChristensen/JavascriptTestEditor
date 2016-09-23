@@ -3,6 +3,7 @@
 class Model{
 	constructor(newController){
 		console.log("model")
-		this.myController = newController
+		this.myController = new Controller
+		this.myFiler = new Filer
 	}
 }
