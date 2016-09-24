@@ -27,18 +27,18 @@ class Controller{
     		for (let item of suiteArray){
       			if (pattern.test(item)){
         			let splitLine = item.split("})")
-        			this.createType(splitLine[0])
-        			this.createType(splitLine[1])
+        			this.addToCurrentSuite(splitLine[0])
+        			this.addToCurrentSuite(splitLine[1])
       			}else if (atRoot){
         			this.myModel.myTestFrameWork.root._description = this.getName(item)
         			atRoot = false;
       			}else{
-        			this.createType(item)
+        			this.addToCurrentSuite(item)
       			}
     		}
   	}
   	
-  	createType(suiteNodeString){
+  	addToCurrentSuite(suiteNodeString){
     		suiteNodeString = suiteNodeString.trim()
     		//regex is finding all letters from the start of the string
     		let result = /^\w+/g.exec(suiteNodeString)
