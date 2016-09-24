@@ -37,4 +37,22 @@ class Controller{
       			}
     		}
   	}
+  	
+  	createType(suiteNodeString){
+    		suiteNodeString = suiteNodeString.trim();
+    		//regex is finding all letters from the start of the string
+    		let result = /^\w+/g.exec(suiteNodeString);
+    		if (result == "describe"){
+      			let child = this.testFrameWork.addSuite(this.getName(suiteNodeString));
+      			this.testFrameWork.currentSuite = child;
+    		}else if (result == "it"){
+      			this.testFrameWork.addSpec(this.getName(suiteNodeString));
+    		}
+  	}
+  	
+  	getName(suiteNodeString){
+  		//regex is searching for any characters between " " chars
+    		let name = /("[\s\S]+")/g.exec(suiteNodeString);
+    		return name[0].replace("\"",'');
+  	}
 }
