@@ -30,7 +30,7 @@ class Controller{
         			this.createType(splitLine[0]);
         			this.createType(splitLine[1]);
       			}else if (atRoot){
-        			this.testFrameWork.root._description = this.getName(item);
+        			this.myModel.myTestFrameWork.root._description = this.getName(item);
         			atRoot = false;
       			}else{
         			this.createType(item);
@@ -43,10 +43,10 @@ class Controller{
     		//regex is finding all letters from the start of the string
     		let result = /^\w+/g.exec(suiteNodeString);
     		if (result == "describe"){
-      			let child = this.testFrameWork.addSuite(this.getName(suiteNodeString));
-      			this.testFrameWork.currentSuite = child;
+      			let child = this.myModel.myTestFrameWork.addSuite(this.getName(suiteNodeString));
+      			this.myModel.myTestFrameWork.currentSuite = child;
     		}else if (result == "it"){
-      			this.testFrameWork.addSpec(this.getName(suiteNodeString));
+      			this.myModel.myTestFrameWork.addSpec(this.getName(suiteNodeString));
     		}
   	}
   	
