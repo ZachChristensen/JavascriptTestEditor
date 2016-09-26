@@ -1,12 +1,25 @@
 //Controller
 
-console.log("HELLO")
-
 class Controller{
 	constructor(){
-		this.myModel = new Model()
-		this.myView = new View()
+		this.myModel = new Model(this)
+		this.myView = new HTMLView(this)
 		console.log("controller")
+	}
+	
+	updateDisplay(){
+		this.myModel.toHTML()
+	}
+	
+	loadTestData(){
+		this.myModel.createNewRoot("Root Sweetie")
+		this.myModel.addSpec("first Child spec")
+		var suite = this.myModel.addSuite("firstChild Suite")
+		this.myModel.setCurrentSuite(suite)
+		this.myModel.addSpec("child of  child spec 1")
+		this.myModel.addSpec("child of  child spec 2")
+		this.myModel.addSpec("child of  child spec 3")
+		this.myModel.addSpec("childOfChild Suite")
 	}
 	
 	loadSuiteFromFile(callback, inputElementId){
@@ -56,3 +69,8 @@ class Controller{
     		return name[0].replace("\"",'')
   	}
 }
+
+window.addEventListener('input', function (e) {	
+	 let id = e.target.id.slice(0, -1)
+	 TC.myModel.updateItem(id, e.target.value)
+ }, false);

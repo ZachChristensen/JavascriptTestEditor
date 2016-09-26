@@ -6,12 +6,14 @@
 	font-family:Arial;
 }
 
-.suite{
+.Suite{
 	margin:1em;
 	padding:1em;
 	border: 1px solid #444;
 }
 
-.spec{
-	border: 1px solid #943;
+.Spec{
+	margin:1em;
+	padding:1em;
+	border: 1px solid #444;
 }
