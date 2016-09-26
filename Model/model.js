@@ -37,7 +37,6 @@ class Model{
 
 	addSpec (descriptionStr) {
 		var parentSuite = this.getCurrentSuite()
-		console.log(parentSuite)
 		parentSuite.addChild(descriptionStr, parentSuite)
 	}
 

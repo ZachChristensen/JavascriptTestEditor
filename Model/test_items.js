@@ -24,37 +24,31 @@ class TestItem {
 	}
 	
 	toHTML(Parent){
-		let newText = "<div class='"+this.type+"' style='background-color:#D"+(9-(this.findIndent() * 2))+"D' id='" + this.id + "'>"
+		let backColour = 240-(this.findIndent() * 30)
+		if (backColour < 0) backColour = 0
+		let newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		
 		if (this.parent !== "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 			
 			//out
 			newText += "<button onclick='TC.myModel.find(\"" + this.id + "\").moveOut()'"
-			if (this.parent.parent == "None"){
-				newText += " disabled"
-			}
+			if (this.parent.parent == "None") newText += " disabled"
 			newText += ">←</button>"
 			
 			//in
 			newText += "<button title='Move object into a suite above' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()'"
-			if (index == 0 || this.parent.allMyChildren[index-1].type !== "Suite"){
-				newText += " disabled"
-			}
+			if (index == 0 || this.parent.allMyChildren[index-1].type !== "Suite") newText += " disabled"
 			newText += ">→</button>"
 			
 			//up
 			newText += "<button onclick='TC.myModel.find(\"" + this.id + "\").moveUp()'"
-			if (index == 0){
-				newText += " disabled"
-			}
+			if (index == 0) newText += " disabled"
 			newText += ">↑</button>"
 			
 			//down
 			newText += "<button onclick='TC.myModel.find(\"" + this.id + "\").moveDown()'"
-			if (index == (this.parent.allMyChildren.length - 1)){
-				newText += " disabled"
-			}
+			if (index == (this.parent.allMyChildren.length - 1)) newText += " disabled"
 			newText += ">↓</button>"
 		}
 		

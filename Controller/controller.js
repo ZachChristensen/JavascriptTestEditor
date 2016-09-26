@@ -11,6 +11,10 @@ class Controller{
 		this.myModel.toHTML()
 	}
 	
+	outputToDiv(divID, textContent){
+		this.myView(divID, textContent)
+	}
+	
 	loadTestData(){
 		this.myModel.createNewRoot("Root Sweetie")
 		this.myModel.addSpec("first Child spec")
@@ -18,8 +22,9 @@ class Controller{
 		this.myModel.setCurrentSuite(suite)
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addSpec("child of  child spec 2")
+		this.myModel.addSuite("childOfChild Suite")
+		this.myModel.setCurrentSuite(suite)
 		this.myModel.addSpec("child of  child spec 3")
-		this.myModel.addSpec("childOfChild Suite")
 	}
 	 
 	loadFromFile(){
