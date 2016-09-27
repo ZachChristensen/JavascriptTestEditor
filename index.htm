@@ -1,26 +1,52 @@
-<!DOCTYPE html>
-
+<!DOCTYPE HTML>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="sheet.css"/>
-	<meta charset="UTF-8"> 
-	<title>SpecBuilder</title>
-
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8">
+	<title>JavaScript Test Editor</title>
+    <meta name="JavaScript Test Editor" content="A GUI test editor for JavaScript Unit Tests." />
+    <link rel="icon" href="favicon.ico">
+	<link href="http://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="sheet.css">
 </head>
-<body>
-	<div id = "main">
-	</div>
-	<!-- third-party javascript -->
 
-	<!-- our javascript -->
-	<script src="Model\filer.js"></script>
-	<script src="Model\test_items.js"></script>
-	<script src="Model\model.js"></script>
-	<script src="View\view.js"></script>
-	<script src="Controller\controller.js"></script>
-	<script src="Main.js"></script>
-	<script>
+<body>
+	<div class="wrapper">
+	<header>
+		<div class="inner">
+			<h1>JS Test Editor</h1>
+		</div>
+	</header>
 	
-	</script>	
+	<div class="nav">
+            <div class="navInner">
+                <div class="nav1">
+                    <ul>
+                        <li><a href="index.htm" title="Links">Help(unfinished)</a></li>
+                        <li ><a href="index.htm" title="Home" class="current-page">Home</a></li>
+                    </ul>
+                </div>
+                <div class="nav2">
+                    <ul>
+						<li><a href="index.htm" title="Home" class="current-page" >Home</a></li>
+                        <li><a href="index.htm" title="Links">Help(unfinished)</a></li>
+                    </ul>
+                </div>
+           
+            </div>
+        </div>
+	<div id="mainWrapper">
+        <div id="main"> 
+            
+		</div>
+	</div>
+	</div>
 </body>
+
+<script src="Model\filer.js"></script>
+<script src="Model\test_items.js"></script>
+<script src="Model\model.js"></script>
+<script src="View\view.js"></script>
+<script src="Controller\controller.js"></script>
+<script src="Main.js"></script>
 </html>

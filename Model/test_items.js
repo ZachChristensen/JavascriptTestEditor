@@ -26,7 +26,8 @@ class TestItem {
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 30)
 		if (backColour < 0) backColour = 0
-		let newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
+		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		
 		if (this.parent !== "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)

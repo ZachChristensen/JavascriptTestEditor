@@ -28,14 +28,14 @@ class Controller{
 	}
 	 
 	loadFromFile(){
-    		let that = this
-    		this.myModel.myFiler.loadSuiteFromFile("fileInput", this.testFrameWork, function(e) {
-      			that.updateDisplay();
-    		})
+		let that = this
+		this.myModel.myFiler.loadSuiteFromFile("fileInput", this.testFrameWork, function(e) {
+			that.updateDisplay();
+		})
   	}
 	 
 	saveViewToModel(){
-    		this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
+    	this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
   	}
 }
 
