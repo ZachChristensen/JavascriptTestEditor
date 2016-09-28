@@ -39,7 +39,9 @@ class Controller{
   	}
 }
 
-window.addEventListener('input', function (e) {	
-	 let id = e.target.id.slice(0, -1)
-	 TC.myModel.updateItem(id, e.target.value)
+window.addEventListener('input', function (e) {
+	if (e.target.id.substr(0, 4) === "Item"){
+		let id = e.target.id.slice(0, -1)
+		TC.myModel.updateItem(id, e.target.value)
+	}
  }, false);
