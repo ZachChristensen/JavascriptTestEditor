@@ -37,7 +37,7 @@ class Model{
 
 	addSpec (descriptionStr) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addChild(descriptionStr, parentSuite)
+		parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
 	find (idStr) {
@@ -59,7 +59,7 @@ class Model{
 	toHTML() {
 		var HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
-
+		
 		return this.root.toHTML('main')
 	}
 

@@ -76,11 +76,11 @@ header h1{
 }
 
 .navInner li:hover {
-	background-color: #CCB341; 
+	background-color: #B1DCAD; 
 }
 
 .current-page:hover {
-	background-color: #CCB341; 
+	background-color: #BCE9B7; 
 }
 
 .navInner a {
@@ -98,11 +98,7 @@ header h1{
 }
 
 .current-page{
-	background-color: #FFE82A;
-}
-
-.current-page-footer{
-    color: #FFE82A;
+	background-color: #83DC79;
 }
 
 #content{

@@ -44,10 +44,10 @@ class HTMLView{
   	}
 
   	getTxtAreaContents(element){
-    		if (element.tagName == "TEXTAREA"){
-      			return element.value;
-    		}else{
-      			return "";
-    		}
+		if (element.tagName == "TEXTAREA"){
+			return element.value;
+		}else{
+			return "";
+		}
   	}
 }

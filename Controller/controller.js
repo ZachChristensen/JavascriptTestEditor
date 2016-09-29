@@ -9,10 +9,36 @@ class Controller{
 	
 	updateDisplay(){
 		this.myModel.toHTML()
+		
+		//set onclick methods for dropdown addSpec/Suite btns
+		let specbtns = document.getElementsByClassName("btnAddSpec")
+		for (var spec of specbtns){
+			spec.onclick = function(event) {
+				console.log("spec func")
+				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				currentItem = TC.myModel.find(SELECTEDSUITE)
+				document.getElementById('modalTitle').innerHTML = "Add Spec"
+				modal.style.display = "block"
+				NEWTYPE = "SPEC"
+			}
+		}
+		
+		let suitebtns = document.getElementsByClassName("btnAddSuite")
+		for (var suite of suitebtns){
+			suite.onclick = function(event) {
+				console.log("suite func")
+				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				currentItem = TC.myModel.find(SELECTEDSUITE)
+				document.getElementById('modalTitle').innerHTML = "Add Suite"
+				modal.style.display = "block"
+				NEWTYPE = "SUITE"
+			}
+		}
+		
 	}
 	
 	outputToDiv(divID, textContent){
-		this.myView(divID, textContent)
+		this.myView.appendToDiv(divID, textContent)
 	}
 	
 	loadTestData(){

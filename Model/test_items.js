@@ -29,27 +29,29 @@ class TestItem {
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		
-		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content"><a class="btnAddSpec" href="#">Add Spec</a><a href="#">Add Suite</a>'
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
 		
 		if (this.parent !== "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 			//out
-			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Out</a>"
+			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			
 			//in
-			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >In</a>"
+			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 			
 			//up
-			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveUp()'>Up</a>"
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
 			
 			//down
-			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveDown()' >Down</a>"
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
 		newText += '</div></div>'
 		
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
-		let HTMLParent = document.getElementById(Parent)
-		HTMLParent.innerHTML += newText
+		// let HTMLParent = document.getElementById(Parent)
+		// HTMLParent.innerHTML += newText
+		TC.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){
 				baby.toHTML(this.id)
@@ -139,9 +141,14 @@ class Suite extends TestItem{
 		this.allMyChildren = [] 
 	}
 
-	addChild (itStr, newParent) {
+	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
 		this.allMyChildren.push(aSpec)
+	}
+	
+	addSuite (itStr, newParent) {
+		let aSuite = new Suite(itStr, newParent)
+		this.allMyChildren.push(aSuite)
 	}
 	
 	findChild (theId){
