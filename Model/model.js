@@ -59,8 +59,11 @@ class Model{
 	toHTML() {
 		var HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
-		
-		return this.root.toHTML('main')
+		if (this.root !== undefined){
+			return this.root.toHTML('main')
+		}else{
+			HTMLdiv.innerHTML = "Nothing here click <button onclick='alert(\"Just kidding it does not work yet\")'>here</button> to add a new root suite"
+		}
 	}
 
 }
