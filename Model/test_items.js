@@ -71,7 +71,7 @@ class TestItem {
 			this.parent.allMyChildren.splice(index, 1)
 			newParent.allMyChildren.push(me)
 			this.parent = newParent
-			TC.myModel.toHTML()
+			TC.updateDisplay()
 		}
 		else{
 			console.log("No suite positioned above to attach to")
@@ -88,7 +88,7 @@ class TestItem {
 			this.parent = this.parent.parent
 			this.parent.allMyChildren.push(me)
 			console.log("OUT!")
-			TC.myModel.toHTML()
+			TC.updateDisplay()
 			console.log(TC.myModel.allMyChildren)
 		}
 		else{
@@ -103,7 +103,7 @@ class TestItem {
 			this.parent.allMyChildren[index-1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
-		TC.myModel.toHTML()
+		TC.updateDisplay()
 	}
 	
 	moveDown(){
@@ -113,7 +113,7 @@ class TestItem {
 			this.parent.allMyChildren[index+1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
-		TC.myModel.toHTML()
+		TC.updateDisplay()
 	}
 	
 	findIndent(){
