@@ -41,7 +41,6 @@ modalAddBtn.onclick = function(event) {
 
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
-		alert("CLEAR")
 		TC.myModel.root = undefined
 		TC.updateDisplay()
 	}
