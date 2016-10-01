@@ -55,6 +55,10 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 3")
 	}
 
+	saveToFile(fileName){
+		this.myModel.myFiler.saveSuiteToFile(this.myModel, fileName)
+	}
+
 	loadFromFile(){
 		let that = this
 		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(error) {
