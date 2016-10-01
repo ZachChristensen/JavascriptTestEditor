@@ -21,24 +21,6 @@ var clearBtns = document.getElementsByClassName("clearBtn")
 var saveBtns = document.getElementsByClassName("saveBtn")
 var loadBtns = document.getElementsByClassName("loadBtn")
 
-modalAddBtn.onclick = function(event) {
-    if (currentItem.type === "Suite"){
-		TC.myModel.setCurrentSuite(currentItem)
-		if (NEWTYPE === "SPEC"){
-			TC.myModel.addSpec(modalDescr.value)
-			TC.updateDisplay()
-			modal.style.display = "none"
-			modalDescr.value = ""
-		}
-		else if (NEWTYPE === "SUITE"){
-			TC.myModel.addSuite(modalDescr.value)
-			TC.updateDisplay()
-			modal.style.display = "none"
-			modalDescr.value = ""
-		}
-	}
-}
-
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
 		TC.myModel.root = undefined
@@ -58,13 +40,19 @@ for (var btn of loadBtns){
 	}
 }
 
+var newRootBtn = document.getElementById("newRootBtn")
+newRootBtn.onclick = function() {
+    modal.style.display = "Block"
+	modal_content.setNewRootSuite()
+}
+
 // Get the modal
 var modal = document.getElementById('myModal')
 
 // Modal close button
-var span = document.getElementsByClassName("close")[0]
+var modalCloseBtn = document.getElementsByClassName("close")[0]
 // close the modal on click 
-span.onclick = function() {
+modalCloseBtn.onclick = function() {
     modal.style.display = "none"
 }
 

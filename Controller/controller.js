@@ -17,7 +17,7 @@ class Controller{
 				console.log("spec func")
 				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				currentItem = TC.myModel.find(SELECTEDSUITE)
-				document.getElementById('modalTitle').innerHTML = "Add Spec"
+				modal_content.setAddSpec()
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
 			}
@@ -29,7 +29,7 @@ class Controller{
 				console.log("suite func")
 				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				currentItem = TC.myModel.find(SELECTEDSUITE)
-				document.getElementById('modalTitle').innerHTML = "Add Suite"
+				modal_content.setAddSuite()
 				modal.style.display = "block"
 				NEWTYPE = "SUITE"
 			}

@@ -89,7 +89,6 @@ class TestItem {
 			this.parent.allMyChildren.push(me)
 			console.log("OUT!")
 			TC.updateDisplay()
-			console.log(TC.myModel.allMyChildren)
 		}
 		else{
 			console.log("Unable to move "+ this.type +" out")
@@ -149,6 +148,10 @@ class Suite extends TestItem{
 	addSuite (itStr, newParent) {
 		let aSuite = new Suite(itStr, newParent)
 		this.allMyChildren.push(aSuite)
+	}
+	
+	removeChild(index){
+		//TODO 
 	}
 	
 	findChild (theId){

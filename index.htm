@@ -42,25 +42,29 @@
 	<div id="mainWrapper">
         <div id="main"> 
             This page requires a modern browser with JavaScript enabled to work.
+			
 		</div>
+		<!-- "No Existing Suite" button -->
+		<button id='newRootBtn' onclick='modal.style.display = "Block"; modal_content.setDefault()'>+ Add New Suite</button>
 	</div>
 	</div>
 	<!-- The Modal -->
 	<div id="myModal" class="modal">
-
 	  <!-- Modal content -->
-	  <div class="modal-content">
+	  <div class="modal-container">
 		<span class="close">×</span>
 		<h2 id="modalTitle">Add Spec</h2>
-		<input type="text" id="modalDescription" placeholder="Spec Description"></input>
-		<button id="modalAddBtn">Add</button>
+		<div id="modalContent"><input type="text" id="modalDescription" placeholder="Spec Description"></input>
+		<button id="modalAddBtn">Add</button></div>
 	  </div>
 	</div>
+	
 </body>
 
 <script src="Model\filer.js"></script>
 <script src="Model\test_items.js"></script>
 <script src="Model\model.js"></script>
+<script src="Model\modal_content.js"></script>
 <script src="View\view.js"></script>
 <script src="Controller\controller.js"></script>
 <script src="Main.js"></script>

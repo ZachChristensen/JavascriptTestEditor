@@ -192,7 +192,7 @@ header h1{
 }
 
 /* Modal Content */
-.modal-content {
+.modal-container {
     background-color: #FFF;
     margin: auto;
     padding: 20px;
@@ -200,7 +200,7 @@ header h1{
     width: 80%;
 }
 
-.modal-content h2{
+.modal-container h2{
     margin-bottom: 7px;
 }
 
@@ -222,7 +222,7 @@ header h1{
 }
 
 #newRootBtn{
-	display: block;
+	display: none;
 	background-color: #FFF;
 	margin: 0 auto;
 	margin-top: 2em;

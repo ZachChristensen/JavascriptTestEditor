@@ -62,7 +62,7 @@ class Model{
 		if (this.root !== undefined){
 			return this.root.toHTML('main')
 		}else{
-			HTMLdiv.innerHTML = "<button id='newRootBtn' onclick='alert(\"Just kidding it does not work yet\")'>+ Add New Suite</button>"
+			document.getElementById('newRootBtn').style.display = "block"
 		}
 	}
 
