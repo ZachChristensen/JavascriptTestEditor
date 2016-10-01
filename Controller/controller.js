@@ -66,10 +66,6 @@ class Controller{
 			}
 		})
 	}
-
-	saveViewToModel(){
-    	this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
-  	}
 }
 
 window.addEventListener('input', function (e) {
