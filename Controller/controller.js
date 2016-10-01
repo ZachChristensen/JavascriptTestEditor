@@ -57,10 +57,15 @@ class Controller{
 
 	loadFromFile(){
 		let that = this
-		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.testFrameWork, function(e) {
-			that.updateDisplay();
+		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(error) {
+			console.log(error)
+			if (error == ""){
+				that.updateDisplay();
+			}else{
+				that.outputToDiv("main", error)
+			}
 		})
-  	}
+	}
 
 	saveViewToModel(){
     	this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
