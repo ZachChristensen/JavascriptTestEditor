@@ -17,7 +17,7 @@
 			<h1>JS Test Editor</h1>
 		</div>
 	</header>
-	
+
 	<div class="nav">
             <div class="navInner">
                 <div class="nav1">
@@ -36,16 +36,18 @@
 						<li><a href="#" class="loadBtn" title="Load">Load</a></li>
                     </ul>
                 </div>
-           
+
             </div>
         </div>
 	<div id="mainWrapper">
-        <div id="main"> 
+        <div id="main">
             This page requires a modern browser with JavaScript enabled to work.
-			
+
 		</div>
 		<!-- "No Existing Suite" button -->
 		<button id='newRootBtn' onclick='modal.style.display = "Block"; modal_content.setDefault()'>+ Add New Suite</button>
+		<!-- Hidden file selection for dialog -->
+		<input type="file" id="fileSelector" style="display:none">
 	</div>
 	</div>
 	<!-- The Modal -->
@@ -58,7 +60,7 @@
 		<button id="modalAddBtn">Add</button></div>
 	  </div>
 	</div>
-	
+
 </body>
 
 <script src="Model\filer.js"></script>

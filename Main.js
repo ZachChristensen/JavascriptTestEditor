@@ -34,7 +34,7 @@ for (var btn of saveBtns){
 
 for (var btn of loadBtns){
 	btn.onclick = function(event) {
-		alert("Load button not working yet")
+		document.getElementById("fileSelector").click();
 	}
 }
 
@@ -49,6 +49,11 @@ var modalCloseBtn = document.getElementsByClassName("close")[0]
 modalCloseBtn.onclick = function() {
     modal.style.display = "none"
 }
+
+document.getElementById("fileSelector").addEventListener("change", function() {
+    LC = new Controller()
+		LC.loadFromFile()
+});
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

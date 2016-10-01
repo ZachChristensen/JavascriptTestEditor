@@ -6,10 +6,10 @@ class Controller{
 		this.myView = new HTMLView(this)
 		console.log("controller")
 	}
-	
+
 	updateDisplay(){
 		this.myModel.toHTML()
-		
+
 		//set onclick methods for dropdown addSpec/Suite btns
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
@@ -23,7 +23,7 @@ class Controller{
 				NEWTYPE = "SPEC"
 			}
 		}
-		
+
 		let suitebtns = document.getElementsByClassName("btnAddSuite")
 		for (var suite of suitebtns){
 			suite.onclick = function(event) {
@@ -36,13 +36,13 @@ class Controller{
 				NEWTYPE = "SUITE"
 			}
 		}
-		
+
 	}
-	
+
 	outputToDiv(divID, textContent){
 		this.myView.appendToDiv(divID, textContent)
 	}
-	
+
 	loadTestData(){
 		this.myModel.createNewRoot("Root Sweetie")
 		this.myModel.addSpec("first Child spec")
@@ -54,14 +54,14 @@ class Controller{
 		this.myModel.setCurrentSuite(suite)
 		this.myModel.addSpec("child of  child spec 3")
 	}
-	 
+
 	loadFromFile(){
 		let that = this
-		this.myModel.myFiler.loadSuiteFromFile("fileInput", this.testFrameWork, function(e) {
+		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.testFrameWork, function(e) {
 			that.updateDisplay();
 		})
   	}
-	 
+
 	saveViewToModel(){
     	this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
   	}
