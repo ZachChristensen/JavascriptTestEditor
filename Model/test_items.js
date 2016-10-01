@@ -25,6 +25,9 @@ class TestItem {
 	
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 30)
+		if (this.parent !== "None"){
+			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		}
 		if (backColour < 0) backColour = 0
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
@@ -33,7 +36,6 @@ class TestItem {
 		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
 		
 		if (this.parent !== "None"){
-			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			
@@ -49,8 +51,6 @@ class TestItem {
 		newText += '</div></div>'
 		
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
-		// let HTMLParent = document.getElementById(Parent)
-		// HTMLParent.innerHTML += newText
 		TC.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){

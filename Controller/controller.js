@@ -15,8 +15,9 @@ class Controller{
 		for (var spec of specbtns){
 			spec.onclick = function(event) {
 				console.log("spec func")
-				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				currentItem = TC.myModel.find(SELECTEDSUITE)
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSpec()
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
@@ -27,8 +28,9 @@ class Controller{
 		for (var suite of suitebtns){
 			suite.onclick = function(event) {
 				console.log("suite func")
-				SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				currentItem = TC.myModel.find(SELECTEDSUITE)
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSuite()
 				modal.style.display = "block"
 				NEWTYPE = "SUITE"

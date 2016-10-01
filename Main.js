@@ -15,8 +15,6 @@ TC.updateDisplay()
 
 //Add onclicks for all add specs
 
-var modalDescr = document.getElementById("modalDescription")
-var modalAddBtn = document.getElementById("modalAddBtn")
 var clearBtns = document.getElementsByClassName("clearBtn")
 var saveBtns = document.getElementsByClassName("saveBtn")
 var loadBtns = document.getElementsByClassName("loadBtn")
@@ -46,12 +44,8 @@ newRootBtn.onclick = function() {
 	modal_content.setNewRootSuite()
 }
 
-// Get the modal
 var modal = document.getElementById('myModal')
-
-// Modal close button
 var modalCloseBtn = document.getElementsByClassName("close")[0]
-// close the modal on click 
 modalCloseBtn.onclick = function() {
     modal.style.display = "none"
 }
