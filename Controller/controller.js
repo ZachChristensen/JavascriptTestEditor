@@ -37,6 +37,29 @@ class Controller{
 			}
 		}
 
+		let deletebtns = document.getElementsByClassName("btnDelete")
+		for (var btn of deletebtns){
+			btn.onclick = function(event) {
+				console.log("delete func")
+				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
+					var itemID = event.target.parentElement.parentElement.parentElement.id
+					var item = TC.myModel.find(itemID)
+					//If deleting root suite
+					if (item.parent === "None"){
+						TC.myModel.root = undefined
+						TC.myModel.currentSuite = undefined
+						idGenerator = new idCounter();
+					}
+					else{
+						TC.myModel.currentSuite = item.parent
+						let theParent = item.parent
+						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
+						theParent.removeChild(index)
+					}
+					TC.updateDisplay()
+				}
+			}
+		}
 	}
 
 	outputToDiv(divID, textContent){

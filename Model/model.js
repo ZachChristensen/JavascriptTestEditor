@@ -5,19 +5,19 @@ class Model{
 		console.log("model")
 		this.myController = newController
 		this.myFiler = new Filer()
-		
+
 		//danger code!
 		this.root = undefined
-		
+
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 	}
-	
+
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
 		this.currentSuite = this.root
 	}
-	
+
 	setCurrentSuite (suite) {
 		this.currentSuite = suite
 	}
@@ -35,9 +35,9 @@ class Model{
 		return aSuite
 	}
 
-	addSpec (descriptionStr) {
+	addSpec (descriptionStr, asserts) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSpec(descriptionStr, parentSuite)
+		parentSuite.addSpec(descriptionStr, parentSuite, asserts)
 	}
 
 	find (idStr) {
@@ -46,7 +46,7 @@ class Model{
 		}
 		return this.root.findChild(idStr)
 	}
-	
+
 	updateItem(elementID, newStr){
 		this.find(elementID).description = newStr
 		console.log(this.find(elementID))

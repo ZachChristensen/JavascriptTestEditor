@@ -1,4 +1,10 @@
 class Filer{
+  constructor () {
+    this.currentSpec = ""
+    this.asserts = []
+	}
+
+
   readFile(file, callback){
     let suiteArray = []
     let result
@@ -31,6 +37,7 @@ class Filer{
     let pattern = /(\}\))/i
     let atRoot = true
     for (let item of suiteArray){
+          //console.log(item)
       if (pattern.test(item)){
         let splitLine = item.split("})")
         atRoot = this.createNode(splitLine[0], currentFrameWork, atRoot)
@@ -59,20 +66,32 @@ class Filer{
   createNode(item, currentFrameWork, atRoot){
     if(atRoot){
       return !this.createRootSuite(item, currentFrameWork)
-    }else if (/[\w]+/i.exec(item) != null && this.getNodeDescription(item) != null){
+    }else if (/[\w]+/i.exec(item) != null){
       let type = /[\w]+/i.exec(item)[0].toLowerCase()
       if (type == "describe"){
         let suite = currentFrameWork.addSuite(this.getNodeDescription(item))
         currentFrameWork.setCurrentSuite(suite)
       }else if (type == "it"){
-        console.log(this.getNodeDescription(item))
-        currentFrameWork.addSpec(this.getNodeDescription(item))
+        if (this.currentSpec == ""){
+          this.currentSpec = this.getNodeDescription(item)
+        }else{
+          currentFrameWork.addSpec(this.currentSpec, this.asserts)
+          this.asserts = []
+          this.currentSpec = this.getNodeDescription(item)
+        }
       }else if (type == "before"){
         //to be added
       }else if (type == "after"){
         //to be added
+      }else if (type == "expect"){
+        let items = item.split("\n")
+        for (let i = 0; i < items.length; i++){
+          if(/[\w]+/i.exec(items[i]) != null){
+            this.asserts.push(items[i].trim())
+          }
+        }
       }else{
-        //to be added
+
       }
     }
     return false
