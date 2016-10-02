@@ -49,6 +49,9 @@ class Filer{
     if(atRoot){
       return "Could not find a root suite"
     }else{
+      if(this.currentSpec != ""){
+        currentFrameWork.addSpec(this.currentSpec, this.asserts)
+      }
       return ""
     }
   }
@@ -69,6 +72,11 @@ class Filer{
     }else if (/[\w]+/i.exec(item) != null){
       let type = /[\w]+/i.exec(item)[0].toLowerCase()
       if (type == "describe"){
+        if (this.currentSpec != ""){
+          currentFrameWork.addSpec(this.currentSpec, this.asserts)
+          this.asserts = []
+          this.currentSpec = ""
+        }
         let suite = currentFrameWork.addSuite(this.getNodeDescription(item))
         currentFrameWork.setCurrentSuite(suite)
       }else if (type == "it"){
@@ -79,9 +87,9 @@ class Filer{
           this.asserts = []
           this.currentSpec = this.getNodeDescription(item)
         }
-      }else if (type == "before"){
+      }else if (type == "beforeAll"){
         //to be added
-      }else if (type == "after"){
+      }else if (type == "afterAll"){
         //to be added
       }else if (type == "expect"){
         let items = item.split("\n")
