@@ -9,14 +9,20 @@ class modal_content{
 		var contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
 		var modalAddBtn = document.getElementById("modalAddBtn")
+		var modalDescr = document.getElementById("modalDescription")
 		modalAddBtn.onclick = function(event) {
-			var modalDescr = document.getElementById("modalDescription")
 			TC.myModel.addSpec(modalDescr.value)
 			TC.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
 		}
-
+		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
+			event.preventDefault();
+			if (event.keyCode == 13) {
+				modalAddBtn.click()
+			}
+		})
+		modalDescr.focus()
 	}
 	
 	static setAddSuite(){
@@ -36,6 +42,12 @@ class modal_content{
 			modal.style.display = "none"
 			modalDescr.value = ""
 		}
+		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
+			event.preventDefault();
+			if (event.keyCode == 13) {
+				modalAddBtn.click()
+			}
+		})
 	}
 	
 	static setNewRootSuite(){
@@ -57,7 +69,13 @@ class modal_content{
 			TC.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
-			//reset counter
+			
 		}
+		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
+			event.preventDefault();
+			if (event.keyCode == 13) {
+				modalAddBtn.click()
+			}
+		})
 	}
 }
