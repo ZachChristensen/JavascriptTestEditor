@@ -31,8 +31,10 @@ class TestItem {
 		if (backColour < 0) backColour = 0
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
-		
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		
+		newText += '<a class="btnDelete" href="#">Delete</a>'
+		
 		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
 		
 		if (this.parent !== "None"){
@@ -49,7 +51,6 @@ class TestItem {
 			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
 		newText += '</div></div>'
-		
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
@@ -151,7 +152,11 @@ class Suite extends TestItem{
 	}
 	
 	removeChild(index){
-		//TODO 
+		console.log(index)
+		if (index > -1) {
+			console.log("killing babby")
+			this.allMyChildren.splice(index, 1);
+		}
 	}
 	
 	findChild (theId){

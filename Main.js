@@ -23,6 +23,7 @@ for (var btn of clearBtns){
 	btn.onclick = function(event) {
 		TC.myModel.root = undefined
 		TC.updateDisplay()
+		idGenerator = new idCounter();
 	}
 }
 
