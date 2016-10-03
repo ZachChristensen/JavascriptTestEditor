@@ -30,5 +30,4 @@ class Filer{
     let blob = new Blob([currentFrameWork.toString()], {type: "text/plain;charset=utf-8"});
     saveAs(blob, filename + ".txt");
   }
-
 }

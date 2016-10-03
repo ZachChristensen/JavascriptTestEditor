@@ -127,9 +127,22 @@ class TestItem {
 	}
 }
 
+class Setup extends TestItem {
+  constructor (type, contents, newParent = "None"){
+    super("", type, newParent)
+    this.contents = contents
+  }
+}
+
+class Assert {
+  constructor (type, contents){
+    this.type = type
+    this.contents = contents
+  }
+}
 
 class Spec extends TestItem {
-	constructor (newDesc, newParent = "None", asserts = []) {
+	constructor (newDesc, asserts = [], newParent = "None") {
 		super(newDesc, "Spec", newParent)
     this.asserts = asserts
 	}
@@ -149,6 +162,11 @@ class Suite extends TestItem{
 		super(newDesc, "Suite", newParent)
 		this.allMyChildren = []
 	}
+
+  addSetup (type, contents) {
+    let aSetup = new Setup(type, contents)
+    this.allMyChildren.push(aSetup)
+  }
 
 	addSpec (itStr, newParent, asserts) {
 		let aSpec = new Spec(itStr, newParent, asserts)

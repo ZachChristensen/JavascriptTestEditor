@@ -14,6 +14,11 @@ class Model{
 
 		this.currentSpecName = ""
 		this.asserts = []
+
+		this.creatingSpec = false
+		this.creatingBefore = false
+		this.creatingAfter = false
+		this.miscCode = []
 	}
 
 	createNewRoot(descriptionStr){
@@ -40,11 +45,23 @@ class Model{
 
 	addSpec (descriptionStr, asserts) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSpec(descriptionStr, parentSuite, asserts)
+		parentSuite.addSpec(descriptionStr, asserts, parentSuite)
 	}
 
 	createAssert (type, contents) {
 		return new Assert(type, contents)
+	}
+
+	createBeforeEach(){
+		var parentSuite = this.getCurrentSuite()
+		parentSuite.addSetup("beforeEach", this.miscCode)
+		this.miscCode = []
+	}
+
+	createAfterEach(){
+		var parentSuite = this.getCurrentSuite()
+		parentSuite.addSetup("afterEach", this.miscCode)
+		this.miscCode = []
 	}
 
 	createTestItems(splitFileArray){
@@ -79,37 +96,50 @@ class Model{
 		}else if (/[\w]+/i.exec(item) != null){
 			let type = /[\w]+/i.exec(item)[0].toLowerCase()
 			if (type == "describe"){
-				if (this.currentSpecName != ""){
-					this.addSpec(this.currentSpecName, this.asserts)
-					this.asserts = []
-					this.currentSpecName = ""
-				}
+				this.checkCreatingStatuses()
 				let suite = this.addSuite(this.getNodeDescription(item))
 				this.setCurrentSuite(suite)
 			}else if (type == "it"){
-				if (this.currentSpecName == ""){
-					this.currentSpecName = this.getNodeDescription(item)
-				}else{
-					this.addSpec(this.currentSpecName, this.asserts)
-					this.asserts = []
-					this.currentSpecName = this.getNodeDescription(item)
-				}
-			}else if (type == "before"){
-				//to be added
-			}else if (type == "after"){
-				//to be added
+				this.checkCreatingStatuses()
+				this.currentSpecName = this.getNodeDescription(item)
+				this.creatingSpec = true
+			}else if (type == "beforeeach"){
+				this.checkCreatingStatuses()
+				this.creatingBefore = true
+			}else if (type == "aftereach"){
+				this.checkCreatingStatuses()
+				this.creatingAfter = true
 			}else if (type == "expect"){
 				let items = item.split("\n")
 				for (let i = 0; i < items.length; i++){
-					if(/[\w]+/i.exec(items[i]) != null){
+					if(/[\w]+/i.exec(items[i]) == "expect"){
 						this.asserts.push(this.createAssert(/[\w]+/i.exec(items[i])[0], items[i].trim()))
 					}
 				}
 			}else{
-
+				let items = item.split("\n")
+				for (let i = 0; i < items.length; i++){
+					if(items[i].trim() != ""){
+						this.miscCode.push(items[i].trim())
+					}
+				}
 			}
 		}
 		return false
+	}
+
+	checkCreatingStatuses(type){
+		if(this.creatingBefore){
+			this.createBeforeEach()
+			this.creatingBefore = false
+		}else if(this.creatingAfter){
+			this.createAfterEach()
+			this.creatingAfter = false
+		}else if(this.creatingSpec){
+			this.addSpec(this.currentSpecName, this.asserts)
+			this.creatingSpec = false
+			this.asserts = []
+		}
 	}
 
 	getNodeDescription(node){
