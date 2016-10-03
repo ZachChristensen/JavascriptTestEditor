@@ -91,16 +91,17 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 3")
 	}
 
+	saveToFile(fileName){
+		this.myModel.myFiler.saveSuiteToFile(this.myModel, fileName)
+	}
+
 	loadFromFile(){
 		let that = this
-		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.testFrameWork, function(e) {
-			that.updateDisplay();
+		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {
+			that.myModel.createTestItems(splitFileArray)
+			that.updateDisplay()
 		})
-  	}
-
-	saveViewToModel(){
-    	this.myModel.myFiler.createSuite(this.myModel.myFiler.splitString(this.myView.getDisplayedSuite(document.getElementById("1")), "{"));
-  	}
+	}
 }
 
 window.addEventListener('input', function (e) {
