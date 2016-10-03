@@ -26,6 +26,8 @@ class TestItem {
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 30)
 		if (this.parent !== "None"){
+			console.log(this.parent)
+			console.log(this.id)
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 0) backColour = 0
@@ -38,9 +40,12 @@ class TestItem {
 		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
 		
 		if (this.parent !== "None"){
+			newText += '<a class="btnClone" href="#">Clone</a>'
+			
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
-			
+			console.log("index:" + index)
+			console.log( this.parent.allMyChildren)
 			//in
 			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 			
@@ -152,11 +157,47 @@ class Suite extends TestItem{
 	}
 	
 	removeChild(index){
-		console.log(index)
 		if (index > -1) {
-			console.log("killing babby")
 			this.allMyChildren.splice(index, 1);
 		}
+	}
+	
+	cloneChild(index){
+		var orig = this.allMyChildren[index]
+		if (orig.type === "Spec"){
+			var theClone = new Spec(orig.description, this)
+		}
+		else if (orig.type === "Suite"){
+			var theClone = new Suite(orig.description, this)
+			for (var i of orig.allMyChildren){
+				if (i.type === "Spec"){
+					theClone.allMyChildren.push(new Spec(i.description, theClone))
+				}
+				else if (i.type === "Suite"){
+					var newSuite = new Suite(i.description, this)
+					newSuite.allMyChildren = i.duplicateMyChildren(i)
+					theClone.allMyChildren.push(newSuite)
+				}
+				
+			}
+		}
+		this.allMyChildren.splice(index+1, 0, theClone)
+		TC.updateDisplay()
+	}
+	
+	duplicateMyChildren(parent = this){
+		var newArray = []
+		for (var i of this.allMyChildren){
+			if (i.type === "Spec"){
+				newArray.push(new Spec(i.description, this))
+			}
+			else if (i.type === "Suite"){
+				var newSuite = new Suite(i.description, i.parent)
+				newSuite.allMyChildren = i.duplicateMyChildren()
+				newArray.push(newSuite)
+			}
+		}
+		return newArray
 	}
 	
 	findChild (theId){

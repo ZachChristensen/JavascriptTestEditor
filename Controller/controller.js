@@ -62,6 +62,17 @@ class Controller{
 				}
 			}
 		}
+		
+		let clonebtns = document.getElementsByClassName("btnClone")
+		for (var spec of clonebtns){
+			spec.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
+				currentItem.parent.cloneChild(index)
+				
+			}
+		}
 	}
 
 	outputToDiv(divID, textContent){
