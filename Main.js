@@ -43,6 +43,7 @@ var newRootBtn = document.getElementById("newRootBtn")
 newRootBtn.onclick = function() {
     modal.style.display = "Block"
 	modal_content.setNewRootSuite()
+	document.getElementById("modalDescription").focus()
 }
 
 var modal = document.getElementById('myModal')

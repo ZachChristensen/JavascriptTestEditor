@@ -21,6 +21,7 @@ class Controller{
 				modal_content.setAddSpec()
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
+				document.getElementById("modalDescription").focus()
 			}
 		}
 
@@ -34,6 +35,7 @@ class Controller{
 				modal_content.setAddSuite()
 				modal.style.display = "block"
 				NEWTYPE = "SUITE"
+				document.getElementById("modalDescription").focus()
 			}
 		}
 
