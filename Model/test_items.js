@@ -44,10 +44,6 @@ class TestItem {
 			
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 			//in
 			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 
@@ -190,7 +186,6 @@ class Suite extends TestItem{
 			this.allMyChildren.splice(index, 1);
 		}
 	}
-<<<<<<< HEAD
 	
 	cloneChild(index){
 		var orig = this.allMyChildren[index]
@@ -230,11 +225,19 @@ class Suite extends TestItem{
 		return newArray
 	}
 	
-=======
+	toString (tabNum) {
+		var resultStr, theTab, child
+		var tab = "    "
+		theTab = tabNum
+		resultStr = tab.repeat(theTab) + "describe(\"" + this.description + "\", function() {\r\n"
+		theTab = theTab + 1
+		for (child of this.allMyChildren) {
+			resultStr +=  child.toString(theTab)
+		}
+		resultStr += tab.repeat(theTab - 1) + "})\r\n"
+		return resultStr
+	}
 
- }
-
->>>>>>> origin/master
 	findChild (theId){
 		for (var child of this.allMyChildren){
 			if (child.id === theId){
