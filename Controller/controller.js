@@ -84,14 +84,9 @@ class Controller{
 
 	loadFromFile(){
 		let that = this
-		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(error) {
-
-			if (error == ""){
-				that.updateDisplay();
-			}else{
-				that.outputToDiv("main", error)
-				console.log(error)
-			}
+		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {
+			that.myModel.createTestItems(splitFileArray)
+			that.updateDisplay()
 		})
 	}
 }
