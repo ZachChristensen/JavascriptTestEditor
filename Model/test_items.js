@@ -145,9 +145,9 @@ class Assert {
 }
 
 class Spec extends TestItem {
-	constructor (newDesc, asserts = [], newParent = "None") {
+	constructor (newDesc, newParent = "None", asserts = []) {
 		super(newDesc, "Spec", newParent)
-    this.asserts = asserts
+		this.asserts = asserts
 	}
 
   toString (tabNum) {
@@ -166,10 +166,10 @@ class Suite extends TestItem{
 		this.allMyChildren = []
 	}
 
-  addSetup (type, contents) {
-    let aSetup = new Setup(type, contents)
-    this.allMyChildren.push(aSetup)
-  }
+	addSetup (type, contents) {
+		let aSetup = new Setup(type, contents)
+		this.allMyChildren.push(aSetup)
+	}
 
 	addSpec (itStr, newParent, asserts) {
 		let aSpec = new Spec(itStr, newParent, asserts)
@@ -196,11 +196,15 @@ class Suite extends TestItem{
 			var theClone = new Suite(orig.description, this)
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
-					theClone.allMyChildren.push(new Spec(i.description, theClone))
+					console.log("LOOK")
+					console.log(theClone)
+					let newSpec = new Spec(i.description, theClone)
+					console.log(newSpec)
+					theClone.addSpec(i.description, theClone)
 				}
 				else if (i.type === "Suite"){
-					var newSuite = new Suite(i.description, this)
-					newSuite.allMyChildren = i.duplicateMyChildren(i)
+					var newSuite = new Suite(i.description, theClone)
+					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
 					theClone.allMyChildren.push(newSuite)
 				}
 				
@@ -210,15 +214,15 @@ class Suite extends TestItem{
 		TC.updateDisplay()
 	}
 	
-	duplicateMyChildren(parent = this){
+	duplicateMyChildren(oldParent = this, newParent){
 		var newArray = []
-		for (var i of this.allMyChildren){
+		for (var i of oldParent.allMyChildren){
 			if (i.type === "Spec"){
-				newArray.push(new Spec(i.description, this))
+				newArray.push(new Spec(i.description, newParent))
 			}
 			else if (i.type === "Suite"){
-				var newSuite = new Suite(i.description, i.parent)
-				newSuite.allMyChildren = i.duplicateMyChildren()
+				var newSuite = new Suite(i.description, newParent)
+				newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
 				newArray.push(newSuite)
 			}
 		}

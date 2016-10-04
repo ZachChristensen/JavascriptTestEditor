@@ -45,7 +45,7 @@ class Model{
 
 	addSpec (descriptionStr, asserts) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSpec(descriptionStr, asserts, parentSuite)
+		parentSuite.addSpec(descriptionStr, parentSuite, asserts)
 	}
 
 	createAssert (type, contents) {

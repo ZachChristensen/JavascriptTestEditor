@@ -87,7 +87,7 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addSpec("child of  child spec 2")
 		this.myModel.addSuite("childOfChild Suite")
-		this.myModel.setCurrentSuite(suite)
+		//this.myModel.setCurrentSuite(suite)
 		this.myModel.addSpec("child of  child spec 3")
 	}
 
