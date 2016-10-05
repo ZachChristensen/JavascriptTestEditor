@@ -143,8 +143,8 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSetup)
 	}
 
-	addSpec (itStr, newParent, asserts) {
-		let aSpec = new Spec(itStr, newParent, asserts)
+	addSpec (itStr, newParent) {
+		let aSpec = new Spec(itStr, newParent)
 		this.allMyChildren.push(aSpec)
 	}
 
@@ -266,8 +266,18 @@ class Setup extends Suite{
 }
 
 class Assert {
-	constructor (contents){
+	constructor (contents, newParent = "None"){
+		this.id = idGenerator()
 		this.contents = contents
+		this.parent = newParent
+	}
+}
+
+class MiscCode {
+	constructor (contents, newParent = "None"){
+		this.id = idGenerator()
+		this.contents = contents
+		this.parent = newParent
 	}
 }
 
@@ -277,13 +287,23 @@ class Spec extends TestItem {
 		this.allMyChildren = []
 	}
 
-  toString (tabNum) {
-    let tab = "    "
-    let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
-      + tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
-      + tab.repeat(tabNum) + "})\r\n"
-    return resultStr
-  }
+	addAssert (contents, newParent) {
+		let aAssert = new MiscCode(itStr, newParent)
+		this.allMyChildren.push(aAssert)
+	}
+	
+	addMiscCode (itStr, newParent) {
+		let aMisc = new Spec(itStr, newParent)
+		this.allMyChildren.push(aMisc)
+	}
+	
+	toString (tabNum) {
+		let tab = "    "
+		let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
+			+ tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
+			+ tab.repeat(tabNum) + "})\r\n"
+		return resultStr
+	}
 }
 
 
