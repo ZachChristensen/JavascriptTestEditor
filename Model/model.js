@@ -34,17 +34,17 @@ class Model{
 	getCurrentSuite () {
 		return this.currentSuite
 	}
-	
+
 	setCopiedItem (suite) {
 		this.copiedItem = suite
 	}
-	
+
 	unsetCopiedItem (suite) {
 		var item = this.copiedItem
 		this.copiedItem = undefined
 		return item
 	}
-	
+
 	addSuite (descriptionStr) {
 		var aSuite, parent
 		parent = this.getCurrentSuite()
@@ -54,25 +54,25 @@ class Model{
 		return aSuite
 	}
 
-	addSpec (descriptionStr, asserts) {
+	addSpec (descriptionStr) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSpec(descriptionStr, parentSuite, asserts)
+		parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
-	createAssert (type, contents) {
-		return new Assert(type, contents)
+	createAssert (contents) {
+		return new Assert(contents)
 	}
 
 	createBeforeEach(){
-		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSetup("beforeEach", this.miscCode)
-		this.miscCode = []
+		//var parentSuite = this.getCurrentSuite()
+		//parentSuite.addSetup()
+		//this.miscCode = []
 	}
 
 	createAfterEach(){
-		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSetup("afterEach", this.miscCode)
-		this.miscCode = []
+		//var parentSuite = this.getCurrentSuite()
+		//parentSuite.addSetup("afterEach", this.miscCode)
+		//this.miscCode = []
 	}
 
 	createTestItems(splitFileArray){

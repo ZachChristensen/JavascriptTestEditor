@@ -158,7 +158,7 @@ class Suite extends TestItem{
 			this.allMyChildren.splice(index, 1);
 		}
 	}
-	
+
 	addPastedItem(theItem){
 		var orig = theItem
 		if (orig.type === "Spec"){
@@ -179,13 +179,13 @@ class Suite extends TestItem{
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
 					theClone.allMyChildren.push(newSuite)
 				}
-				
+
 			}
 		}
 		this.allMyChildren.push(theClone)
 		TC.updateDisplay()
 	}
-	
+
 	cloneChild(index){
 		var orig = this.allMyChildren[index]
 		if (orig.type === "Spec"){
@@ -204,13 +204,13 @@ class Suite extends TestItem{
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
 					theClone.allMyChildren.push(newSuite)
 				}
-				
+
 			}
 		}
 		this.allMyChildren.splice(index+1, 0, theClone)
 		TC.updateDisplay()
 	}
-	
+
 	duplicateMyChildren(oldParent = this, newParent){
 		var newArray = []
 		for (var i of oldParent.allMyChildren){
@@ -225,7 +225,7 @@ class Suite extends TestItem{
 		}
 		return newArray
 	}
-	
+
 	toString (tabNum) {
 		var resultStr, theTab, child
 		var tab = "    "
@@ -259,7 +259,7 @@ class Suite extends TestItem{
 }
 
 class Setup extends Suite{
-	constructor (newParent){
+	constructor (newParent) {
 		super("", newParent)
 		this.type = "Setup"
 	}
@@ -305,5 +305,3 @@ class Spec extends TestItem {
 		return resultStr
 	}
 }
-
-
