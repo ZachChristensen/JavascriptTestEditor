@@ -30,7 +30,7 @@ class TestItem {
 			console.log(this.id)
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
-		if (backColour < 0) backColour = 0
+		if (backColour < 40) backColour = 40
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
@@ -41,15 +41,15 @@ class TestItem {
 
 		if (this.parent !== "None"){
 			newText += '<a class="btnClone" href="#">Clone</a>'
-			
+			newText += '<a class="btnCopy" href="#">Copy</a>'
+			newText += '<a class="btnCut" href="#">Cut</a>'
+			if (this.type === "Suite") newText += '<a class="btnPaste" href="#">Paste</a>'
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//in
 			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
-
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
-
 			//down
 			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
@@ -130,40 +130,12 @@ class TestItem {
 	}
 }
 
-class Setup extends TestItem {
-  constructor (type, contents, newParent = "None"){
-    super("", type, newParent)
-    this.contents = contents
-  }
-}
-
-class Assert {
-  constructor (type, contents){
-    this.type = type
-    this.contents = contents
-  }
-}
-
-class Spec extends TestItem {
-	constructor (newDesc, newParent = "None", asserts = []) {
-		super(newDesc, "Spec", newParent)
-		this.asserts = asserts
-	}
-
-  toString (tabNum) {
-    let tab = "    "
-    let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
-      + tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
-      + tab.repeat(tabNum) + "})\r\n"
-    return resultStr
-  }
-}
-
-
 class Suite extends TestItem{
 	constructor (newDesc, newParent = "None") {
 		super(newDesc, "Suite", newParent)
 		this.allMyChildren = []
+		this.myBefore = undefined
+		this.myAfter = undefined
 	}
 
 	addSetup (type, contents) {
@@ -187,8 +159,8 @@ class Suite extends TestItem{
 		}
 	}
 	
-	cloneChild(index){
-		var orig = this.allMyChildren[index]
+	addPastedItem(theItem){
+		var orig = theItem
 		if (orig.type === "Spec"){
 			var theClone = new Spec(orig.description, this)
 		}
@@ -200,6 +172,31 @@ class Suite extends TestItem{
 					console.log(theClone)
 					let newSpec = new Spec(i.description, theClone)
 					console.log(newSpec)
+					theClone.addSpec(i.description, theClone)
+				}
+				else if (i.type === "Suite"){
+					var newSuite = new Suite(i.description, theClone)
+					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+					theClone.allMyChildren.push(newSuite)
+				}
+				
+			}
+		}
+		this.allMyChildren.push(theClone)
+		TC.updateDisplay()
+	}
+	
+	cloneChild(index){
+		var orig = this.allMyChildren[index]
+		if (orig.type === "Spec"){
+			var theClone = new Spec(orig.description, this)
+		}
+		else if (orig.type === "Suite"){
+			var theClone = new Suite(orig.description, this)
+			for (var i of orig.allMyChildren){
+				if (i.type === "Spec"){
+					console.log("LOOK")
+					console.log(theClone)
 					theClone.addSpec(i.description, theClone)
 				}
 				else if (i.type === "Suite"){
@@ -249,7 +246,7 @@ class Suite extends TestItem{
 				return child
 			}
 			else{
-				if(child.hasOwnProperty("allMyChildren")){
+				if(child.type === "Suite"){
 					let result = child.findChild(theId)
 					if(result !== undefined){
 						console.log(result.description + " found")
@@ -260,3 +257,33 @@ class Suite extends TestItem{
 		}
 	}
 }
+
+class Setup extends Suite{
+	constructor (newParent){
+		super("", newParent)
+		this.type = "Setup"
+	}
+}
+
+class Assert {
+	constructor (contents){
+		this.contents = contents
+	}
+}
+
+class Spec extends TestItem {
+	constructor (newDesc, newParent = "None") {
+		super(newDesc, "Spec", newParent)
+		this.allMyChildren = []
+	}
+
+  toString (tabNum) {
+    let tab = "    "
+    let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
+      + tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
+      + tab.repeat(tabNum) + "})\r\n"
+    return resultStr
+  }
+}
+
+

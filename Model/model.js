@@ -8,6 +8,7 @@ class Model{
 
 		//danger code!
 		this.root = undefined
+		this.copiedItem = undefined
 
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
@@ -33,7 +34,17 @@ class Model{
 	getCurrentSuite () {
 		return this.currentSuite
 	}
-
+	
+	setCopiedItem (suite) {
+		this.copiedItem = suite
+	}
+	
+	unsetCopiedItem (suite) {
+		var item = this.copiedItem
+		this.copiedItem = undefined
+		return item
+	}
+	
 	addSuite (descriptionStr) {
 		var aSuite, parent
 		parent = this.getCurrentSuite()

@@ -64,13 +64,48 @@ class Controller{
 		}
 		
 		let clonebtns = document.getElementsByClassName("btnClone")
-		for (var spec of clonebtns){
-			spec.onclick = function(event) {
+		for (var btn of clonebtns){
+			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.parent.cloneChild(index)
 				
+			}
+		}
+		
+		let copybtns = document.getElementsByClassName("btnCopy")
+		for (var btn of copybtns){
+			btn.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
+				TC.myModel.setCopiedItem(currentItem)
+				var div = document.getElementsByClassName('error')[0];
+				div.style.display = "block"
+				div.style.transition="opacity 1s";
+				div.style.opacity="0";
+			}
+		}
+		
+		let cutbtns = document.getElementsByClassName("btnCut")
+		for (var btn of cutbtns){
+			btn.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
+				TC.myModel.setCopiedItem(currentItem)
+				//remove from model
+			}
+		}
+		
+		let pastebtns = document.getElementsByClassName("btnPaste")
+		for (var btn of pastebtns){
+			btn.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
+				currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
 			}
 		}
 	}
