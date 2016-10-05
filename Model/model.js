@@ -13,8 +13,11 @@ class Model{
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 
-		this.currentSpecName = ""
+		this.currentSpec = undefined
+		this.currentTestItem = undefined
 		this.asserts = []
+
+
 
 		this.creatingSpec = false
 		this.creatingBefore = false
@@ -56,23 +59,31 @@ class Model{
 
 	addSpec (descriptionStr) {
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addSpec(descriptionStr, parentSuite)
+		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
-	createAssert (contents) {
-		return new Assert(contents)
+	addAssert (contents) {
+		console.log(this.currentTestItem)
+		if(this.currentTestItem != undefined){
+			console.log("adding assert")
+			this.currentTestItem.addAssert(contents, this.currentTestItem)
+		}
+	}
+
+	addMiscCode (miscCode) {
+		this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 	}
 
 	createBeforeEach(){
-		//var parentSuite = this.getCurrentSuite()
-		//parentSuite.addSetup()
-		//this.miscCode = []
+		var parentSuite = this.getCurrentSuite()
+		parentSuite.myBefore = new Setup()
+		this.currentTestItem = parentSuite.myBefore
 	}
 
 	createAfterEach(){
-		//var parentSuite = this.getCurrentSuite()
-		//parentSuite.addSetup("afterEach", this.miscCode)
-		//this.miscCode = []
+		var parentSuite = this.getCurrentSuite()
+		parentSuite.myAfter = new Setup()
+		this.currentTestItem = parentSuite.myAfter
 	}
 
 	createTestItems(splitFileArray){
@@ -107,31 +118,26 @@ class Model{
 		}else if (/[\w]+/i.exec(item) != null){
 			let type = /[\w]+/i.exec(item)[0].toLowerCase()
 			if (type == "describe"){
-				this.checkCreatingStatuses()
 				let suite = this.addSuite(this.getNodeDescription(item))
 				this.setCurrentSuite(suite)
 			}else if (type == "it"){
-				this.checkCreatingStatuses()
-				this.currentSpecName = this.getNodeDescription(item)
-				this.creatingSpec = true
+				this.addSpec(this.getNodeDescription(item))
 			}else if (type == "beforeeach"){
-				this.checkCreatingStatuses()
-				this.creatingBefore = true
+				this.createBeforeEach()
 			}else if (type == "aftereach"){
-				this.checkCreatingStatuses()
-				this.creatingAfter = true
+				this.createAfterEach()
 			}else if (type == "expect"){
 				let items = item.split("\n")
 				for (let i = 0; i < items.length; i++){
 					if(/[\w]+/i.exec(items[i]) == "expect"){
-						this.asserts.push(this.createAssert(/[\w]+/i.exec(items[i])[0], items[i].trim()))
+						this.addAssert(/[\w]+/i.exec(items[i].trim()))
 					}
 				}
 			}else{
 				let items = item.split("\n")
 				for (let i = 0; i < items.length; i++){
 					if(items[i].trim() != ""){
-						this.miscCode.push(items[i].trim())
+						this.addMiscCode(items[i].trim())
 					}
 				}
 			}
@@ -146,10 +152,6 @@ class Model{
 		}else if(this.creatingAfter){
 			this.createAfterEach()
 			this.creatingAfter = false
-		}else if(this.creatingSpec){
-			this.addSpec(this.currentSpecName, this.asserts)
-			this.creatingSpec = false
-			this.asserts = []
 		}
 	}
 

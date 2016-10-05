@@ -143,9 +143,15 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSetup)
 	}
 
+    addMiscCode (itStr, newParent) {
+        let aMisc = new Spec(itStr, newParent)
+        this.allMyChildren.push(aMisc)
+    }
+
 	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
 		this.allMyChildren.push(aSpec)
+        return aSpec
 	}
 
 	addSuite (itStr, newParent) {
@@ -288,15 +294,15 @@ class Spec extends TestItem {
 	}
 
 	addAssert (contents, newParent) {
-		let aAssert = new MiscCode(itStr, newParent)
+		let aAssert = new MiscCode(contents, newParent)
 		this.allMyChildren.push(aAssert)
 	}
-	
+
 	addMiscCode (itStr, newParent) {
 		let aMisc = new Spec(itStr, newParent)
 		this.allMyChildren.push(aMisc)
 	}
-	
+
 	toString (tabNum) {
 		let tab = "    "
 		let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
