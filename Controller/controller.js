@@ -79,23 +79,27 @@ class Controller{
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				TC.myModel.setCopiedItem(currentItem)
 				var div = document.getElementsByClassName('error')[0];
 				div.style.display = "block"
 				div.style.transition="opacity 1s";
 				div.style.opacity="0";
+				var slideSource = document.getElementById('error');
+				slideSource.className = slideSource.className ? '' : 'fade';
+
 			}
 		}
 		
 		let cutbtns = document.getElementsByClassName("btnCut")
 		for (var btn of cutbtns){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				let SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				let currentItem = TC.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
+				var parent = currentItem.parent
 				TC.myModel.setCopiedItem(currentItem)
-				//remove from model
+				parent.removeChild(index)
+				TC.updateDisplay()
 			}
 		}
 		
@@ -104,7 +108,6 @@ class Controller{
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
 			}
 		}
@@ -126,6 +129,11 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 3")
 	}
 
+	loadTestData2(){
+		this.myModel.createNewRoot("Root Sweetie")
+		this.myModel.addSpec("first Child spec")
+	}
+	
 	saveToFile(fileName){
 		this.myModel.myFiler.saveSuiteToFile(this.myModel, fileName)
 	}

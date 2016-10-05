@@ -24,10 +24,8 @@ class TestItem {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 30)
+		let backColour = 240-(this.findIndent() * 23)
 		if (this.parent !== "None"){
-			console.log(this.parent)
-			console.log(this.id)
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
@@ -38,12 +36,14 @@ class TestItem {
 		newText += '<a class="btnDelete" href="#">Delete</a>'
 
 		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
+		
+		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
+		newText += '<a class="btnCopy" href="#">Copy</a>'
+		if (this.parent !== "None") newText += '<a class="btnCut" href="#">Cut</a>'
+		
+		if (this.type === "Suite") newText += '<a class="btnPaste" href="#">Paste</a>'
 
 		if (this.parent !== "None"){
-			newText += '<a class="btnClone" href="#">Clone</a>'
-			newText += '<a class="btnCopy" href="#">Copy</a>'
-			newText += '<a class="btnCut" href="#">Cut</a>'
-			if (this.type === "Suite") newText += '<a class="btnPaste" href="#">Paste</a>'
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//in
@@ -66,8 +66,6 @@ class TestItem {
 	moveIn(){
 		//item above it becomes parent
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
-		console.log("IN:")
-		console.log("index:"+index)
 		//check index not negative
 		if (index != 0 && this.parent.allMyChildren[index-1].type == "Suite"){
 			let newParent = this.parent.allMyChildren[index-1]
@@ -86,12 +84,10 @@ class TestItem {
 		//moves out along side parent unless parent is root.
 		if (this.parent.hasOwnProperty('parent') && this.parent.parent != "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
-			console.log("index:"+index)
 			let me = this.parent.allMyChildren[index]
 			this.parent.allMyChildren.splice(index, 1)
 			this.parent = this.parent.parent
 			this.parent.allMyChildren.push(me)
-			console.log("OUT!")
 			TC.updateDisplay()
 		}
 		else{
