@@ -38,9 +38,18 @@ class Model{
 		return this.currentSuite
 	}
 
+	setCurrentTestItem (suite) {
+		this.currentTestItem = suite
+	}
+	
+	getCurrentTestItem () {
+		return this.currentTestItem
+	}
+
 	setCopiedItem (suite) {
 		this.copiedItem = suite
 	}
+
 
 	unsetCopiedItem (suite) {
 		var item = this.copiedItem

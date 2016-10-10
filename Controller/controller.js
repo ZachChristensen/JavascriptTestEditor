@@ -119,7 +119,7 @@ class Controller{
 				console.log("assert func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentSuite(currentItem)
+				TC.myModel.setCurrentTestItem(currentItem)
 				modal_content.setAddAssert()
 				modal.style.display = "block"
 				NEWTYPE = "Assert"

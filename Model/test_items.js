@@ -160,19 +160,14 @@ class TestItem {
 	cloneChild(index){
 		var orig = this.allMyChildren[index]
 		console.log(orig)
-		if (orig.type === "Spec"){
-			var theClone = new Spec(orig.description, this)
-		}
-		else if (orig.hasOwnProperty('allMyChildren')){
+		if (orig.hasOwnProperty('allMyChildren')){
 			console.log("Cloning my CHILDREN")
 			var theClone = new Suite(orig.description, this)
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
-					//theClone.addSpec(i.description, theClone)
 					var newSpec = new Spec(i.description, theClone)
 					newSpec.allMyChildren = i.duplicateMyChildren(i, newSpec)
 					theClone.allMyChildren.push(newSpec)
-
 				}
 				else if (i.type === "Suite"){
 					var newSuite = new Suite(i.description, theClone)
@@ -180,7 +175,7 @@ class TestItem {
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
-					var newAssert = new Assert(i.contents, newParent)
+					var newAssert = new Assert(i.contents, theClone)
 					theClone.allMyChildren.push(newAssert)
 				}
 			}
@@ -197,7 +192,9 @@ class TestItem {
 		var newArray = []
 		for (var i of oldParent.allMyChildren){
 			if (i.type === "Spec"){
-				newArray.push(new Spec(i.description, newParent))
+				var newSpec = new Spec(i.description, newParent)
+				newSpec.allMyChildren = i.duplicateMyChildren(i, newSpec)
+				newArray.push(newSpec)
 			}
 			else if (i.type === "Suite"){
 				var newSuite = new Suite(i.description, newParent)
@@ -334,7 +331,18 @@ class MiscCode {
 	}
 	
 	toHTML(Parent){
-		var newText = "I AM ASSERT! " + this.contents
+		let backColour = 240-(this.findIndent() * 23)
+		if (this.parent !== "None"){
+			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		}
+		if (backColour < 40) backColour = 40
+		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+
+		newText += '<a class="btnDelete" href="#">Delete</a>'
+				
+		newText += '</div></div>'
+		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
 	}
 	
