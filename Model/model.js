@@ -181,8 +181,12 @@ class Model{
 	}
 
 	updateItem(elementID, newStr){
-		this.find(elementID).description = newStr
-		console.log(this.find(elementID))
+		var item = this.find(elementID)
+		if (item.type === "Assert" || item.type === "Misc"){
+			item.contents = newStr
+		}
+		else item.description = newStr
+		console.log(item)
 	}
 
 	toString() {

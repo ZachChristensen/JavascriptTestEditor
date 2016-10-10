@@ -167,7 +167,12 @@ class TestItem {
 		var orig = this.allMyChildren[index]
 		console.log(orig)
 		if (orig.hasOwnProperty('allMyChildren')){
-			var theClone = new Suite(orig.description, this)
+			if (orig.type === "Spec"){
+				var theClone = new Spec(orig.description, this)
+			}
+			else{
+				var theClone = new Suite(orig.description, this)
+			}
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
 					var newSpec = new Spec(i.description, theClone)
@@ -183,10 +188,17 @@ class TestItem {
 					var newAssert = new Assert(i.contents, theClone)
 					theClone.allMyChildren.push(newAssert)
 				}
+				else if (i.type === "Misc"){
+					var newAssert = new MiscCode(i.contents, theClone)
+					theClone.allMyChildren.push(newAssert)
+				}
 			}
 		}
 		else if (orig.type === "Assert"){
 			var theClone = new Assert(orig.contents, this)
+		}
+		else if (i.type === "Misc"){
+			var theClone = new MiscCode(i.contents, theClone)
 		}
 		console.log("clone! " + theClone)
 		this.allMyChildren.splice(index+1, 0, theClone)
@@ -208,6 +220,10 @@ class TestItem {
 			}
 			else if (i.type === "Assert"){
 				var newSuite = new Assert(i.contents, newParent)
+				newArray.push(newSuite)
+			}
+			else if (i.type === "Misc"){
+				var newSuite = new MiscCode(i.contents, newParent)
 				newArray.push(newSuite)
 			}
 		}
