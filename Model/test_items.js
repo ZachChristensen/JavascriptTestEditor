@@ -24,18 +24,19 @@ class TestItem {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 23)
+		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
-		if (backColour < 40) backColour = 40
+		if (backColour < 60) backColour = 60
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete" href="#">Delete</a>'
 
-		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a><a href="#" class="btnAddSuite">Add Suite</a>'
+		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
+
 		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a>'
 
 		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
@@ -126,6 +127,11 @@ class TestItem {
 		return depth
 	}
 	
+	addMiscCode (itStr, newParent) {
+        let aMisc = new MiscCode(itStr, newParent)
+        this.allMyChildren.push(aMisc)
+    }
+
 	addPastedItem(theItem){
 		//check if it can have children
 		if (this.type == "Spec" || this.type == "Suite"){
@@ -161,7 +167,6 @@ class TestItem {
 		var orig = this.allMyChildren[index]
 		console.log(orig)
 		if (orig.hasOwnProperty('allMyChildren')){
-			console.log("Cloning my CHILDREN")
 			var theClone = new Suite(orig.description, this)
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
@@ -228,11 +233,6 @@ class Suite extends TestItem{
 		let aSetup = new Setup(type, contents)
 		this.allMyChildren.push(aSetup)
 	}
-
-    addMiscCode (itStr, newParent) {
-        let aMisc = new Spec(itStr, newParent)
-        this.allMyChildren.push(aMisc)
-    }
 
 	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
@@ -366,11 +366,6 @@ class Spec extends TestItem {
 	addAssert (contents, newParent) {
 		let aAssert = new Assert(contents, newParent)
 		this.allMyChildren.push(aAssert)
-	}
-
-	addMiscCode (itStr, newParent) {
-		let aMisc = new MiscCode(itStr, newParent)
-		this.allMyChildren.push(aMisc)
 	}
 
 	toString (tabNum) {

@@ -78,7 +78,9 @@ class Model{
 	}
 
 	addMiscCode (miscCode) {
-		this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
+		if(this.currentTestItem != undefined){
+			this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
+		}
 	}
 
 	createBeforeEach(){

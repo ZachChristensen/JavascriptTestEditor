@@ -151,6 +151,7 @@ class Controller{
 		this.myModel.addAssert("Assert == Hello")
 		var suite = this.myModel.addSuite("firstChild Suite")
 		this.myModel.addSpec("child of  child spec 1")
+		this.myModel.addMiscCode("var bananana = 4")
 		this.myModel.addAssert("Assert 2")
 		this.myModel.addSpec("child of  child spec 2")
 	}
