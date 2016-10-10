@@ -112,6 +112,21 @@ class Controller{
 				}
 			}
 		}
+		
+		let assertbtns = document.getElementsByClassName("btnAddAssert")
+		for (var spec of assertbtns){
+			spec.onclick = function(event) {
+				console.log("assert func")
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentSuite(currentItem)
+				modal_content.setAddAssert()
+				modal.style.display = "block"
+				NEWTYPE = "Assert"
+				document.getElementById("modalDescription").focus()
+			}
+		}
+		
 	}
 
 	outputToDiv(divID, textContent){

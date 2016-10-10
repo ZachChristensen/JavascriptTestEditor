@@ -50,6 +50,31 @@ class modal_content{
 		})
 	}
 	
+	static setAddAssert(){
+		var title = "Add New Assert"
+		var content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Assert Content"></input><button id="modalAddBtn">Add</button></div>'
+		var titleID = "modalTitle"
+		var contentID = "modalContent"
+		var titleElement = document.getElementById(titleID)
+		titleElement.innerHTML = title
+		var contentElement = document.getElementById(contentID)
+		contentElement.innerHTML = content
+		var modalAddBtn = document.getElementById("modalAddBtn")
+		modalAddBtn.onclick = function(event) {
+			var modalDescr = document.getElementById("modalDescription")
+			TC.myModel.addAssert(modalDescr.value)
+			TC.updateDisplay()
+			modal.style.display = "none"
+			modalDescr.value = ""
+		}
+		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
+			event.preventDefault();
+			if (event.keyCode == 13) {
+				modalAddBtn.click()
+			}
+		})
+	}
+	
 	static setNewRootSuite(){
 		console.log("delet")
 		var title = "Add New Root Suite"
