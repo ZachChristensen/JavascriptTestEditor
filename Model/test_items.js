@@ -37,7 +37,7 @@ class TestItem {
 
 		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
 
-		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a>'
+		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a> <a class="btnAddMisc" href="#">Add Misc</a>' 
 
 		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
 		newText += '<a class="btnCopy" href="#">Copy</a>'

@@ -127,6 +127,23 @@ class Controller{
 			}
 		}
 		
+		let miscbtns = document.getElementsByClassName("btnAddMisc")
+		for (var misc of miscbtns){
+			misc.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentTestItem(currentItem)
+				
+				TC.myModel.addMiscCode("")
+				
+				TC.updateDisplay()
+				
+				//focus on new misc
+				document.getElementById("modalDescription").focus()
+				
+			}
+		}
+		
 	}
 
 	outputToDiv(divID, textContent){
