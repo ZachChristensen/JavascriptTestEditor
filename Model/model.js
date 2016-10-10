@@ -63,9 +63,7 @@ class Model{
 	}
 
 	addAssert (contents) {
-		console.log(this.currentTestItem)
 		if(this.currentTestItem != undefined){
-			console.log("adding assert")
 			this.currentTestItem.addAssert(contents, this.currentTestItem)
 		}
 	}

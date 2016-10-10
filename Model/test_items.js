@@ -124,6 +124,98 @@ class TestItem {
 		}
 		return depth
 	}
+	
+	addPastedItem(theItem){
+		//check if it can have children
+		if (this.type == "Spec" || this.type == "Suite"){
+			var orig = theItem
+			if (this.type === "Spec" && orig.type === "Assert"){
+				var theClone = new Assert(orig.contents, this)
+			}
+			else if(orig.type === "Spec"){
+				var theClone = new Spec(orig.description, this)
+			}
+			else if (orig.type === "Suite"){
+				var theClone = new Suite(orig.description, this)
+				for (var i of orig.allMyChildren){
+					if (i.type === "Spec"){
+						console.log(theClone)
+						let newSpec = new Spec(i.description, theClone)
+						console.log(newSpec)
+						theClone.addSpec(i.description, theClone)
+					}
+					else if (i.type === "Suite"){
+						var newSuite = new Suite(i.description, theClone)
+						newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+						theClone.allMyChildren.push(newSuite)
+					}
+				}
+			}
+			this.allMyChildren.push(theClone)
+			TC.updateDisplay()
+		}
+	}
+	
+	cloneChild(index){
+		var orig = this.allMyChildren[index]
+		console.log(orig)
+		if (orig.type === "Spec"){
+			var theClone = new Spec(orig.description, this)
+		}
+		else if (orig.hasOwnProperty('allMyChildren')){
+			console.log("Cloning my CHILDREN")
+			var theClone = new Suite(orig.description, this)
+			for (var i of orig.allMyChildren){
+				if (i.type === "Spec"){
+					//theClone.addSpec(i.description, theClone)
+					var newSpec = new Spec(i.description, theClone)
+					newSpec.allMyChildren = i.duplicateMyChildren(i, newSpec)
+					theClone.allMyChildren.push(newSpec)
+
+				}
+				else if (i.type === "Suite"){
+					var newSuite = new Suite(i.description, theClone)
+					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+					theClone.allMyChildren.push(newSuite)
+				}
+				else if (i.type === "Assert"){
+					var newAssert = new Assert(i.contents, newParent)
+					theClone.allMyChildren.push(newAssert)
+				}
+			}
+		}
+		else if (orig.type === "Assert"){
+			var theClone = new Assert(orig.contents, this)
+		}
+		console.log("clone! " + theClone)
+		this.allMyChildren.splice(index+1, 0, theClone)
+		TC.updateDisplay()
+	}
+
+	duplicateMyChildren(oldParent = this, newParent){
+		var newArray = []
+		for (var i of oldParent.allMyChildren){
+			if (i.type === "Spec"){
+				newArray.push(new Spec(i.description, newParent))
+			}
+			else if (i.type === "Suite"){
+				var newSuite = new Suite(i.description, newParent)
+				newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+				newArray.push(newSuite)
+			}
+			else if (i.type === "Assert"){
+				var newSuite = new Assert(i.contents, newParent)
+				newArray.push(newSuite)
+			}
+		}
+		return newArray
+	}
+
+	removeChild(index){
+		if (index > -1) {
+			this.allMyChildren.splice(index, 1);
+		}
+	}
 }
 
 class Suite extends TestItem{
@@ -155,78 +247,6 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSuite)
 	}
 
-	removeChild(index){
-		if (index > -1) {
-			this.allMyChildren.splice(index, 1);
-		}
-	}
-
-	addPastedItem(theItem){
-		var orig = theItem
-		if (orig.type === "Spec"){
-			var theClone = new Spec(orig.description, this)
-		}
-		else if (orig.type === "Suite"){
-			var theClone = new Suite(orig.description, this)
-			for (var i of orig.allMyChildren){
-				if (i.type === "Spec"){
-					console.log("LOOK")
-					console.log(theClone)
-					let newSpec = new Spec(i.description, theClone)
-					console.log(newSpec)
-					theClone.addSpec(i.description, theClone)
-				}
-				else if (i.type === "Suite"){
-					var newSuite = new Suite(i.description, theClone)
-					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-					theClone.allMyChildren.push(newSuite)
-				}
-
-			}
-		}
-		this.allMyChildren.push(theClone)
-		TC.updateDisplay()
-	}
-
-	cloneChild(index){
-		var orig = this.allMyChildren[index]
-		if (orig.type === "Spec"){
-			var theClone = new Spec(orig.description, this)
-		}
-		else if (orig.type === "Suite"){
-			var theClone = new Suite(orig.description, this)
-			for (var i of orig.allMyChildren){
-				if (i.type === "Spec"){
-					console.log("LOOK")
-					console.log(theClone)
-					theClone.addSpec(i.description, theClone)
-				}
-				else if (i.type === "Suite"){
-					var newSuite = new Suite(i.description, theClone)
-					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-					theClone.allMyChildren.push(newSuite)
-				}
-
-			}
-		}
-		this.allMyChildren.splice(index+1, 0, theClone)
-		TC.updateDisplay()
-	}
-
-	duplicateMyChildren(oldParent = this, newParent){
-		var newArray = []
-		for (var i of oldParent.allMyChildren){
-			if (i.type === "Spec"){
-				newArray.push(new Spec(i.description, newParent))
-			}
-			else if (i.type === "Suite"){
-				var newSuite = new Suite(i.description, newParent)
-				newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-				newArray.push(newSuite)
-			}
-		}
-		return newArray
-	}
 
 	toString (tabNum) {
 		var resultStr, theTab, child
@@ -248,7 +268,7 @@ class Suite extends TestItem{
 				return child
 			}
 			else{
-				if(child.type === "Suite"){
+				if(child.hasOwnProperty('allMyChildren')){
 					let result = child.findChild(theId)
 					if(result !== undefined){
 						console.log(result.description + " found")
@@ -272,6 +292,35 @@ class Assert {
 		this.id = idGenerator()
 		this.contents = contents
 		this.parent = newParent
+		this.type = "Assert"
+	}
+	
+	toHTML(Parent){
+		let backColour = 240-(this.findIndent() * 23)
+		if (this.parent !== "None"){
+			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		}
+		if (backColour < 40) backColour = 40
+		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+
+		newText += '<a class="btnDelete" href="#">Delete</a>'
+		
+		newText += '<a class="btnClone" href="#">Clone</a>'
+		
+		newText += '</div></div>'
+		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		TC.outputToDiv(Parent, newText)
+	}
+	
+	findIndent(){
+		var current = this,
+		depth = 0
+		while (current.parent != "None"){
+			depth++
+			current = current.parent
+		}
+		return depth
 	}
 }
 
@@ -280,6 +329,22 @@ class MiscCode {
 		this.id = idGenerator()
 		this.contents = contents
 		this.parent = newParent
+		this.type = "Misc"
+	}
+	
+	toHTML(Parent){
+		var newText = "I AM ASSERT! " + this.contents
+		TC.outputToDiv(Parent, newText)
+	}
+	
+	findIndent(){
+		var current = this,
+		depth = 0
+		while (current.parent != "None"){
+			depth++
+			current = current.parent
+		}
+		return depth
 	}
 }
 
@@ -290,12 +355,12 @@ class Spec extends TestItem {
 	}
 
 	addAssert (contents, newParent) {
-		let aAssert = new MiscCode(contents, newParent)
+		let aAssert = new Assert(contents, newParent)
 		this.allMyChildren.push(aAssert)
 	}
 
 	addMiscCode (itStr, newParent) {
-		let aMisc = new Spec(itStr, newParent)
+		let aMisc = new MiscCode(itStr, newParent)
 		this.allMyChildren.push(aMisc)
 	}
 
@@ -305,5 +370,22 @@ class Spec extends TestItem {
 			+ tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
 			+ tab.repeat(tabNum) + "})\r\n"
 		return resultStr
+	}
+	
+	findChild (theId){
+		for (var child of this.allMyChildren){
+			if (child.id === theId){
+				return child
+			}
+			else{
+				if(child.hasOwnProperty('allMyChildren')){
+					let result = child.findChild(theId)
+					if(result !== undefined){
+						console.log(result.description + " found")
+						return result
+					}
+				}
+			}
+		}
 	}
 }

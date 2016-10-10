@@ -78,15 +78,9 @@ class Controller{
 		for (var btn of copybtns){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				console.log(event.target.parentElement.parentElement.parentElement.id)
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
 				TC.myModel.setCopiedItem(currentItem)
-				var div = document.getElementsByClassName('error')[0];
-				div.style.display = "block"
-				div.style.transition="opacity 1s";
-				div.style.opacity="0";
-				var slideSource = document.getElementById('error');
-				slideSource.className = slideSource.className ? '' : 'fade';
-
 			}
 		}
 		
@@ -108,7 +102,14 @@ class Controller{
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
+				if ( currentItem.type == "Assert" && currentItem.parent.type == "Spec"){
+					currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
+					return
+				}
+				if ( (currentItem.type == "Spec" || currentItem.type == "Spec") && currentItem.parent.type == "Suite"){
+					currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
+					return
+				}
 			}
 		}
 	}
@@ -117,7 +118,7 @@ class Controller{
 		this.myView.appendToDiv(divID, textContent)
 	}
 
-	loadTestData(){
+	loadTestData2(){
 		this.myModel.createNewRoot("Root Sweetie")
 		this.myModel.addSpec("first Child spec")
 		var suite = this.myModel.addSuite("firstChild Suite")
@@ -129,9 +130,14 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 3")
 	}
 
-	loadTestData2(){
+	loadTestData(){
 		this.myModel.createNewRoot("Root Sweetie")
 		this.myModel.addSpec("first Child spec")
+		this.myModel.addAssert("Assert == Hello")
+		var suite = this.myModel.addSuite("firstChild Suite")
+		this.myModel.addSpec("child of  child spec 1")
+		this.myModel.addAssert("Assert 2")
+		this.myModel.addSpec("child of  child spec 2")
 	}
 	
 	saveToFile(fileName){
