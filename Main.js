@@ -37,6 +37,7 @@ for (var btn of loadBtns){
 	btn.onclick = function(event) {
 		document.getElementById("fileSelector").click();
 	}
+	idGenerator = new idCounter();
 }
 
 var newRootBtn = document.getElementById("newRootBtn")
