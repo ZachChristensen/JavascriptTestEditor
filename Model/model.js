@@ -50,7 +50,6 @@ class Model{
 		this.copiedItem = suite
 	}
 
-
 	unsetCopiedItem (suite) {
 		var item = this.copiedItem
 		this.copiedItem = undefined
@@ -83,15 +82,17 @@ class Model{
 		}
 	}
 
-	createBeforeEach(){
+	addBeforeEach(){
+		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.myBefore = new Setup()
+		parentSuite.myBefore = new BeforeEach(parentSuite)
 		this.currentTestItem = parentSuite.myBefore
 	}
 
-	createAfterEach(){
+	addAfterEach(){
+		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.myAfter = new Setup()
+		parentSuite.myAfter = new AfterEach(parentSuite)
 		this.currentTestItem = parentSuite.myAfter
 	}
 
@@ -132,9 +133,9 @@ class Model{
 			}else if (type == "it"){
 				this.addSpec(this.getNodeDescription(item))
 			}else if (type == "beforeeach"){
-				this.createBeforeEach()
+				this.addBeforeEach()
 			}else if (type == "aftereach"){
-				this.createAfterEach()
+				this.addAfterEach()
 			}else if (type == "expect"){
 				let items = item.split("\n")
 				for (let i = 0; i < items.length; i++){
@@ -156,10 +157,10 @@ class Model{
 
 	checkCreatingStatuses(type){
 		if(this.creatingBefore){
-			this.createBeforeEach()
+			this.addBeforeEach()
 			this.creatingBefore = false
 		}else if(this.creatingAfter){
-			this.createAfterEach()
+			this.addAfterEach()
 			this.creatingAfter = false
 		}
 	}

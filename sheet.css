@@ -146,6 +146,12 @@ header h1{
 	border: 1px solid #444;
 }
 
+.Setup{
+	margin:1em;
+	padding:1em;
+	border: 1px solid #444;
+}
+
 .dropbtn {
     background-color: #2c3d66;
     color: white;
