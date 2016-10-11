@@ -179,7 +179,7 @@ class Controller{
 	loadFromFile(){
 		let that = this
 		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {
-			that.myModel.createTestItems(splitFileArray)
+			that.myModel.myFiler.createTestItems(splitFileArray, that.myModel)
 			that.updateDisplay()
 		})
 	}
