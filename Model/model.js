@@ -98,7 +98,10 @@ class Model{
 
 	updateItem(elementID, newStr){
 		var item = this.find(elementID)
-		if (item.type === "Assert" || item.type === "Misc"){
+		if (item.type === "Assert"){
+			item.contents = newStr
+		}
+		else if(item.type === "Misc"){
 			item.contents = newStr
 		}
 		else item.description = newStr

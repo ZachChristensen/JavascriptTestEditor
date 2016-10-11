@@ -300,13 +300,28 @@ class Suite extends TestItem{
 				console.log(child.description + " found")
 				return child
 			}
-			else{
-				if(child.hasOwnProperty('allMyChildren')){
-					let result = child.findChild(theId)
+			if(child.hasOwnProperty('myAfter')){
+				if (child.myAfter !== undefined){
+					let result = child.myAfter.findChild(theId)
 					if(result !== undefined){
 						console.log(result.description + " found")
 						return result
 					}
+				}
+				if (child.myBefore !== undefined){
+					let result = child.myBefore.findChild(theId)
+					if(result !== undefined){
+						console.log(result.description + " found")
+						return result
+					}
+				}
+			}
+			if(child.hasOwnProperty('allMyChildren')){
+				let result = child.findChild(theId)
+				
+				if(result !== undefined){
+					console.log(result.description + " found")
+					return result
 				}
 			}
 		}
@@ -434,7 +449,7 @@ class MiscCode {
 		newText += '<a class="btnDelete" href="#">Delete</a>'
 
 		newText += '</div></div>'
-		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		newText += " " +this.type + "&nbsp;&nbsp;" + "<textArea id='" + this.id + "t' type='text'>" + this.contents + "</textArea> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
 	}
 
