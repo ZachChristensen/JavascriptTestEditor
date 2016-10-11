@@ -46,7 +46,7 @@ class TestItem {
 		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
 		newText += '<a class="btnCopy" href="#">Copy</a>'
 		if (this.parent !== "None") newText += '<a class="btnCut" href="#">Cut</a>'
-		
+
 		if (this.type === "Suite") newText += '<a class="btnPaste" href="#">Paste</a>'
 
 		if (this.parent !== "None"){
@@ -134,7 +134,7 @@ class TestItem {
 		}
 		return depth
 	}
-	
+
 	addMiscCode (itStr, newParent) {
         let aMisc = new MiscCode(itStr, newParent)
         this.allMyChildren.push(aMisc)
@@ -170,7 +170,7 @@ class TestItem {
 			TC.updateDisplay()
 		}
 	}
-	
+
 	cloneChild(index){
 		var orig = this.allMyChildren[index]
 		console.log(orig)
@@ -254,10 +254,13 @@ class Suite extends TestItem{
 		this.myAfter = undefined
 	}
 
-	addSetup (type, contents) {
-		let aSetup = new Setup(type, contents)
-		this.allMyChildren.push(aSetup)
+    addBefore () {
+		this.myBefore = new Setup(this)
 	}
+
+    addAfter () {
+        this.myAfter = new Setup(this)
+    }
 
 	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
@@ -270,13 +273,20 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSuite)
 	}
 
-
-	toString (tabNum) {
+    toString (tabNum) {
 		var resultStr, theTab, child
 		var tab = "    "
 		theTab = tabNum
 		resultStr = tab.repeat(theTab) + "describe(\"" + this.description + "\", function() {\r\n"
 		theTab = theTab + 1
+        //if (this.myBefore != undefined) {
+        //  resultStr += this.myBefore.toString() + "\r\n"
+        //}
+
+        //if (this.myAfter != undefined) {
+        //  resultStr += this.myAfter.toString() + "\r\n"
+        //}
+
 		for (child of this.allMyChildren) {
 			resultStr +=  child.toString(theTab)
 		}
@@ -307,8 +317,7 @@ class Setup extends Suite{
 	constructor (newParent) {
 		super("", newParent)
 		this.type = "Setup"
-	}
-	
+	}	
 	toHTML(Parent){
 		console.log(this)
 		let backColour = 240-(this.findIndent() * 20)
@@ -335,6 +344,20 @@ class BeforeEach extends Setup{
 		super(newParent)
 		this.type = "BeforeEach"
 	}
+
+    toString (tabNum) {
+        let tab = "    "
+        let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
+        for (child of this.allMyChildren) {
+            resultStr += child.toString(theTab) + "\r\n"
+        }
+        resultStr += tab.repeat(theTab - 1) + "})\r\n"
+        return resultStr
+    }
+    addMiscCode (itStr, newParent) {
+        let aMisc = new MiscCode(itStr, newParent)
+        this.allMyChildren.push(aMisc)
+    }
 }
 
 class AfterEach extends Setup{
@@ -352,7 +375,7 @@ class Assert {
 		this.parent = newParent
 		this.type = "Assert"
 	}
-	
+
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
@@ -363,14 +386,19 @@ class Assert {
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete" href="#">Delete</a>'
-		
+
 		newText += '<a class="btnClone" href="#">Clone</a>'
-		
+
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
 	}
-	
+    toString (tabNum) {
+        let tab = "    "
+        let resultStr = tab.repeat(tabNum) + this.contents
+        return resultStr
+    }
+
 	findIndent(){
 		var current = this,
 		depth = 0
@@ -389,7 +417,7 @@ class MiscCode {
 		this.parent = newParent
 		this.type = "Misc"
 	}
-	
+
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
@@ -400,12 +428,18 @@ class MiscCode {
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete" href="#">Delete</a>'
-				
+
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
 	}
-	
+
+    toString (tabNum) {
+        let tab = "    "
+        let resultStr = tab.repeat(tabNum) + this.contents
+        return resultStr
+    }
+
 	findIndent(){
 		var current = this,
 		depth = 0
@@ -428,14 +462,28 @@ class Spec extends TestItem {
 		this.allMyChildren.push(aAssert)
 	}
 
-	toString (tabNum) {
-		let tab = "    "
-		let resultStr = tab.repeat(tabNum) + "it(\"" + this.description + "\", function() {\r\n"
-			+ tab.repeat(tabNum + 1) + "expect(true).toBe(true)\r\n"
-			+ tab.repeat(tabNum) + "})\r\n"
-		return resultStr
-	}
-	
+    toString (tabNum) {
+        var resultStr, theTab, child
+        var tab = "    "
+        theTab = tabNum
+        resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
+        theTab = theTab + 1
+        for (child of this.allMyChildren) {
+            resultStr +=  child.toString(theTab)  + "\r\n"
+        }
+        resultStr += tab.repeat(theTab - 1) + "})\r\n"
+        return resultStr
+    }
+    addAssert (contents, newParent) {
+        let aAssert = new Assert(contents, newParent)
+        this.allMyChildren.push(aAssert)
+    }
+
+    addMiscCode (itStr, newParent) {
+        let aMisc = new MiscCode(itStr, newParent)
+        this.allMyChildren.push(aMisc)
+    }
+
 	findChild (theId){
 		for (var child of this.allMyChildren){
 			if (child.id === theId){
