@@ -62,7 +62,7 @@ class Controller{
 				}
 			}
 		}
-		
+
 		let clonebtns = document.getElementsByClassName("btnClone")
 		for (var btn of clonebtns){
 			btn.onclick = function(event) {
@@ -70,10 +70,10 @@ class Controller{
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.parent.cloneChild(index)
-				
+
 			}
 		}
-		
+
 		let copybtns = document.getElementsByClassName("btnCopy")
 		for (var btn of copybtns){
 			btn.onclick = function(event) {
@@ -83,7 +83,7 @@ class Controller{
 				TC.myModel.setCopiedItem(currentItem)
 			}
 		}
-		
+
 		let cutbtns = document.getElementsByClassName("btnCut")
 		for (var btn of cutbtns){
 			btn.onclick = function(event) {
@@ -96,7 +96,7 @@ class Controller{
 				TC.updateDisplay()
 			}
 		}
-		
+
 		let pastebtns = document.getElementsByClassName("btnPaste")
 		for (var btn of pastebtns){
 			btn.onclick = function(event) {
@@ -112,7 +112,7 @@ class Controller{
 				}
 			}
 		}
-		
+
 		let assertbtns = document.getElementsByClassName("btnAddAssert")
 		for (var spec of assertbtns){
 			spec.onclick = function(event) {
@@ -126,24 +126,24 @@ class Controller{
 				document.getElementById("modalDescription").focus()
 			}
 		}
-		
+
 		let miscbtns = document.getElementsByClassName("btnAddMisc")
 		for (var misc of miscbtns){
 			misc.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
 				TC.myModel.setCurrentTestItem(currentItem)
-				
+
 				TC.myModel.addMiscCode("")
-				
+
 				TC.updateDisplay()
-				
+
 				//focus on new misc
 				document.getElementById("modalDescription").focus()
-				
+
 			}
 		}
-		
+
 	}
 
 	outputToDiv(divID, textContent){
@@ -171,9 +171,9 @@ class Controller{
 		this.myModel.addAssert("Assert 2")
 		this.myModel.addSpec("child of  child spec 2")
 	}
-	
-	saveToFile(fileName){		
-		this.myModel.myFiler.saveSuiteToFile(this.myModel, fileName)
+
+	saveToFile(fileName){
+		this.myModel.myFiler.saveToFile(this.myModel, fileName)
 	}
 
 	loadFromFile(){
