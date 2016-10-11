@@ -255,11 +255,11 @@ class Suite extends TestItem{
 	}
 
     addBefore () {
-		this.myBefore = new Setup(this)
+		this.myBefore = new BeforeEach(this)
 	}
 
     addAfter () {
-        this.myAfter = new Setup(this)
+        this.myAfter = new AfterEach(this)
     }
 
 	addSpec (itStr, newParent) {
@@ -337,16 +337,12 @@ class Setup extends Suite{
 			}
 		}
 	}
-}
-
-class BeforeEach extends Setup{
-	constructor (newParent) {
-		super(newParent)
-		this.type = "BeforeEach"
-	}
-
-    toString (tabNum) {
+	
+	toString (tabNum) {
         let tab = "    "
+		var theTab, child
+		theTab = tabNum
+
         let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
         for (child of this.allMyChildren) {
             resultStr += child.toString(theTab) + "\r\n"
@@ -354,6 +350,14 @@ class BeforeEach extends Setup{
         resultStr += tab.repeat(theTab - 1) + "})\r\n"
         return resultStr
     }
+}
+
+class BeforeEach extends Setup{
+	constructor (newParent) {
+		super(newParent)
+		this.type = "BeforeEach"
+	}
+    
     addMiscCode (itStr, newParent) {
         let aMisc = new MiscCode(itStr, newParent)
         this.allMyChildren.push(aMisc)
