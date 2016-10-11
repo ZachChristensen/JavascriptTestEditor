@@ -27,6 +27,8 @@ class Filer{
   }
 
   saveSuiteToFile(currentFrameWork, filename){
+	console.log("filr save")
+	console.log(filename)
     let blob = new Blob([currentFrameWork.toString()], {type: "text/plain;charset=utf-8"});
     saveAs(blob, filename + ".txt");
   }

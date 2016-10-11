@@ -5,7 +5,7 @@ jshint esversion:6
 jshint asi:true
 */
 
-//Fix dependancies in the code on TC
+//Fix dependancies in the code on TC?
 var SELECTEDSUITE = ""
 var NEWTYPE = ""
 var currentItem
@@ -29,7 +29,8 @@ for (var btn of clearBtns){
 
 for (var btn of saveBtns){
 	btn.onclick = function(event) {
-		alert("Save button not working yet")
+		modal_content.setSave()
+		modal.style.display = "block"
 	}
 }
 
@@ -54,8 +55,9 @@ modalCloseBtn.onclick = function() {
 }
 
 document.getElementById("fileSelector").addEventListener("change", function() {
-    LC = new Controller()
-		LC.loadFromFile()
+	//terrible fix this
+    TC = new Controller()
+	TC.loadFromFile()
 });
 
 // When the user clicks anywhere outside of the modal, close it

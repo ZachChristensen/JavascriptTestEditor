@@ -172,7 +172,7 @@ class Controller{
 		this.myModel.addSpec("child of  child spec 2")
 	}
 	
-	saveToFile(fileName){
+	saveToFile(fileName){		
 		this.myModel.myFiler.saveSuiteToFile(this.myModel, fileName)
 	}
 
