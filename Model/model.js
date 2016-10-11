@@ -41,7 +41,6 @@ class Model{
 		this.copiedItem = suite
 	}
 
-
 	unsetCopiedItem (suite) {
 		var item = this.copiedItem
 		this.copiedItem = undefined
@@ -75,13 +74,16 @@ class Model{
 		}
 	}
 
-	createBeforeEach(){
+	addBeforeEach(){
+		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
+
 		parentSuite.addBefore()
 		this.currentTestItem = parentSuite.myBefore
 	}
 
-	createAfterEach(){
+	addAfterEach(){
+		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
 		parentSuite.addAfter()
 		this.currentTestItem = parentSuite.myAfter

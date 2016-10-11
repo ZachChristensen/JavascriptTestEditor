@@ -28,6 +28,7 @@ class TestItem {
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
+		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
@@ -35,9 +36,12 @@ class TestItem {
 
 		newText += '<a class="btnDelete" href="#">Delete</a>'
 
-		if (this.type === "Suite") newText += '<a class="btnAddSpec" href="#">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
-
-		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a> <a class="btnAddMisc" href="#">Add Misc</a>'
+		if (this.type === "Suite"){
+			newText += '<a class="btnAddSpec" href="#">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
+			newText += '<a class="btnAddBeforeEach" href="#">Add BeforeEach</a>'
+			newText += '<a class="btnAddAfterEach" href="#">Add AfterEach</a>'
+		}
+		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a> <a class="btnAddMisc" href="#">Add Misc</a>' 
 
 		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
 		newText += '<a class="btnCopy" href="#">Copy</a>'
@@ -58,6 +62,10 @@ class TestItem {
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		TC.outputToDiv(Parent, newText)
+		if (this.type === "Suite"){
+			if (this.myBefore != undefined) this.myBefore.toHTML(this.id)
+			if (this.myAfter != undefined) this.myAfter.toHTML(this.id)
+		}
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){
 				baby.toHTML(this.id)
@@ -83,7 +91,7 @@ class TestItem {
 	}
 
 	moveOut(){
-		//moves out along side parent unless parent is root.
+		//moves out and under parent unless parent is root.
 		if (this.parent.hasOwnProperty('parent') && this.parent.parent != "None"){
 			let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 			let me = this.parent.allMyChildren[index]
@@ -239,6 +247,7 @@ class TestItem {
 
 class Suite extends TestItem{
 	constructor (newDesc, newParent = "None") {
+		console.log(newParent)
 		super(newDesc, "Suite", newParent)
 		this.allMyChildren = []
 		this.myBefore = undefined
@@ -246,11 +255,11 @@ class Suite extends TestItem{
 	}
 
     addBefore () {
-		this.myBefore = new Setup(this)
+		this.myBefore = new BeforeEach(this)
 	}
 
     addAfter () {
-        this.myAfter = new Setup(this)
+        this.myAfter = new AfterEach(this)
     }
 
 	addSpec (itStr, newParent) {
@@ -308,9 +317,32 @@ class Setup extends Suite{
 	constructor (newParent) {
 		super("", newParent)
 		this.type = "Setup"
+	}	
+	toHTML(Parent){
+		console.log(this)
+		let backColour = 240-(this.findIndent() * 20)
+		if (this.parent !== "None"){
+			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		}
+		if (backColour < 40) backColour = 40
+		var newText = "<div class='Setup' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		newText += '<a class="btnDelete" href="#">Delete</a>'		
+		newText += '</div></div>'
+		newText += " " +this.type + "&nbsp;&nbsp;" + "| "+ this.id + "</div>"
+		TC.outputToDiv(Parent, newText)
+		if(this.hasOwnProperty("allMyChildren")){
+			for (var baby of this.allMyChildren){
+				baby.toHTML(this.id)
+			}
+		}
 	}
-    toString (tabNum) {
+	
+	toString (tabNum) {
         let tab = "    "
+		var theTab, child
+		theTab = tabNum
+
         let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
         for (child of this.allMyChildren) {
             resultStr += child.toString(theTab) + "\r\n"
@@ -318,11 +350,27 @@ class Setup extends Suite{
         resultStr += tab.repeat(theTab - 1) + "})\r\n"
         return resultStr
     }
+}
+
+class BeforeEach extends Setup{
+	constructor (newParent) {
+		super(newParent)
+		this.type = "BeforeEach"
+	}
+    
     addMiscCode (itStr, newParent) {
         let aMisc = new MiscCode(itStr, newParent)
         this.allMyChildren.push(aMisc)
     }
 }
+
+class AfterEach extends Setup{
+	constructor (newParent) {
+		super(newParent)
+		this.type = "AfterEach"
+	}
+}
+
 
 class Assert {
 	constructor (contents, newParent = "None"){
@@ -333,7 +381,7 @@ class Assert {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 23)
+		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
@@ -375,7 +423,7 @@ class MiscCode {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 23)
+		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}

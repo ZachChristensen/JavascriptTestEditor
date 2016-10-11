@@ -126,7 +126,7 @@ class modal_content{
 		var modalSaveButton = document.getElementById("modalSaveButton")
 		modalSaveButton.onclick = function(event) {
 			var filename = document.getElementById("filenameInput").value
-			if (filename == "") return
+			if (filename == "") return //Error popup ToDo - Zach
 			TC.saveToFile(filename)
 		}
 	}

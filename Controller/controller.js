@@ -133,17 +133,34 @@ class Controller{
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = TC.myModel.find(SELECTEDSUITE)
 				TC.myModel.setCurrentTestItem(currentItem)
-
 				TC.myModel.addMiscCode("")
-
 				TC.updateDisplay()
-
 				//focus on new misc
 				document.getElementById("modalDescription").focus()
-
 			}
 		}
-
+		
+		let beforeBtn = document.getElementsByClassName("btnAddBeforeEach")
+		for (var btn of beforeBtn){
+			btn.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentSuite(currentItem)
+				TC.myModel.addBeforeEach()
+				TC.updateDisplay()				
+			}
+		}
+		
+		let afterBtn = document.getElementsByClassName("btnAddAfterEach")
+		for (var btn of afterBtn){
+			btn.onclick = function(event) {
+				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
+				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				TC.myModel.setCurrentSuite(currentItem)
+				TC.myModel.addAfterEach()
+				TC.updateDisplay()				
+			}
+		}
 	}
 
 	outputToDiv(divID, textContent){
@@ -166,6 +183,8 @@ class Controller{
 		this.myModel.addSpec("first Child spec")
 		this.myModel.addAssert("Assert == Hello")
 		var suite = this.myModel.addSuite("firstChild Suite")
+		this.myModel.addBeforeEach()
+		this.myModel.addMiscCode("var apple = 600")
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addMiscCode("var bananana = 4")
 		this.myModel.addAssert("Assert 2")

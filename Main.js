@@ -13,8 +13,7 @@ var TC = new Controller()
 TC.loadTestData()
 TC.updateDisplay()
 
-//Add onclicks for all add specs
-
+//buttons at the top
 var clearBtns = document.getElementsByClassName("clearBtn")
 var saveBtns = document.getElementsByClassName("saveBtn")
 var loadBtns = document.getElementsByClassName("loadBtn")
@@ -55,7 +54,6 @@ modalCloseBtn.onclick = function() {
 }
 
 document.getElementById("fileSelector").addEventListener("change", function() {
-	//terrible fix this
     TC = new Controller()
 	TC.loadFromFile()
 });
