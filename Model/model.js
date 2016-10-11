@@ -13,16 +13,7 @@ class Model{
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 
-		this.currentSpec = undefined
 		this.currentTestItem = undefined
-		this.asserts = []
-
-
-
-		this.creatingSpec = false
-		this.creatingBefore = false
-		this.creatingAfter = false
-		this.miscCode = []
 	}
 
 	createNewRoot(descriptionStr){
@@ -41,7 +32,7 @@ class Model{
 	setCurrentTestItem (suite) {
 		this.currentTestItem = suite
 	}
-	
+
 	getCurrentTestItem () {
 		return this.currentTestItem
 	}
@@ -57,10 +48,10 @@ class Model{
 		return item
 	}
 
-	addSuite (descriptionStr) {
+	addSuite (descriptionStr, disabled) {
 		var aSuite, parent
 		parent = this.getCurrentSuite()
-		aSuite = new Suite(descriptionStr, parent)
+		aSuite = new Suite(descriptionStr, parent, disabled)
 		parent.allMyChildren.push(aSuite)
 		this.setCurrentSuite(aSuite)
 		return aSuite
@@ -79,19 +70,20 @@ class Model{
 
 	addMiscCode (miscCode) {
 		if(this.currentTestItem != undefined){
+			console.log(miscCode)
 			this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 		}
 	}
 
 	createBeforeEach(){
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.myBefore = new Setup()
+		parentSuite.addBefore()
 		this.currentTestItem = parentSuite.myBefore
 	}
 
 	createAfterEach(){
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.myAfter = new Setup()
+		parentSuite.addAfter()
 		this.currentTestItem = parentSuite.myAfter
 	}
 
@@ -100,10 +92,10 @@ class Model{
 		for (let item of splitFileArray){
 			if (pattern.test(item)){
 				let splitLine = item.split("})")
-				this.createNode(splitLine[0])
-				this.createNode(splitLine[1])
+				this.createTestItem(splitLine[0])
+				this.createTestItem(splitLine[1])
 			}else{
-				this.createNode(item)
+				this.createTestItem(item)
 			}
 		}
 		if(this.root == undefined){
@@ -121,13 +113,16 @@ class Model{
 		}
 	}
 
-	createNode(item){
+	createTestItem(item){
 		if(this.root == undefined){
 			this.createRootSuite(item, this)
 		}else if (/[\w]+/i.exec(item) != null){
 			let type = /[\w]+/i.exec(item)[0].toLowerCase()
 			if (type == "describe"){
-				let suite = this.addSuite(this.getNodeDescription(item))
+				let suite = this.addSuite(this.getNodeDescription(item), false)
+				this.setCurrentSuite(suite)
+			}else if (type == "xdescribe"){
+				let suite = this.addSuite(this.getNodeDescription(item), true)
 				this.setCurrentSuite(suite)
 			}else if (type == "it"){
 				this.addSpec(this.getNodeDescription(item))
@@ -135,32 +130,20 @@ class Model{
 				this.createBeforeEach()
 			}else if (type == "aftereach"){
 				this.createAfterEach()
-			}else if (type == "expect"){
-				let items = item.split("\n")
-				for (let i = 0; i < items.length; i++){
-					if(/[\w]+/i.exec(items[i]) == "expect"){
-						this.addAssert(/[\w]+/i.exec(items[i].trim()))
-					}
-				}
 			}else{
-				let items = item.split("\n")
-				for (let i = 0; i < items.length; i++){
-					if(items[i].trim() != ""){
-						this.addMiscCode(items[i].trim())
-					}
-				}
+				this.checkForMiscCode(item)
 			}
 		}
-		return false
 	}
 
-	checkCreatingStatuses(type){
-		if(this.creatingBefore){
-			this.createBeforeEach()
-			this.creatingBefore = false
-		}else if(this.creatingAfter){
-			this.createAfterEach()
-			this.creatingAfter = false
+	checkForMiscCode(line){
+		let items = line.split("\n")
+		for (let i = 0; i < items.length; i++){
+			if(/[\w]+/i.exec(items[i]) == "expect" || /[\w]+/i.exec(items[i]) == "should"){
+				this.addAssert(items[i].trim())
+			}else if (items[i].trim() != ""){
+				this.addMiscCode(items[i].trim())
+			}
 		}
 	}
 
