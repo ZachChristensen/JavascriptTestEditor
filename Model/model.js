@@ -18,7 +18,7 @@ class Model{
 
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
-		this.currentSuite = this.root
+		this.setCurrentSuite(this.root)
 	}
 
 	setCurrentSuite (suite) {
