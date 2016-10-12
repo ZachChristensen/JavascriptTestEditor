@@ -46,6 +46,16 @@ class Controller{
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var itemID = event.target.parentElement.parentElement.parentElement.id
 					var item = TC.myModel.find(itemID)
+					if (item.type === "AfterEach"){
+						item.parent.myAfter = undefined
+						TC.updateDisplay()
+						return
+					}
+					if (item.type === "BeforeEach"){
+						item.parent.myBefore = undefined
+						TC.updateDisplay()
+						return
+					}
 					//If deleting root suite
 					if (item.parent === "None"){
 						TC.myModel.root = undefined
@@ -185,6 +195,8 @@ class Controller{
 		var suite = this.myModel.addSuite("firstChild Suite")
 		this.myModel.addBeforeEach()
 		this.myModel.addMiscCode("var apple = 600")
+		this.myModel.addAfterEach()
+		this.myModel.addMiscCode("var apple = 0")
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addMiscCode("var bananana = 4")
 		this.myModel.addAssert("Assert 2")

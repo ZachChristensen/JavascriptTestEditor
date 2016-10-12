@@ -69,7 +69,6 @@ class Model{
 
 	addMiscCode (miscCode) {
 		if(this.currentTestItem != undefined){
-			console.log(miscCode)
 			this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 		}
 	}

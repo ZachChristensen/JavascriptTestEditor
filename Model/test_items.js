@@ -173,13 +173,26 @@ class TestItem {
 
 	cloneChild(index){
 		var orig = this.allMyChildren[index]
-		console.log(orig)
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
 				var theClone = new Spec(orig.description, this)
 			}
 			else{
 				var theClone = new Suite(orig.description, this)
+				
+				console.log(orig)
+				if (orig.myBefore != undefined){
+					var newSetup = new BeforeEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(orig.myBefore, newSetup)
+					theClone.myBefore = newSetup
+				}
+				if (orig.myAfter != undefined){
+					var newSetup = new AfterEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(orig.myAfter, newSetup)
+					theClone.myAfter = newSetup
+				}
+				if (orig.myAfter != undefined) var o = 1
+				
 			}
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
@@ -190,6 +203,7 @@ class TestItem {
 				else if (i.type === "Suite"){
 					var newSuite = new Suite(i.description, theClone)
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+					
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
@@ -208,12 +222,12 @@ class TestItem {
 		else if (i.type === "Misc"){
 			var theClone = new MiscCode(i.contents, theClone)
 		}
-		console.log("clone! " + theClone)
 		this.allMyChildren.splice(index+1, 0, theClone)
 		TC.updateDisplay()
 	}
 
 	duplicateMyChildren(oldParent = this, newParent){
+		console.log(oldParent)
 		var newArray = []
 		for (var i of oldParent.allMyChildren){
 			if (i.type === "Spec"){
@@ -231,8 +245,8 @@ class TestItem {
 				newArray.push(newSuite)
 			}
 			else if (i.type === "Misc"){
-				var newSuite = new MiscCode(i.contents, newParent)
-				newArray.push(newSuite)
+				var newMisc = new MiscCode(i.contents, newParent)
+				newArray.push(newMisc)
 			}
 		}
 		return newArray
@@ -247,7 +261,6 @@ class TestItem {
 
 class Suite extends TestItem{
 	constructor (newDesc, newParent = "None") {
-		console.log(newParent)
 		super(newDesc, "Suite", newParent)
 		this.allMyChildren = []
 		this.myBefore = undefined
@@ -302,16 +315,20 @@ class Suite extends TestItem{
 			}
 			if(child.hasOwnProperty('myAfter')){
 				if (child.myAfter !== undefined){
+					if (child.myAfter.id === theId){
+						return child.myAfter
+					}
 					let result = child.myAfter.findChild(theId)
 					if(result !== undefined){
-						console.log(result.description + " found")
 						return result
 					}
 				}
 				if (child.myBefore !== undefined){
+					if (child.myBefore.id === theId){
+						return child.myBefore
+					}
 					let result = child.myBefore.findChild(theId)
 					if(result !== undefined){
-						console.log(result.description + " found")
 						return result
 					}
 				}
@@ -334,7 +351,6 @@ class Setup extends Suite{
 		this.type = "Setup"
 	}	
 	toHTML(Parent){
-		console.log(this)
 		let backColour = 240-(this.findIndent() * 20)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
