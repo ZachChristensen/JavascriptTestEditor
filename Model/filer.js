@@ -71,9 +71,9 @@ class Filer{
           }else if (type == "it"){
               this.myModel.addSpec(this.getNodeDescription(item))
           }else if (type == "beforeeach"){
-              this.myModel.createBeforeEach()
+              this.myModel.addBeforeEach()
           }else if (type == "aftereach"){
-              this.myModel.createAfterEach()
+              this.myModel.addAfterEach()
           }else{
               this.checkForMiscCode(item)
           }
