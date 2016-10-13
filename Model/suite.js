@@ -31,13 +31,13 @@ class Suite extends TestItem{
 		theTab = tabNum
 		resultStr = tab.repeat(theTab) + "describe(\"" + this.description + "\", function() {\r\n"
 		theTab = theTab + 1
-        //if (this.myBefore != undefined) {
-        //  resultStr += this.myBefore.toString() + "\r\n"
-        //}
+    if (this.myBefore != undefined) {
+      resultStr += this.myBefore.toString(theTab) + "\r\n"
+    }
 
-        //if (this.myAfter != undefined) {
-        //  resultStr += this.myAfter.toString() + "\r\n"
-        //}
+    if (this.myAfter != undefined) {
+      resultStr += this.myAfter.toString(theTab) + "\r\n"
+    }
 
 		for (child of this.allMyChildren) {
 			resultStr +=  child.toString(theTab)
@@ -74,7 +74,7 @@ class Suite extends TestItem{
 			}
 			if(child.hasOwnProperty('allMyChildren')){
 				let result = child.findChild(theId)
-				
+
 				if(result !== undefined){
 					console.log(result.description + " found")
 					return result

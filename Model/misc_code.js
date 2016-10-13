@@ -24,7 +24,14 @@ class MiscCode {
 
     toString (tabNum) {
         let tab = "    "
-        let resultStr = tab.repeat(tabNum) + this.contents
+				let lines = this.contents.split("\r\n")
+        let resultStr = ""
+				for (let i = 0; i < lines.length; i++){
+					resultStr += tab.repeat(tabNum) + lines[i]
+					if (i < lines.length - 2){
+						 resultStr += "\r\n"
+					}
+				}
         return resultStr
     }
 
