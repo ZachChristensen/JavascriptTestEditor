@@ -14,7 +14,7 @@ class Setup extends Suite{
 		newText += '<a class="btnDelete" href="#">Delete</a>'		
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "| "+ this.id + "</div>"
-		TC.outputToDiv(Parent, newText)
+		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){
 				baby.toHTML(this.id)

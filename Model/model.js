@@ -14,6 +14,9 @@ class Model{
 		//Attempt loading, if nothing then create new?
 
 		this.currentTestItem = undefined
+		
+		//Library of key words used during output(screen & file)
+		this.currentLanguage = new jasmineLanguage()
 	}
 
 	createNewRoot(descriptionStr){

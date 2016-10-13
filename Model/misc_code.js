@@ -19,7 +19,7 @@ class MiscCode {
 
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<textArea id='" + this.id + "t' type='text'>" + this.contents + "</textArea> | "+ this.id + "</div>"
-		TC.outputToDiv(Parent, newText)
+		theController.outputToDiv(Parent, newText)
 	}
 
     toString (tabNum) {

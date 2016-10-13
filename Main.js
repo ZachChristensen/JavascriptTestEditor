@@ -5,13 +5,13 @@ jshint esversion:6
 jshint asi:true
 */
 
-//Fix dependancies in the code on TC?
+//Fix dependancies in the code on theController?
 var SELECTEDSUITE = ""
 var NEWTYPE = ""
 var currentItem
-var TC = new Controller()
-TC.loadTestData()
-TC.updateDisplay()
+var theController = new Controller()
+theController.loadTestData()
+theController.updateDisplay()
 
 //buttons at the top
 var clearBtns = document.getElementsByClassName("clearBtn")
@@ -20,8 +20,8 @@ var loadBtns = document.getElementsByClassName("loadBtn")
 
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
-		TC.myModel.root = undefined
-		TC.updateDisplay()
+		theController.myModel.root = undefined
+		theController.updateDisplay()
 		idGenerator = new idCounter();
 	}
 }
@@ -54,8 +54,8 @@ modalCloseBtn.onclick = function() {
 }
 
 document.getElementById("fileSelector").addEventListener("change", function() {
-    TC = new Controller()
-	TC.loadFromFile()
+    theController = new Controller()
+	theController.loadFromFile()
 });
 
 // When the user clicks anywhere outside of the modal, close it

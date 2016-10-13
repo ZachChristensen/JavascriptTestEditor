@@ -19,6 +19,13 @@ class TestItem {
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
+		//Name used to display
+		if (this.type === "Suite") var name = theController.myModel.currentLanguage.suite
+		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
+		else if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
+		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
+
+		
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
 		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
@@ -42,17 +49,17 @@ class TestItem {
 
 		if (this.parent !== "None"){
 			//out
-			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
+			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//in
-			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
+			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 			//up
-			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
 			//down
-			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='TC.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
 		newText += '</div></div>'
-		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
-		TC.outputToDiv(Parent, newText)
+		newText += " " + name + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+		theController.outputToDiv(Parent, newText)
 		if (this.type === "Suite"){
 			if (this.myBefore != undefined) this.myBefore.toHTML(this.id)
 			if (this.myAfter != undefined) this.myAfter.toHTML(this.id)
@@ -74,7 +81,7 @@ class TestItem {
 			this.parent.allMyChildren.splice(index, 1)
 			newParent.allMyChildren.push(me)
 			this.parent = newParent
-			TC.updateDisplay()
+			theController.updateDisplay()
 		}
 		else{
 			console.log("No suite positioned above to attach to")
@@ -89,7 +96,7 @@ class TestItem {
 			this.parent.allMyChildren.splice(index, 1)
 			this.parent = this.parent.parent
 			this.parent.allMyChildren.push(me)
-			TC.updateDisplay()
+			theController.updateDisplay()
 		}
 		else{
 			console.log("Unable to move "+ this.type +" out")
@@ -103,7 +110,7 @@ class TestItem {
 			this.parent.allMyChildren[index-1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
-		TC.updateDisplay()
+		theController.updateDisplay()
 	}
 
 	moveDown(){
@@ -113,7 +120,7 @@ class TestItem {
 			this.parent.allMyChildren[index+1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
-		TC.updateDisplay()
+		theController.updateDisplay()
 	}
 
 	findIndent(){
@@ -158,7 +165,7 @@ class TestItem {
 				}
 			}
 			this.allMyChildren.push(theClone)
-			TC.updateDisplay()
+			theController.updateDisplay()
 		}
 	}
 
@@ -214,7 +221,7 @@ class TestItem {
 			var theClone = new MiscCode(i.contents, theClone)
 		}
 		this.allMyChildren.splice(index+1, 0, theClone)
-		TC.updateDisplay()
+		theController.updateDisplay()
 	}
 
 	duplicateMyChildren(oldParent = this, newParent){

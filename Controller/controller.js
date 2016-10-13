@@ -16,8 +16,8 @@ class Controller{
 			spec.onclick = function(event) {
 				console.log("spec func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentSuite(currentItem)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSpec()
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
@@ -30,8 +30,8 @@ class Controller{
 			suite.onclick = function(event) {
 				console.log("suite func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentSuite(currentItem)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSuite()
 				modal.style.display = "block"
 				NEWTYPE = "SUITE"
@@ -45,30 +45,30 @@ class Controller{
 				console.log("delete func")
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var itemID = event.target.parentElement.parentElement.parentElement.id
-					var item = TC.myModel.find(itemID)
+					var item = theController.myModel.find(itemID)
 					if (item.type === "AfterEach"){
 						item.parent.myAfter = undefined
-						TC.updateDisplay()
+						theController.updateDisplay()
 						return
 					}
 					if (item.type === "BeforeEach"){
 						item.parent.myBefore = undefined
-						TC.updateDisplay()
+						theController.updateDisplay()
 						return
 					}
 					//If deleting root suite
 					if (item.parent === "None"){
-						TC.myModel.root = undefined
-						TC.myModel.currentSuite = undefined
+						theController.myModel.root = undefined
+						theController.myModel.currentSuite = undefined
 						idGenerator = new idCounter();
 					}
 					else{
-						TC.myModel.currentSuite = item.parent
+						theController.myModel.currentSuite = item.parent
 						let theParent = item.parent
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
-					TC.updateDisplay()
+					theController.updateDisplay()
 				}
 			}
 		}
@@ -77,7 +77,7 @@ class Controller{
 		for (var btn of clonebtns){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.parent.cloneChild(index)
 
@@ -89,8 +89,8 @@ class Controller{
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				console.log(event.target.parentElement.parentElement.parentElement.id)
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCopiedItem(currentItem)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCopiedItem(currentItem)
 			}
 		}
 
@@ -98,12 +98,12 @@ class Controller{
 		for (var btn of cutbtns){
 			btn.onclick = function(event) {
 				let SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				let currentItem = TC.myModel.find(SELECTEDSUITE)
+				let currentItem = theController.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				var parent = currentItem.parent
-				TC.myModel.setCopiedItem(currentItem)
+				theController.myModel.setCopiedItem(currentItem)
 				parent.removeChild(index)
-				TC.updateDisplay()
+				theController.updateDisplay()
 			}
 		}
 
@@ -111,13 +111,13 @@ class Controller{
 		for (var btn of pastebtns){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				if ( currentItem.type == "Assert" && currentItem.parent.type == "Spec"){
-					currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
+					currentItem.addPastedItem( theController.myModel.unsetCopiedItem() )
 					return
 				}
 				if ( (currentItem.type == "Spec" || currentItem.type == "Spec") && currentItem.parent.type == "Suite"){
-					currentItem.addPastedItem( TC.myModel.unsetCopiedItem() )
+					currentItem.addPastedItem( theController.myModel.unsetCopiedItem() )
 					return
 				}
 			}
@@ -128,8 +128,8 @@ class Controller{
 			spec.onclick = function(event) {
 				console.log("assert func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentTestItem(currentItem)
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentTestItem(currentItem)
 				modal_content.setAddAssert()
 				modal.style.display = "block"
 				NEWTYPE = "Assert"
@@ -141,10 +141,10 @@ class Controller{
 		for (var misc of miscbtns){
 			misc.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentTestItem(currentItem)
-				TC.myModel.addMiscCode("")
-				TC.updateDisplay()
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentTestItem(currentItem)
+				theController.myModel.addMiscCode("")
+				theController.updateDisplay()
 				//focus on new misc
 				document.getElementById("modalDescription").focus()
 			}
@@ -154,10 +154,10 @@ class Controller{
 		for (var btn of beforeBtn){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentSuite(currentItem)
-				TC.myModel.addBeforeEach()
-				TC.updateDisplay()				
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentSuite(currentItem)
+				theController.myModel.addBeforeEach()
+				theController.updateDisplay()				
 			}
 		}
 		
@@ -165,10 +165,10 @@ class Controller{
 		for (var btn of afterBtn){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = TC.myModel.find(SELECTEDSUITE)
-				TC.myModel.setCurrentSuite(currentItem)
-				TC.myModel.addAfterEach()
-				TC.updateDisplay()				
+				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				theController.myModel.setCurrentSuite(currentItem)
+				theController.myModel.addAfterEach()
+				theController.updateDisplay()				
 			}
 		}
 	}
@@ -219,7 +219,7 @@ class Controller{
 window.addEventListener('input', function (e) {
 	if (e.target.id.substr(0, 4) === "Item"){
 		let id = e.target.id.slice(0, -1)
-		console.log(TC.myModel.find(id))
-		TC.myModel.updateItem(id, e.target.value)
+		console.log(theController.myModel.find(id))
+		theController.myModel.updateItem(id, e.target.value)
 	}
  }, false);

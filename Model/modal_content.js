@@ -11,8 +11,8 @@ class modal_content{
 		var modalAddBtn = document.getElementById("modalAddBtn")
 		var modalDescr = document.getElementById("modalDescription")
 		modalAddBtn.onclick = function(event) {
-			TC.myModel.addSpec(modalDescr.value)
-			TC.updateDisplay()
+			theController.myModel.addSpec(modalDescr.value)
+			theController.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
 		}
@@ -37,8 +37,8 @@ class modal_content{
 		var modalAddBtn = document.getElementById("modalAddBtn")
 		modalAddBtn.onclick = function(event) {
 			var modalDescr = document.getElementById("modalDescription")
-			TC.myModel.addSuite(modalDescr.value)
-			TC.updateDisplay()
+			theController.myModel.addSuite(modalDescr.value)
+			theController.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
 		}
@@ -62,8 +62,8 @@ class modal_content{
 		var modalAddBtn = document.getElementById("modalAddBtn")
 		modalAddBtn.onclick = function(event) {
 			var modalDescr = document.getElementById("modalDescription")
-			TC.myModel.addAssert(modalDescr.value)
-			TC.updateDisplay()
+			theController.myModel.addAssert(modalDescr.value)
+			theController.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
 		}
@@ -89,8 +89,8 @@ class modal_content{
 			document.getElementById('newRootBtn').style.display = "none"
 			let modalDescr = document.getElementById("modalDescription")
 			console.log(modalDescr.value)
-			TC.myModel.createNewRoot(modalDescr.value)
-			TC.updateDisplay()
+			theController.myModel.createNewRoot(modalDescr.value)
+			theController.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""
 			
@@ -127,7 +127,7 @@ class modal_content{
 		modalSaveButton.onclick = function(event) {
 			var filename = document.getElementById("filenameInput").value
 			if (filename == "") return //Error popup ToDo - Zach
-			TC.saveToFile(filename)
+			theController.saveToFile(filename)
 		}
 	}
 }

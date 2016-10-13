@@ -21,7 +21,7 @@ class Assert {
 
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
-		TC.outputToDiv(Parent, newText)
+		theController.outputToDiv(Parent, newText)
 	}
     toString (tabNum) {
         let tab = "    "
