@@ -12,13 +12,19 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
-		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
+		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete" href="#">Delete</a>'
+		if (this.parent !== "None"){
+			//up
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+			//down
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
+		}
 
 		newText += '</div></div>'
-		newText += " " +this.type + "&nbsp;&nbsp;" + "<textArea id='" + this.id + "t' type='text'>" + this.contents + "</textArea> | "+ this.id + "</div>"
+		newText += "&nbsp;&nbsp;" + "<textArea  rows='3' id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 110px); resize: vertical;'>" + this.contents + "</textArea> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
 	}
 
@@ -27,7 +33,28 @@ class MiscCode {
         let resultStr = tab.repeat(tabNum) + this.contents
         return resultStr
     }
+	
+	moveUp(){
+		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		if (index !== 0){
+			var temp = this.parent.allMyChildren[index-1]
+			this.parent.allMyChildren[index-1] = this.parent.allMyChildren[index]
+			this.parent.allMyChildren[index] = temp
+		}
+		theController.updateDisplay()
+	}
 
+	moveDown(){
+		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		if (index != this.parent.allMyChildren.length-1){
+			var temp = this.parent.allMyChildren[index+1]
+			this.parent.allMyChildren[index+1] = this.parent.allMyChildren[index]
+			this.parent.allMyChildren[index] = temp
+		}
+		theController.updateDisplay()
+	}
+
+	
 	findIndent(){
 		var current = this,
 		depth = 0

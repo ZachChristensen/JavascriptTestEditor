@@ -18,9 +18,15 @@ class Assert {
 		newText += '<a class="btnDelete" href="#">Delete</a>'
 
 		newText += '<a class="btnClone" href="#">Clone</a>'
+		if (this.parent !== "None"){
+			//up
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+			//down
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
+		}
 
 		newText += '</div></div>'
-		newText += " " +this.type + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		newText += " " +this.type + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
 	}
     toString (tabNum) {
@@ -28,6 +34,26 @@ class Assert {
         let resultStr = tab.repeat(tabNum) + this.contents
         return resultStr
     }
+	
+	moveUp(){
+		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		if (index !== 0){
+			var temp = this.parent.allMyChildren[index-1]
+			this.parent.allMyChildren[index-1] = this.parent.allMyChildren[index]
+			this.parent.allMyChildren[index] = temp
+		}
+		theController.updateDisplay()
+	}
+
+	moveDown(){
+		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+		if (index != this.parent.allMyChildren.length-1){
+			var temp = this.parent.allMyChildren[index+1]
+			this.parent.allMyChildren[index+1] = this.parent.allMyChildren[index]
+			this.parent.allMyChildren[index] = temp
+		}
+		theController.updateDisplay()
+	}
 
 	findIndent(){
 		var current = this,

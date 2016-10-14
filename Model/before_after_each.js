@@ -11,7 +11,8 @@ class Setup extends Suite{
 		if (backColour < 40) backColour = 40
 		var newText = "<div class='Setup' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
-		newText += '<a class="btnDelete" href="#">Delete</a>'		
+		newText += '<a class="btnDelete" href="#">Delete</a>'
+		newText += '<a class="btnAddMisc" href="#">Add Misc</a>'
 		newText += '</div></div>'
 		newText += " " +this.type + "&nbsp;&nbsp;" + "| "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)

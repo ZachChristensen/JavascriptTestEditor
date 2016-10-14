@@ -39,7 +39,8 @@ class TestItem {
 			newText += '<a class="btnAddBeforeEach" href="#">Add BeforeEach</a>'
 			newText += '<a class="btnAddAfterEach" href="#">Add AfterEach</a>'
 		}
-		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a> <a class="btnAddMisc" href="#">Add Misc</a>' 
+		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a>' 
+		newText += '<a class="btnAddMisc" href="#">Add Misc</a>' 
 
 		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
 		newText += '<a class="btnCopy" href="#">Copy</a>'
@@ -58,7 +59,13 @@ class TestItem {
 			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
 		newText += '</div></div>'
-		newText += " " + name + "&nbsp;&nbsp;" + "<input id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+		//for the different text box sizes move to css later
+		if (this.type === "Suite"){
+			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+		}
+		else{
+			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+		}
 		theController.outputToDiv(Parent, newText)
 		if (this.type === "Suite"){
 			if (this.myBefore != undefined) this.myBefore.toHTML(this.id)
