@@ -46,16 +46,6 @@ class Controller{
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var itemID = event.target.parentElement.parentElement.parentElement.id
 					var item = theController.myModel.find(itemID)
-					if (item.type === "AfterEach"){
-						item.parent.myAfter = undefined
-						theController.updateDisplay()
-						return
-					}
-					if (item.type === "BeforeEach"){
-						item.parent.myBefore = undefined
-						theController.updateDisplay()
-						return
-					}
 					//If deleting root suite
 					if (item.parent === "None"){
 						theController.myModel.root = undefined
@@ -157,6 +147,7 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
 				theController.myModel.addBeforeEach()
+				theController.myModel.addMiscCode("")
 				theController.updateDisplay()				
 			}
 		}
@@ -168,6 +159,7 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
 				theController.myModel.addAfterEach()
+				theController.myModel.addMiscCode("")
 				theController.updateDisplay()				
 			}
 		}

@@ -6,13 +6,13 @@ class Suite extends TestItem{
 
   addBefore () {
 		let aBefore = new BeforeEach(this)
-		this.allMyChildren.push(aBefore)
+		this.allMyChildren.unshift(aBefore)
 		return aBefore
 	}
 
   addAfter () {
 		let aAfter = new AfterEach(this)
-		this.allMyChildren.push(aAfter)
+		this.allMyChildren.unshift(aAfter)
 		return aAfter
   }
 
