@@ -2,22 +2,24 @@ class Suite extends TestItem{
 	constructor (newDesc, newParent = "None") {
 		super(newDesc, "Suite", newParent)
 		this.allMyChildren = []
-		this.myBefore = undefined
-		this.myAfter = undefined
 	}
 
-    addBefore () {
-		this.myBefore = new BeforeEach(this)
+  addBefore () {
+		let aBefore = new BeforeEach(this)
+		this.allMyChildren.push(aBefore)
+		return aBefore
 	}
 
-    addAfter () {
-        this.myAfter = new AfterEach(this)
-    }
+  addAfter () {
+		let aAfter = new AfterEach(this)
+		this.allMyChildren.push(aAfter)
+		return aAfter
+  }
 
 	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
 		this.allMyChildren.push(aSpec)
-        return aSpec
+    return aSpec
 	}
 
 	addSuite (itStr, newParent) {
@@ -25,22 +27,15 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSuite)
 	}
 
-    toString (tabNum) {
+  toString (tabNum) {
 		var resultStr, theTab, child
 		var tab = "    "
 		theTab = tabNum
 		resultStr = tab.repeat(theTab) + "describe(\"" + this.description + "\", function() {\r\n"
 		theTab = theTab + 1
-    if (this.myBefore != undefined) {
-      resultStr += this.myBefore.toString(theTab) + "\r\n"
-    }
-
-    if (this.myAfter != undefined) {
-      resultStr += this.myAfter.toString(theTab) + "\r\n"
-    }
 
 		for (child of this.allMyChildren) {
-			resultStr +=  child.toString(theTab)
+			resultStr +=  child.toString(theTab) + "\r\n"
 		}
 		resultStr += tab.repeat(theTab - 1) + "})\r\n"
 		return resultStr

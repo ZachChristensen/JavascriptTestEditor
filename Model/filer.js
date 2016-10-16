@@ -2,6 +2,7 @@ class Filer{
   constructor () {
       this.currentTestItem = undefined
       this.myModel = undefined
+      this.miscCode = ""
 	}
 
 
@@ -42,6 +43,7 @@ class Filer{
               this.createTestItem(item)
           }
       }
+      this.setPreviousTestItemMiscCode()
       if(this.myModel.root == undefined){
           return "Could not find a root suite"
       }else{
@@ -58,44 +60,55 @@ class Filer{
   }
 
   createTestItem(item){
-      if(this.myModel.root == undefined){
-          this.createRootSuite(item, this)
-      }else if (/[\w]+/i.exec(item) != null){
-          let type = /[\w]+/i.exec(item)[0].toLowerCase()
-          if (type == "describe"){
-              let suite = this.myModel.addSuite(this.getNodeDescription(item), false)
-              this.myModel.setCurrentSuite(suite)
-          }else if (type == "xdescribe"){
-              let suite = this.myModel.addSuite(this.getNodeDescription(item), true)
-              this.myModel.setCurrentSuite(suite)
-          }else if (type == "it"){
-              this.myModel.addSpec(this.getNodeDescription(item))
-          }else if (type == "beforeeach"){
-              this.myModel.addBeforeEach()
-          }else if (type == "aftereach"){
-              this.myModel.addAfterEach()
-          }else{
-              this.checkForMiscCode(item)
+      let items = item.split("\n")
+      for (let i = 0; i < items.length; i++){
+          if(this.myModel.root == undefined){
+              this.createRootSuite(items[i], this)
+          }else if (/[\w]+/i.exec(items[i]) != null){
+              let type = /[\w]+/i.exec(items[i])[0].toLowerCase()
+              if (type == "describe"){
+                  this.setPreviousTestItemMiscCode()
+                  let suite = this.myModel.addSuite(this.getNodeDescription(items[i]), false)
+                  this.myModel.setCurrentSuite(suite)
+              }else if (type == "xdescribe"){
+                  this.setPreviousTestItemMiscCode()
+                  let suite = this.myModel.addSuite(this.getNodeDescription(items[i]), true)
+                  this.myModel.setCurrentSuite(suite)
+              }else if (type == "it"){
+                  this.setPreviousTestItemMiscCode()
+                  this.myModel.addSpec(this.getNodeDescription(items[i]))
+              }else if (type == "beforeeach"){
+                  this.setPreviousTestItemMiscCode()
+                  this.myModel.addBeforeEach()
+              }else if (type == "aftereach"){
+                  this.setPreviousTestItemMiscCode()
+                  this.myModel.addAfterEach()
+              }else{
+                  this.checkForMiscCode(items[i])
+              }
           }
       }
+  }
+  setPreviousTestItemMiscCode(){
+    if (this.miscCode != ""){
+        this.myModel.addMiscCode(this.miscCode)
+        this.miscCode = ""
+    }
   }
 
   checkForMiscCode(line){
       let items = line.split("\n")
-      let miscCode = ""
+      let functionIdentifier = /(function\(\))/
       for (let i = 0; i < items.length; i++){
           if(/[\w]+/i.exec(items[i]) == "expect" || /[\w]+/i.exec(items[i]) == "should"){
-              if (miscCode != ""){
-                  this.myModel.addMiscCode(miscCode)
-                  miscCode = ""
+              if (this.miscCode != ""){
+                  this.myModel.addMiscCode(this.miscCode)
+                  this.miscCode = ""
               }
               this.myModel.addAssert(items[i].trim())
           }else if (items[i].trim() != ""){
-              miscCode += items[i].trim() + "\r\n"
+              this.miscCode += items[i].trim() + "\r\n"
           }
-      }
-      if (miscCode != ""){
-          this.myModel.addMiscCode(miscCode)
       }
   }
 

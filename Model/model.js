@@ -14,7 +14,7 @@ class Model{
 		//Attempt loading, if nothing then create new?
 
 		this.currentTestItem = undefined
-		
+
 		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
 	}
@@ -56,6 +56,7 @@ class Model{
 		aSuite = new Suite(descriptionStr, parent, disabled)
 		parent.allMyChildren.push(aSuite)
 		this.setCurrentSuite(aSuite)
+		this.currentTestItem = aSuite
 		return aSuite
 	}
 
@@ -79,16 +80,13 @@ class Model{
 	addBeforeEach(){
 		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-
-		parentSuite.addBefore()
-		this.currentTestItem = parentSuite.myBefore
+		this.currentTestItem = parentSuite.addBefore()
 	}
 
 	addAfterEach(){
 		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-		parentSuite.addAfter()
-		this.currentTestItem = parentSuite.myAfter
+		this.currentTestItem = parentSuite.addAfter()
 	}
 
 	find (idStr) {

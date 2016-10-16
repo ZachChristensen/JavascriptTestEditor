@@ -26,12 +26,11 @@ class Setup extends Suite{
     let tab = "    "
 		var theTab, child
 		theTab = tabNum
-
-        let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
-        for (child of this.allMyChildren) {
-            resultStr += child.toString(theTab + 1) + "\r\n"
-        }
-        resultStr += tab.repeat(theTab) + "})"
+    let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
+    for (child of this.allMyChildren) {
+        resultStr += child.toString(theTab + 1) + "\r\n"
+    }
+        resultStr += tab.repeat(theTab) + "})\r\n"
         return resultStr
     }
 }
