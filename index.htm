@@ -47,7 +47,7 @@
 		<button id='newRootBtn' onclick='modal.style.display = "Block"; modal_content.setDefault()'>+ Add New Suite</button>
 		<!-- Hidden file selection for dialog -->
 		<input type="file" id="fileSelector" style="display:none">
-		<div class='error' style='display:none'>Copied</div>
+		<div class='error' style="opacity=0">Copied</div>
 	</div>
 	</div>
 	<!-- The Modal -->
@@ -60,7 +60,6 @@
 		<button id="modalAddBtn">Add</button></div>
 	  </div>
 	</div>
-
 </body>
 
 <script src="Model\filer.js"></script>
@@ -75,6 +74,7 @@
 <script src="Model\model.js"></script>
 <script src="Model\modal_content.js"></script>
 <script src="View\view.js"></script>
+<script src="View\toast_msg.js"></script>
 <script src="Controller\controller.js"></script>
 <script src="Main.js"></script>
 <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/e9d941381475b5df8b7d7691013401e171014e89/FileSaver.min.js"></script>

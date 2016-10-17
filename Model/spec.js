@@ -40,7 +40,6 @@ class Spec extends TestItem {
 				if(child.hasOwnProperty('allMyChildren')){
 					let result = child.findChild(theId)
 					if(result !== undefined){
-						console.log(result.description + " found")
 						return result
 					}
 				}

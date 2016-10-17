@@ -32,21 +32,21 @@ class TestItem {
 		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
-		newText += '<a class="btnDelete" href="#">Delete</a>'
+		newText += '<a class="btnDelete">Delete</a>'
 
 		if (this.type === "Suite"){
-			newText += '<a class="btnAddSpec" href="#">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
-			newText += '<a class="btnAddBeforeEach" href="#">Add BeforeEach</a>'
-			newText += '<a class="btnAddAfterEach" href="#">Add AfterEach</a>'
+			newText += '<a class="btnAddSpec">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
+			newText += '<a class="btnAddBeforeEach">Add BeforeEach</a>'
+			newText += '<a class="btnAddAfterEach">Add AfterEach</a>'
 		}
-		if (this.type === "Spec") newText += '<a class="btnAddAssert" href="#">Add Assert</a>' 
-		newText += '<a class="btnAddMisc" href="#">Add Misc</a>' 
+		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>' 
+		newText += '<a class="btnAddMisc">Add Misc</a>' 
 
-		if (this.parent !== "None") newText += '<a class="btnClone" href="#">Clone</a>'
-		newText += '<a class="btnCopy" href="#">Copy</a>'
-		if (this.parent !== "None") newText += '<a class="btnCut" href="#">Cut</a>'
+		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
+		newText += '<a class="btnCopy">Copy</a>'
+		if (this.parent !== "None") newText += '<a class="btnCut">Cut</a>'
 
-		if (this.type === "Suite") newText += '<a class="btnPaste" href="#">Paste</a>'
+		if (this.type === "Suite") newText += '<a class="btnPaste">Paste</a>'
 
 		if (this.parent !== "None"){
 			//out
@@ -146,59 +146,21 @@ class TestItem {
     }
 
 	addPastedItem(theItem){
-		//check if it can have children
-		if (this.type == "Spec" || this.type == "Suite"){
-			var orig = theItem
-			if (this.type === "Spec" && orig.type === "Assert"){
-				var theClone = new Assert(orig.contents, this)
-			}
-			else if(orig.type === "Spec"){
-				var theClone = new Spec(orig.description, this)
-			}
-			else if (orig.type === "Suite"){
-				var theClone = new Suite(orig.description, this)
-				for (var i of orig.allMyChildren){
-					if (i.type === "Spec"){
-						console.log(theClone)
-						let newSpec = new Spec(i.description, theClone)
-						console.log(newSpec)
-						theClone.addSpec(i.description, theClone)
-					}
-					else if (i.type === "Suite"){
-						var newSuite = new Suite(i.description, theClone)
-						newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-						theClone.allMyChildren.push(newSuite)
-					}
-				}
-			}
-			this.allMyChildren.push(theClone)
-			theController.updateDisplay()
-		}
-	}
-
-	cloneChild(index){
-		var orig = this.allMyChildren[index]
+		var orig = theItem;
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
 				var theClone = new Spec(orig.description, this)
 			}
-			else{
+			else if (orig.type === "Suite"){
 				var theClone = new Suite(orig.description, this)
-				
-				console.log(orig)
-				if (orig.myBefore != undefined){
-					var newSetup = new BeforeEach(theClone)
-					newSetup.allMyChildren = newSetup.duplicateMyChildren(orig.myBefore, newSetup)
-					theClone.myBefore = newSetup
-				}
-				if (orig.myAfter != undefined){
-					var newSetup = new AfterEach(theClone)
-					newSetup.allMyChildren = newSetup.duplicateMyChildren(orig.myAfter, newSetup)
-					theClone.myAfter = newSetup
-				}
-				if (orig.myAfter != undefined) var o = 1
-				
 			}
+			else if (orig.type === "BeforeEach"){
+				var theClone = new BeforeEach(this)
+			}
+			else if (orig.type === "AfterEach"){
+				var theClone = new AfterEach(this)
+			}
+			
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
 					var newSpec = new Spec(i.description, theClone)
@@ -219,6 +181,75 @@ class TestItem {
 					var newAssert = new MiscCode(i.contents, theClone)
 					theClone.allMyChildren.push(newAssert)
 				}
+				else if (i.type === "BeforeEach"){
+					var newSetup = new BeforeEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+					theClone.allMyChildren.unshift(newSetup)
+				}
+				else if (i.type === "AfterEach"){
+					var newSetup = new AfterEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+					theClone.allMyChildren.unshift(newSetup)
+				}
+			}
+		}
+		else if (orig.type === "Assert"){
+			var theClone = new Assert(orig.contents, this)
+		}
+		else if (i.type === "Misc"){
+			var theClone = new MiscCode(i.contents, theClone)
+		}
+		this.allMyChildren.push(theClone)
+		theController.updateDisplay()
+
+	}
+
+	cloneChild(index){
+		var orig = this.allMyChildren[index]
+		if (orig.hasOwnProperty('allMyChildren')){
+			if (orig.type === "Spec"){
+				var theClone = new Spec(orig.description, this)
+			}
+			else if (orig.type === "Suite"){
+				var theClone = new Suite(orig.description, this)
+			}
+			else if (orig.type === "BeforeEach"){
+				var theClone = new BeforeEach(this)
+			}
+			else if (orig.type === "AfterEach"){
+				var theClone = new AfterEach(this)
+			}
+			
+			for (var i of orig.allMyChildren){
+				if (i.type === "Spec"){
+					var newSpec = new Spec(i.description, theClone)
+					newSpec.allMyChildren = i.duplicateMyChildren(i, newSpec)
+					theClone.allMyChildren.push(newSpec)
+				}
+				else if (i.type === "Suite"){
+					var newSuite = new Suite(i.description, theClone)
+					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
+					
+					theClone.allMyChildren.push(newSuite)
+				}
+				else if (i.type === "Assert"){
+					var newAssert = new Assert(i.contents, theClone)
+					theClone.allMyChildren.push(newAssert)
+				}
+				else if (i.type === "Misc"){
+					var newAssert = new MiscCode(i.contents, theClone)
+					theClone.allMyChildren.push(newAssert)
+				}
+				else if (i.type === "BeforeEach"){
+					var newSetup = new BeforeEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+					theClone.allMyChildren.unshift(newSetup)
+				}
+				else if (i.type === "AfterEach"){
+					var newSetup = new AfterEach(theClone)
+					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+					theClone.allMyChildren.unshift(newSetup)
+				}
 			}
 		}
 		else if (orig.type === "Assert"){
@@ -229,6 +260,7 @@ class TestItem {
 		}
 		this.allMyChildren.splice(index+1, 0, theClone)
 		theController.updateDisplay()
+		
 	}
 
 	duplicateMyChildren(oldParent = this, newParent){
@@ -253,6 +285,16 @@ class TestItem {
 				var newMisc = new MiscCode(i.contents, newParent)
 				newArray.push(newMisc)
 			}
+			else if (i.type === "BeforeEach"){
+				var newSetup = new BeforeEach(theClone)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+				theClone.allMyChildren.unshift(newSetup)
+			}
+			else if (i.type === "AfterEach"){
+				var newSetup = new AfterEach(theClone)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+				theClone.allMyChildren.unshift(newSetup)
+			}			
 		}
 		return newArray
 	}

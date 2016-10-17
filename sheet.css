@@ -17,7 +17,7 @@ html, body{
 
 .wrapper {
 	min-height: 100%;
-	margin: 0 auto -6em; /* the bottom margin is the negative value of the footer's height */
+	margin: 0 auto 2em; 
 }
 
 .inner {
@@ -116,37 +116,13 @@ header h1{
 	margin: 0 auto;
 }
 
-.Root{
-	margin:1em;
-	padding:1em;
-	border: 1px solid #444;
-}
-
-.Suite{
-	margin:1em;
-	padding:1em;
-	border: 1px solid #444;
-}
-
-.Spec{
-	margin:1em;
-	padding:1em;
-	border: 1px solid #444;
-}
-
-.Assert{
-	margin:1em;
-	padding:1em;
-	border: 1px solid #444;
-}
-
-.Misc{
-	margin:1em;
-	padding:1em;
-	border: 1px solid #444;
-}
-
-.Setup{
+.Root,
+.Suite,
+.Spec,
+.Assert,
+.Misc,
+.Setup
+{
 	margin:1em;
 	padding:1em;
 	border: 1px solid #444;
@@ -178,6 +154,8 @@ header h1{
 
 .dropdown-content a{
     color: black;
+	cursor: pointer;
+	cursor: hand; 
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -251,11 +229,9 @@ header h1{
 
 .error {
     width:200px;
-    height:20px;
     height:auto;
-    position:absolute;
-    left:50%;
-    margin-left:-100px;
+    position: fixed;
+    right:10px;
     bottom:10px;
     background-color: #383838;
     color: #F0F0F0;
@@ -263,12 +239,11 @@ header h1{
     font-size: 20px;
     padding:10px;
     text-align:center;
-	opacity:1;
-	transition: opacity 1s; 
-}
-.error.fade {
 	opacity:0;
+	transition: opacity 0.4s linear;
+	visibility:none;
 }
+
 @media screen and (max-width: 61em) {
 	header h1{
 		font-size:2.5em;

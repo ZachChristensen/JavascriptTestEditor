@@ -44,34 +44,12 @@ class Suite extends TestItem{
 	findChild (theId){
 		for (var child of this.allMyChildren){
 			if (child.id === theId){
-				console.log(child.description + " found")
 				return child
-			}
-			if(child.hasOwnProperty('myAfter')){
-				if (child.myAfter !== undefined){
-					if (child.myAfter.id === theId){
-						return child.myAfter
-					}
-					let result = child.myAfter.findChild(theId)
-					if(result !== undefined){
-						return result
-					}
-				}
-				if (child.myBefore !== undefined){
-					if (child.myBefore.id === theId){
-						return child.myBefore
-					}
-					let result = child.myBefore.findChild(theId)
-					if(result !== undefined){
-						return result
-					}
-				}
 			}
 			if(child.hasOwnProperty('allMyChildren')){
 				let result = child.findChild(theId)
 
 				if(result !== undefined){
-					console.log(result.description + " found")
 					return result
 				}
 			}

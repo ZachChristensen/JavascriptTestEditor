@@ -22,6 +22,7 @@ class Controller{
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
 				document.getElementById("modalDescription").focus()
+				
 			}
 		}
 
@@ -59,6 +60,7 @@ class Controller{
 						theParent.removeChild(index)
 					}
 					theController.updateDisplay()
+					toast_msg.showDeleted()
 				}
 			}
 		}
@@ -70,7 +72,7 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.parent.cloneChild(index)
-
+				toast_msg.showClone()
 			}
 		}
 
@@ -81,6 +83,7 @@ class Controller{
 				console.log(event.target.parentElement.parentElement.parentElement.id)
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCopiedItem(currentItem)
+				toast_msg.showCopy()
 			}
 		}
 
@@ -94,6 +97,7 @@ class Controller{
 				theController.myModel.setCopiedItem(currentItem)
 				parent.removeChild(index)
 				theController.updateDisplay()
+				toast_msg.showCut()
 			}
 		}
 
@@ -102,14 +106,17 @@ class Controller{
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				if ( currentItem.type == "Assert" && currentItem.parent.type == "Spec"){
-					currentItem.addPastedItem( theController.myModel.unsetCopiedItem() )
-					return
+				//Check if paste legal
+				if (currentItem.hasOwnProperty('allMyChildren')){
+					var pastedItem = theController.myModel.unsetCopiedItem()
+					
+					if ( (pastedItem.type == "Suite" && currentItem.type == "Spec")){
+						//Error message
+						return
+					}
+					currentItem.addPastedItem( pastedItem )
 				}
-				if ( (currentItem.type == "Spec" || currentItem.type == "Spec") && currentItem.parent.type == "Suite"){
-					currentItem.addPastedItem( theController.myModel.unsetCopiedItem() )
-					return
-				}
+				toast_msg.showPaste()
 			}
 		}
 
