@@ -17,6 +17,7 @@ theController.updateDisplay()
 var clearBtns = document.getElementsByClassName("clearBtn")
 var saveBtns = document.getElementsByClassName("saveBtn")
 var loadBtns = document.getElementsByClassName("loadBtn")
+var helpBtns = document.getElementsByClassName("helpBtn")
 
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
@@ -36,7 +37,14 @@ for (var btn of saveBtns){
 for (var btn of loadBtns){
 	btn.onclick = function(event) {
 		document.getElementById("fileSelector").click();
-		idGenerator = new idCounter();
+		
+	}
+}
+
+for (var btn of helpBtns){
+	btn.onclick = function(event) {
+		modal_content.setHelp()
+		modal.style.display = "block"
 	}
 }
 
@@ -55,6 +63,7 @@ modalCloseBtn.onclick = function() {
 
 document.getElementById("fileSelector").addEventListener("change", function() {
     theController = new Controller()
+	idGenerator = new idCounter();
 	theController.loadFromFile()
 });
 

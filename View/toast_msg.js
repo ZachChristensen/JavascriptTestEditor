@@ -26,7 +26,6 @@ class toast_msg{
 	static show(msg){
 		var contentClass = "error"
 		var contentElement = document.getElementsByClassName(contentClass)[0]
-		contentElement.style.display = "block"
 		contentElement.style.opacity = 0;
 		contentElement.innerHTML = msg
 		contentElement.style.opacity = 1;

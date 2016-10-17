@@ -10,6 +10,10 @@ h1,h2,h3,h4,h5,h6{
     font-family: 'Merriweather', serif;
 }
 
+header h1{
+	text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+}
+
 html, body{
 	background-color:#eee;
 	height: 100%;
@@ -34,12 +38,11 @@ html, body{
     border-right: 0.1em solid #ccc;
 }
 
-
 header{
 	height:6em;
     line-height:6em;
 	background-color:#93B2E8;
-	border-top: 1px solid #ccc;
+	z-index:3;
 }
 
 header h1{
@@ -51,13 +54,14 @@ header h1{
 
 .nav{
     background-color: #A2DCFF;
-	border-top:1px solid #ccc;
-	border-bottom:1px solid #ccc;
 	margin-bottom:0.3em;
 }
 
 .nav1{
     overflow: hidden;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+
 }
 
 .navInner {
@@ -68,11 +72,9 @@ header h1{
 .navInner li {
 	float: right;
 	display: block;
-	border-right: 1px solid #ccc;
 }
 
 .navInner li:last-child{
-	border-left: 1px solid #ccc;
 }
 
 .navInner li:hover {
@@ -89,6 +91,7 @@ header h1{
 	text-decoration: none;
 	font-weight: bold;
 }
+
 .navInner a:visited {
     color: #333;
 } 
@@ -126,6 +129,7 @@ header h1{
 	margin:1em;
 	padding:1em;
 	border: 1px solid #444;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .dropbtn {

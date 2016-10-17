@@ -130,4 +130,16 @@ class modal_content{
 			theController.saveToFile(filename)
 		}
 	}
+	
+	static setHelp(){
+		var title = "Help"
+		var content = `<h4 style="margin-top:1em;">Helpful stuff coming soon</h4>
+		`
+		var titleID = "modalTitle"
+		var contentID = "modalContent"
+		var titleElement = document.getElementById(titleID)
+		titleElement.innerHTML = title
+		var contentElement = document.getElementById(contentID)
+		contentElement.innerHTML = content
+	}
 }
