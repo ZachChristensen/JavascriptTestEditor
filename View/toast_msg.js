@@ -12,11 +12,11 @@ class toast_msg{
 	}
 	
 	static showClone(){
-		toast_msg.show("Cut")
+		toast_msg.show("Clone")
 	}
 	
 	static showPaste(){
-		toast_msg.show("Cut")
+		toast_msg.show("Paste")
 	}
 	
 	static showDeleted(){
