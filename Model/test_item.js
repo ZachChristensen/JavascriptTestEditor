@@ -35,7 +35,7 @@ class TestItem {
 		newText += '<a class="btnDelete">Delete</a>'
 
 		if (this.type === "Suite"){
-			newText += '<a class="btnAddSpec">Add Spec</a> <a href="#" class="btnAddSuite">Add Suite</a>'
+			newText += '<a class="btnAddSpec">Add Spec</a> <a class="btnAddSuite">Add Suite</a>'
 			newText += '<a class="btnAddBeforeEach">Add BeforeEach</a>'
 			newText += '<a class="btnAddAfterEach">Add AfterEach</a>'
 		}

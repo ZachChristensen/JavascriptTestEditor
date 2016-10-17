@@ -15,7 +15,7 @@ class MiscCode {
 		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
-		newText += '<a class="btnDelete" href="#">Delete</a>'
+		newText += '<a class="btnDelete">Delete</a>'
 		if (this.parent !== "None"){
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
