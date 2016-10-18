@@ -8,7 +8,7 @@ class Model{
 
 		//danger code!
 		this.root = undefined
-		this.copiedItem = undefined
+		this.copiedItems = []
 
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
@@ -120,12 +120,19 @@ class Model{
 	}
 
 	setCopiedItem (suite) {
-		this.copiedItem = suite
+		this.copiedItems = [suite]
+	}
+	
+	setCopiedItems (suites) {
+		this.copiedItems = suites
 	}
 
-	unsetCopiedItem (suite) {
-		var item = this.copiedItem
-		this.copiedItem = undefined
+	unsetCopiedItems (suite) {
+		if (this.copiedItems.length === 0){
+			return
+		}
+		var item = this.copiedItems
+		this.copiedItems = []
 		return item
 	}
 

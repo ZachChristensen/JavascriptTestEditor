@@ -19,6 +19,10 @@ var clearBtns = document.getElementsByClassName("clearBtn")
 var saveBtns = document.getElementsByClassName("saveBtn")
 var loadBtns = document.getElementsByClassName("loadBtn")
 var helpBtns = document.getElementsByClassName("helpBtn")
+var ctxCopy = document.getElementById("ctxCopy")
+var ctxCut = document.getElementById("ctxCut")
+var ctxClone = document.getElementById("ctxClone")
+
 
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
@@ -46,6 +50,31 @@ for (var btn of helpBtns){
 	btn.onclick = function(event) {
 		modal_content.setHelp()
 		modal.style.display = "block"
+	}
+}
+
+ctxCopy.onclick = function(event) {
+	if (theController.myModel.selected.length === 0){
+		toast_msg.showNoneSelected()
+		return
+	}
+	else{
+		theController.myModel.setCopiedItems(theController.myModel.selected)//ToDo
+		toast_msg.showCopy()
+	}
+}
+
+ctxCut.onclick = function(event) {
+	if (theController.myModel.selected.length === 0){
+		toast_msg.showNoneSelected()
+		return
+	}
+}
+
+ctxClone.onclick = function(event) {
+	if (theController.myModel.selected.length === 0){
+		toast_msg.showNoneSelected()
+		return
 	}
 }
 
@@ -94,4 +123,8 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none"
     }
+	var ctxMenu = document.getElementById("ctxMenu");
+	ctxMenu.style.display = "";
+	ctxMenu.style.left = "";
+	ctxMenu.style.top = "";
 }

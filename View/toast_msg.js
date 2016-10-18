@@ -23,6 +23,10 @@ class toast_msg{
 		toast_msg.show("Deleted")
 	}
 	
+	static showNoneSelected(){
+		toast_msg.show("No selected items")
+	}
+	
 	static show(msg){
 		var contentClass = "error"
 		var contentElement = document.getElementsByClassName(contentClass)[0]

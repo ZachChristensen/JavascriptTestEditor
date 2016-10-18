@@ -190,12 +190,16 @@ class TestItem {
 		else if (orig.type === "Assert"){
 			var theClone = new Assert(orig.contents, this)
 		}
-		else if (i.type === "Misc"){
-			var theClone = new MiscCode(i.contents, theClone)
+		else if (orig.type === "Misc"){
+			var theClone = new MiscCode(orig.contents, this)
+		}
+		if (theClone.type === "BeforeEach" || theClone.type === "AfterEach"){
+			this.allMyChildren.unshift(theClone)
+			theController.updateDisplay()
+			return
 		}
 		this.allMyChildren.push(theClone)
 		theController.updateDisplay()
-
 	}
 
 	cloneChild(index){

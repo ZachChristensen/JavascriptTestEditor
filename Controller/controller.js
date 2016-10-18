@@ -9,7 +9,7 @@ class Controller{
 
 	updateDisplay(){
 		this.myModel.toHTML()
-
+		theController.myModel.selected = []
 		//set onclick methods for dropdown addSpec/Suite btns
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
@@ -108,16 +108,21 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
-					var pastedItem = theController.myModel.unsetCopiedItem()
-					if (pastedItem == undefined){
+					var pastedItems = theController.myModel.unsetCopiedItems()
+					if (pastedItems == []){
 						toast_msg.show("No item copied")
 						return
 					}
-					if ( (pastedItem.type == "Suite" && currentItem.type == "Spec")){
-						toast_msg.show("Error Spec cannot contain Suites")
-						return
+					for (var item of pastedItems){
+						if ( (item.type == "Suite" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain Suites")
+							return
+						}
 					}
-					currentItem.addPastedItem( pastedItem )
+					for (var item of pastedItems){
+						currentItem.addPastedItem( item )
+					}
+					
 				}
 				toast_msg.showPaste()
 			}

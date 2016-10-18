@@ -268,6 +268,9 @@ menu:hover{
     background-color:#eef;
     font-weight:bold;
 }
+menu > menu:hover{
+	cursor:pointer;
+}
 menu:hover > menu{
     display:block;
 }
@@ -276,7 +279,7 @@ menu > menu{
     position:relative;
     top:-30px;
     left:100%;
-    width:90px;
+    width:140px;
 }
 menu[title]:before{
     content:attr(title);
