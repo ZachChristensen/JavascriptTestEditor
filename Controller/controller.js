@@ -109,7 +109,10 @@ class Controller{
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
 					var pastedItem = theController.myModel.unsetCopiedItem()
-
+					if (pastedItem == undefined){
+						toast_msg.show("No item copied")
+						return
+					}
 					if ( (pastedItem.type == "Suite" && currentItem.type == "Spec")){
 						toast_msg.show("Error Spec cannot contain Suites")
 						return

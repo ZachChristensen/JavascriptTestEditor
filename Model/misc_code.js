@@ -26,6 +26,7 @@ class MiscCode {
 		newText += '</div></div>'
 		newText += "&nbsp;&nbsp;" + "<textArea  rows='3' id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 115px); resize: vertical;'>" + this.contents + "</textArea> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
+		theController.myView.setItemClickListeners(this.id)
 	}
 
     toString (tabNum) {

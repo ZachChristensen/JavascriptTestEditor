@@ -69,6 +69,7 @@ class TestItem {
 				baby.toHTML(this.id)
 			}
 		}
+		theController.myView.setItemClickListeners(this.id)
 	}
 
 	moveIn(){
@@ -212,7 +213,7 @@ class TestItem {
 			else if (orig.type === "AfterEach"){
 				var theClone = new AfterEach(this)
 			}
-
+			console.log(orig)
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
 					var newSpec = new Spec(i.description, theClone)
@@ -279,14 +280,14 @@ class TestItem {
 				newArray.push(newMisc)
 			}
 			else if (i.type === "BeforeEach"){
-				var newSetup = new BeforeEach(theClone)
-				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-				theClone.allMyChildren.unshift(newSetup)
+				var newSetup = new BeforeEach(newParent)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newParent)
+				newArray.unshift(newSetup)
 			}
 			else if (i.type === "AfterEach"){
-				var newSetup = new AfterEach(theClone)
-				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-				theClone.allMyChildren.unshift(newSetup)
+				var newSetup = new AfterEach(newParent)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newParent)
+				newArray.unshift(newSetup)
 			}
 		}
 		return newArray

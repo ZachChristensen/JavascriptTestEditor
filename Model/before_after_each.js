@@ -25,6 +25,7 @@ class Setup extends Suite{
 				baby.toHTML(this.id)
 			}
 		}
+		theController.myView.setItemClickListeners(this.id)
 	}
 
 	toString (tabNum) {

@@ -17,8 +17,41 @@ class Model{
 
 		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
+		
+		this.selected = []
+		this.selectedParent = undefined
 	}
-
+	
+	selectItem(item){
+		//if exist remove them
+		if (this.selected.indexOf(item) > -1){
+			this.myController.myView.resetItemBackground(item.id)
+			let index = this.selected.indexOf(item);
+			this.selected.splice(index, 1);
+			console.log("already selected")
+			return
+		}
+		if (this.selectedParent === undefined){
+			this.selected.push(item)
+			this.selectedParent = item.parent
+			this.myController.myView.changeItemBackground(item.id)
+		}
+		else if (this.selectedParent === item.parent ){
+			this.selected.push(item)
+			theController.myView.changeItemBackground(item.id)
+		}
+		else{
+			for (var i of this.selected){
+				this.myController.myView.resetItemBackground(i.id)
+			}
+			//foreach selected change display back to unselected
+			this.selected = []
+			this.selectedParent = item.parent
+			this.selected.push(item)
+			theController.myView.changeItemBackground(item.id)
+		}
+	}
+	
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
 		this.setCurrentSuite(this.root)

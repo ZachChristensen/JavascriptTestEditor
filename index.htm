@@ -11,11 +11,12 @@
 </head>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper"  contextmenu="mymenu">
 	<header>
 		<div class="inner">
 			<h1>JS Test Editor</h1>
 		</div>
+		<menu type="context" id="mymenu"><menuitem label="Secret Option" onclick="window.location.reload();"></menuitem></menu>
 	</header>
 
 	<div class="nav">
@@ -62,6 +63,13 @@
 		<button id="modalAddBtn">Add</button></div>
 	  </div>
 	</div>
+	
+	<!-- Custom Context Menu -->
+	<menu id="ctxMenu">
+        <menu title="Copy All"></menu>
+        <menu title="Cut All"></menu>
+		<menu title="Clone All"></menu>
+    </menu>
 </body>
 
 <script src="Model\filer.js"></script>
