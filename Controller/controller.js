@@ -22,7 +22,7 @@ class Controller{
 				modal.style.display = "block"
 				NEWTYPE = "SPEC"
 				document.getElementById("modalDescription").focus()
-				
+
 			}
 		}
 
@@ -109,7 +109,7 @@ class Controller{
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
 					var pastedItem = theController.myModel.unsetCopiedItem()
-					
+
 					if ( (pastedItem.type == "Suite" && currentItem.type == "Spec")){
 						//Error message
 						return
@@ -146,7 +146,7 @@ class Controller{
 				document.getElementById("modalDescription").focus()
 			}
 		}
-		
+
 		let beforeBtn = document.getElementsByClassName("btnAddBeforeEach")
 		for (var btn of beforeBtn){
 			btn.onclick = function(event) {
@@ -155,10 +155,10 @@ class Controller{
 				theController.myModel.setCurrentSuite(currentItem)
 				theController.myModel.addBeforeEach()
 				theController.myModel.addMiscCode("")
-				theController.updateDisplay()				
+				theController.updateDisplay()
 			}
 		}
-		
+
 		let afterBtn = document.getElementsByClassName("btnAddAfterEach")
 		for (var btn of afterBtn){
 			btn.onclick = function(event) {
@@ -167,13 +167,16 @@ class Controller{
 				theController.myModel.setCurrentSuite(currentItem)
 				theController.myModel.addAfterEach()
 				theController.myModel.addMiscCode("")
-				theController.updateDisplay()				
+				theController.updateDisplay()
 			}
 		}
 	}
 
 	outputToDiv(divID, textContent){
 		this.myView.appendToDiv(divID, textContent)
+		document.getElementById(divID).addEventListener('dragstart', function(event) {
+   		event.stopPropagation();
+		});
 	}
 
 	loadTestData2(){
