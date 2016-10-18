@@ -57,11 +57,9 @@ header h1{
 	margin-bottom:0.3em;
 }
 
-.nav1{
-    overflow: hidden;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-
+.nav1 {
+	overflow: hidden;
+	border-right: 1px solid #a3c3d2;
 }
 
 .navInner {
