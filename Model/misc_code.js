@@ -12,7 +12,7 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
+		var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
@@ -30,17 +30,24 @@ class MiscCode {
 
     toString (tabNum) {
         let tab = "    "
-				let lines = this.contents.split("\r\n")
+				let lines = this.contents.split("\n")
         let resultStr = ""
+				console.log(this.contents)
+				console.log(lines)
+				for (let i = 0; i < lines.length; i++){
+					if (lines[i] == "") {
+						lines.splice(i, 1)
+					}
+				}
 				for (let i = 0; i < lines.length; i++){
 					resultStr += tab.repeat(tabNum) + lines[i]
-					if (i < lines.length - 2){
+					if (i <= lines.length - 2){
 						 resultStr += "\r\n"
 					}
 				}
         return resultStr
     }
-	
+
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
@@ -61,7 +68,7 @@ class MiscCode {
 		theController.updateDisplay()
 	}
 
-	
+
 	findIndent(){
 		var current = this,
 		depth = 0

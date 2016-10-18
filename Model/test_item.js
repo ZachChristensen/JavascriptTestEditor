@@ -25,11 +25,10 @@ class TestItem {
 		else if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
 
-		
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (this.parent == "None") var newText = "<div class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
-		else var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		if (this.parent == "None") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
+		else var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
@@ -39,8 +38,8 @@ class TestItem {
 			newText += '<a class="btnAddBeforeEach">Add BeforeEach</a>'
 			newText += '<a class="btnAddAfterEach">Add AfterEach</a>'
 		}
-		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>' 
-		newText += '<a class="btnAddMisc">Add Misc</a>' 
+		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>'
+		newText += '<a class="btnAddMisc">Add Misc</a>'
 
 		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
 		newText += '<a class="btnCopy">Copy</a>'
@@ -160,7 +159,7 @@ class TestItem {
 			else if (orig.type === "AfterEach"){
 				var theClone = new AfterEach(this)
 			}
-			
+
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
 					var newSpec = new Spec(i.description, theClone)
@@ -170,7 +169,7 @@ class TestItem {
 				else if (i.type === "Suite"){
 					var newSuite = new Suite(i.description, theClone)
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-					
+
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
@@ -219,7 +218,7 @@ class TestItem {
 			else if (orig.type === "AfterEach"){
 				var theClone = new AfterEach(this)
 			}
-			
+
 			for (var i of orig.allMyChildren){
 				if (i.type === "Spec"){
 					var newSpec = new Spec(i.description, theClone)
@@ -229,7 +228,7 @@ class TestItem {
 				else if (i.type === "Suite"){
 					var newSuite = new Suite(i.description, theClone)
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-					
+
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
@@ -260,7 +259,7 @@ class TestItem {
 		}
 		this.allMyChildren.splice(index+1, 0, theClone)
 		theController.updateDisplay()
-		
+
 	}
 
 	duplicateMyChildren(oldParent = this, newParent){
@@ -294,7 +293,7 @@ class TestItem {
 				var newSetup = new AfterEach(theClone)
 				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
 				theClone.allMyChildren.unshift(newSetup)
-			}			
+			}
 		}
 		return newArray
 	}

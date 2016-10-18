@@ -12,7 +12,7 @@ class Assert {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
@@ -34,7 +34,7 @@ class Assert {
         let resultStr = tab.repeat(tabNum) + this.contents
         return resultStr
     }
-	
+
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
