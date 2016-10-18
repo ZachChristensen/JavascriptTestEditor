@@ -26,7 +26,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " +this.type + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
 	}
     toString (tabNum) {

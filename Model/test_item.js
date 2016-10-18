@@ -22,8 +22,6 @@ class TestItem {
 		//Name used to display
 		if (this.type === "Suite") var name = theController.myModel.currentLanguage.suite
 		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
-		else if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
-		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
 
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
@@ -45,7 +43,7 @@ class TestItem {
 		newText += '<a class="btnCopy">Copy</a>'
 		if (this.parent !== "None") newText += '<a class="btnCut">Cut</a>'
 
-		if (this.type === "Suite") newText += '<a class="btnPaste">Paste</a>'
+		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
 
 		if (this.parent !== "None"){
 			//out
@@ -66,10 +64,6 @@ class TestItem {
 			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		}
 		theController.outputToDiv(Parent, newText)
-		if (this.type === "Suite"){
-			if (this.myBefore != undefined) this.myBefore.toHTML(this.id)
-			if (this.myAfter != undefined) this.myAfter.toHTML(this.id)
-		}
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){
 				baby.toHTML(this.id)

@@ -11,10 +11,10 @@ class language{
 class jasmineLanguage extends language{
 	constructor(){
 		super()
-		this.suite = "Describe"
-		this.spec = "It"
-		this.assert = "Assert"
-		this.beforeEach = "BeforeEach"
-		this.afterEach = "AfterEach"
+		this.suite = "describe"
+		this.spec = "it"
+		this.assert = "expect"
+		this.beforeEach = "beforeEach"
+		this.afterEach = "afterEach"
 	}
 } 

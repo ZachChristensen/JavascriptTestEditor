@@ -111,7 +111,7 @@ class Controller{
 					var pastedItem = theController.myModel.unsetCopiedItem()
 
 					if ( (pastedItem.type == "Suite" && currentItem.type == "Spec")){
-						//Error message
+						toast_msg.show("Error Spec cannot contain Suites")
 						return
 					}
 					currentItem.addPastedItem( pastedItem )
