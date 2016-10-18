@@ -10,6 +10,7 @@ var SELECTEDSUITE = ""
 var NEWTYPE = ""
 var currentItem
 var theController = new Controller()
+var isDragging = false
 theController.loadTestData()
 theController.updateDisplay()
 
@@ -72,15 +73,20 @@ function allowDrop(ev) {
 }
 
 function drag(ev) {
-
+	if (!isDragging){
+		isDragging = true
     ev.dataTransfer.setData("text", ev.target.id);
 		console.log(ev.target.id)
+	}
 }
 
 function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
+	if (isDragging){
+		isDragging = false
+  	ev.preventDefault();
+  	var data = ev.dataTransfer.getData("text");
+		theController.updateTestItem(ev.target.id, data)
+	}
 }
 
 // When the user clicks anywhere outside of the modal, close it

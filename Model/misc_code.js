@@ -32,8 +32,6 @@ class MiscCode {
         let tab = "    "
 				let lines = this.contents.split("\n")
         let resultStr = ""
-				console.log(this.contents)
-				console.log(lines)
 				for (let i = 0; i < lines.length; i++){
 					if (lines[i] == "") {
 						lines.splice(i, 1)

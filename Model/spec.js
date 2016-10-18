@@ -9,27 +9,23 @@ class Spec extends TestItem {
 		this.allMyChildren.push(aAssert)
 	}
 
-    toString (tabNum) {
-        var resultStr, theTab, child
-        var tab = "    "
-        theTab = tabNum
-        resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
-        theTab = theTab + 1
-        for (child of this.allMyChildren) {
-            resultStr +=  child.toString(theTab)  + "\r\n"
-        }
-        resultStr += tab.repeat(theTab - 1) + "})\r\n"
-        return resultStr
+  toString (tabNum) {
+    var resultStr, theTab, child
+    var tab = "    "
+    theTab = tabNum
+    resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
+    theTab = theTab + 1
+    for (child of this.allMyChildren) {
+        resultStr +=  child.toString(theTab)  + "\r\n"
     }
-    addAssert (contents, newParent) {
-        let aAssert = new Assert(contents, newParent)
-        this.allMyChildren.push(aAssert)
-    }
+    resultStr += tab.repeat(theTab - 1) + "})\r\n"
+    return resultStr
+	}
 
-    addMiscCode (itStr, newParent) {
-        let aMisc = new MiscCode(itStr, newParent)
-        this.allMyChildren.push(aMisc)
-    }
+  addMiscCode (itStr, newParent) {
+      let aMisc = new MiscCode(itStr, newParent)
+      this.allMyChildren.push(aMisc)
+  }
 
 	findChild (theId){
 		for (var child of this.allMyChildren){
