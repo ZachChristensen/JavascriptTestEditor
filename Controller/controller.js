@@ -182,6 +182,11 @@ class Controller{
 		});
 	}
 
+	updateTestItem(targetID, newChildID){
+		this.myModel.moveItem(targetID, newChildID)
+		this.updateDisplay()
+	}
+
 	loadTestData2(){
 		this.myModel.createNewRoot("Root Sweetie")
 		this.myModel.addSpec("first Child spec")

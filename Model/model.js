@@ -51,7 +51,53 @@ class Model{
 			theController.myView.changeItemBackground(item.id)
 		}
 	}
-	
+
+	moveItem(targetID, newChildID){
+		let newParent = undefined
+		let childLocationInOldParent = 0
+		let newChild = this.root.findChild(newChildID)
+		if(this.root.id == targetID){
+			newParent = this.root
+		}else{
+			newParent = this.root.findChild(targetID)
+		}
+		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent){
+			let oldParent = newChild.parent
+			for (let i = 0; i < oldParent.allMyChildren.length; i++){
+				if (newChildID == oldParent.allMyChildren[i].id){
+					childLocationInOldParent = i
+				}
+			}
+			newChild.parent = newParent
+			if(newChild.type == "BeforeEach" || newChild.type == "AfterEach"){
+				newParent.allMyChildren.splice(0, 0, newChild);
+			}else{
+				newParent.allMyChildren.push(newChild)
+			}
+			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
+			return true
+		}
+		return false
+	}
+
+	checkChildToParentCompatability(child, parent){
+		if (parent.type == "Suite"){
+			return true
+		}else if (parent.type == "Spec") {
+			if (child.type == "Misc" || child.type == "Assert"){
+				return true
+			}
+			return false
+		}else if (parent.type == "BeforeEach" || parent.type == "AfterEach") {
+			if (child.type == "Misc" || child.type == "Assert"){
+				return true
+			}
+			return false
+		}else{
+			return false
+		}
+	}
+
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
 		this.setCurrentSuite(this.root)
