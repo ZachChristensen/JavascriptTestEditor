@@ -37,7 +37,7 @@ for (var btn of saveBtns){
 for (var btn of loadBtns){
 	btn.onclick = function(event) {
 		document.getElementById("fileSelector").click();
-		
+
 	}
 }
 
@@ -66,6 +66,22 @@ document.getElementById("fileSelector").addEventListener("change", function() {
 	idGenerator = new idCounter();
 	theController.loadFromFile()
 });
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+
+    ev.dataTransfer.setData("text", ev.target.id);
+		console.log(ev.target.id)
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
