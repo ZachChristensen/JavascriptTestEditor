@@ -59,7 +59,7 @@ ctxCopy.onclick = function(event) {
 		return
 	}
 	else{
-		theController.myModel.setCopiedItems(theController.myModel.selected)//ToDo
+		theController.myModel.setCopiedItems(theController.myModel.selected)
 		toast_msg.showCopy()
 	}
 }
@@ -69,6 +69,17 @@ ctxCut.onclick = function(event) {
 		toast_msg.showNoneSelected()
 		return
 	}
+	else{
+		let currentItems = theController.myModel.selected
+		for (var i of currentItems){
+			let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
+			let parent = i.parent
+			theController.myModel.addCopiedItem(i)
+			parent.removeChild(index)
+		}
+		theController.updateDisplay()
+		toast_msg.showCut()
+	}
 }
 
 ctxClone.onclick = function(event) {
@@ -76,6 +87,12 @@ ctxClone.onclick = function(event) {
 		toast_msg.showNoneSelected()
 		return
 	}
+	let currentItems = theController.myModel.selected
+	for (var i of currentItems){
+		let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
+		i.parent.cloneChild(index, false)
+	}
+	toast_msg.showClone()
 }
 
 var newRootBtn = document.getElementById("newRootBtn")

@@ -202,7 +202,7 @@ class TestItem {
 		theController.updateDisplay()
 	}
 
-	cloneChild(index){
+	cloneChild(index, posAfterOrig = true){
 		var orig = this.allMyChildren[index]
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
@@ -256,7 +256,15 @@ class TestItem {
 		else if (i.type === "Misc"){
 			var theClone = new MiscCode(i.contents, theClone)
 		}
-		this.allMyChildren.splice(index+1, 0, theClone)
+		
+		//Place cloned item directly after its original?
+		if (posAfterOrig) {
+			this.allMyChildren.splice(index+1, 0, theClone)
+		}
+		else {
+			this.allMyChildren.push(theClone)
+		}
+		
 		theController.updateDisplay()
 
 	}

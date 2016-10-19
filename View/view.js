@@ -14,6 +14,11 @@ class HTMLView{
 	setItemClickListeners(elementID){
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
+			var ctxMenu = document.getElementById("ctxMenu");
+			ctxMenu.style.display = "";
+			ctxMenu.style.left = "";
+			ctxMenu.style.top = "";
+
 			if (e.ctrlKey) {
 				
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))

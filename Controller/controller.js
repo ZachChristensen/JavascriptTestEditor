@@ -71,7 +71,7 @@ class Controller{
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
-				currentItem.parent.cloneChild(index)
+				currentItem.parent.cloneChild(index, true)
 				toast_msg.showClone()
 			}
 		}

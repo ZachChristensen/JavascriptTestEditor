@@ -119,12 +119,16 @@ class Model{
 		return this.currentTestItem
 	}
 
-	setCopiedItem (suite) {
-		this.copiedItems = [suite]
+	setCopiedItem (item) {
+		this.copiedItems = [item]
 	}
 	
-	setCopiedItems (suites) {
-		this.copiedItems = suites
+	addCopiedItem (item) {
+		this.copiedItems.push(item)
+	}
+	
+	setCopiedItems (items) {
+		this.copiedItems = items
 	}
 
 	unsetCopiedItems (suite) {
