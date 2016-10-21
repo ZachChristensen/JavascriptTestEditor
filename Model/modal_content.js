@@ -105,7 +105,7 @@ class modal_content{
 	
 	static setSave(){
 		var title = "Save File"
-		var content = `<h4 style="margin-top:1em;">Save Options</h4>
+		var content = `<H3 style="margin-top:1em;">Save Options</H3>
 		<form>
 		  <h5>Assertion type:(coming soon)</h5>
 		  <input type="radio" name="assert" value="assert" checked> assert<br>
@@ -130,10 +130,26 @@ class modal_content{
 			theController.saveToFile(filename)
 		}
 	}
-	
+
+
 	static setHelp(){
 		var title = "Help"
-		var content = `<h4 style="margin-top:1em;">Helpful stuff coming soon</h4>
+		var content = `<H3 style="margin-top:1em;">Multiple Select</H3>
+		<p>You can select multple test items with the same parent at once by pressing the ctrl key before clicking them.<br>
+		After doing this you can press ctrl + right click to show a menu that allows you to copy, clone, cut or delete them all at once.<br>
+		</p><br>
+		<h4 style="margin-top:1em;">Specifying Save Location</h4>
+		<p>If you would like to specify the save location for your test file you have to change an option in your browser to let you do so:</p>
+		<h4 style="margin-top:1em;">Firefox</h4>
+		<p>In <span style="font-weight: bold;">Options</span> under <span style="font-weight: bold;">General</span> check the box titled "Always ask me where to save files"</p>
+		<h4 style="margin-top:1em;">Chrome</h4>
+		<p>In <span style="font-weight: bold;">Settings</span>
+at the bottom, click <span style="font-weight: bold;">Show advanced settings</span>.<br>
+In the <span style="font-weight: bold;">Downloads</span> section:<br>
+Check the box next to "Ask where to save each file before downloading."<br>
+</p>
+		<br><br>Thank you for using this application if you find any issues feel free to submit it to our GitHub page at:<br>
+		<a href="https://github.com/ZachChristensen/JavascriptTestEditor">https://github.com/ZachChristensen/JavascriptTestEditor</a>
 		`
 		var titleID = "modalTitle"
 		var contentID = "modalContent"
