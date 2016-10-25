@@ -22,6 +22,7 @@ var helpBtns = document.getElementsByClassName("helpBtn")
 var ctxCopy = document.getElementById("ctxCopy")
 var ctxCut = document.getElementById("ctxCut")
 var ctxClone = document.getElementById("ctxClone")
+var ctxDelete = document.getElementById("ctxDelete")
 
 
 for (var btn of clearBtns){
@@ -71,6 +72,10 @@ ctxCut.onclick = function(event) {
 	}
 	else{
 		let currentItems = theController.myModel.selected
+		if (currentItems[0].parent === "None"){
+			toast_msg.show("Cannot cut root suite")
+			return
+		}
 		for (var i of currentItems){
 			let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 			let parent = i.parent
@@ -88,11 +93,37 @@ ctxClone.onclick = function(event) {
 		return
 	}
 	let currentItems = theController.myModel.selected
+	if (currentItems[0].parent === "None"){
+		toast_msg.show("Cannot clone root suite")
+		return
+	}
 	for (var i of currentItems){
 		let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 		i.parent.cloneChild(index, false)
 	}
 	toast_msg.showClone()
+}
+
+ctxDelete.onclick = function(event) {
+	if (theController.myModel.selected.length === 0){
+		toast_msg.showNoneSelected()
+		return
+	}
+	let currentItems = theController.myModel.selected
+	if (currentItems[0].parent === "None"){
+		theController.myModel.root = undefined
+		theController.myModel.currentSuite = undefined
+		idGenerator = new idCounter();
+		theController.updateDisplay()
+		toast_msg.showDeleted()
+		return
+	}
+	for (var i of currentItems){
+		let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
+		i.parent.removeChild(index)
+	}
+	theController.updateDisplay()
+	toast_msg.showDeleted()
 }
 
 var newRootBtn = document.getElementById("newRootBtn")
