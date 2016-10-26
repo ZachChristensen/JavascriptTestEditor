@@ -26,7 +26,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}

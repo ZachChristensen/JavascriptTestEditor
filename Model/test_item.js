@@ -58,10 +58,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
@@ -256,7 +256,7 @@ class TestItem {
 		else if (i.type === "Misc"){
 			var theClone = new MiscCode(i.contents, theClone)
 		}
-		
+
 		//Place cloned item directly after its original?
 		if (posAfterOrig) {
 			this.allMyChildren.splice(index+1, 0, theClone)
@@ -264,7 +264,7 @@ class TestItem {
 		else {
 			this.allMyChildren.push(theClone)
 		}
-		
+
 		theController.updateDisplay()
 
 	}

@@ -11,6 +11,7 @@ var NEWTYPE = ""
 var currentItem
 var theController = new Controller()
 var isDragging = false
+var isMouseDown = false
 theController.loadTestData()
 theController.updateDisplay()
 
@@ -154,6 +155,19 @@ function drag(ev) {
 		isDragging = true
     ev.dataTransfer.setData("text", ev.target.id);
 		console.log(ev.target.id)
+	}
+}
+
+function changeDrag(dragSetting, mouseSetting = undefined) {
+	console.log(dragSetting)
+	if (mouseSetting != undefined){
+		this.isMouseDown = mouseSetting
+	}
+	if (this.isMouseDown){
+		let elements = document.getElementsByTagName("div");
+		for (let i = 0; i < elements.length; i++){
+			elements[i].draggable = dragSetting
+		}
 	}
 }
 
