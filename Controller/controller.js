@@ -122,7 +122,7 @@ class Controller{
 					for (var item of pastedItems){
 						currentItem.addPastedItem( item )
 					}
-					
+
 				}
 				toast_msg.showPaste()
 			}
@@ -209,13 +209,16 @@ class Controller{
 		this.myModel.addAssert("Assert == Hello")
 		var suite = this.myModel.addSuite("firstChild Suite")
 		this.myModel.addBeforeEach()
+		console.log("t")
 		this.myModel.addMiscCode("var apple = 600")
+		console.log("q")
 		this.myModel.addAfterEach()
 		this.myModel.addMiscCode("var apple = 0")
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addMiscCode("var bananana = 4")
 		this.myModel.addAssert("Assert 2")
 		this.myModel.addSpec("child of  child spec 2")
+
 	}
 
 	saveToFile(fileName){

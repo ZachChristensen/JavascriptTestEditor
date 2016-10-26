@@ -164,9 +164,22 @@ function changeDrag(dragSetting, mouseSetting = undefined) {
 		this.isMouseDown = mouseSetting
 	}
 	if (this.isMouseDown){
-		let elements = document.getElementsByTagName("div");
-		for (let i = 0; i < elements.length; i++){
-			elements[i].draggable = dragSetting
+		let suites = document.getElementsByClassName("Suite")
+		let specs = document.getElementsByClassName("Spec")
+		let setups = document.getElementsByClassName("Setup")
+		let asserts = document.getElementsByClassName("Assert")
+
+		for (let i = 0; i < suites.length; i++){
+			suites[i].draggable = dragSetting
+		}
+		for (let i = 0; i < specs.length; i++){
+			specs[i].draggable = dragSetting
+		}
+		for (let i = 0; i < setups.length; i++){
+			setups[i].draggable = dragSetting
+		}
+		for (let i = 0; i < asserts.length; i++){
+			asserts[i].draggable = dragSetting
 		}
 	}
 }

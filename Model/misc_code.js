@@ -30,6 +30,7 @@ class MiscCode {
 	}
 
     toString (tabNum) {
+        console.log(undefined.type)
         let tab = "    "
 				let lines = this.contents.split("\n")
         let resultStr = ""
@@ -71,7 +72,7 @@ class MiscCode {
 	findIndent(){
 		var current = this,
 		depth = 0
-		while (current.parent != "None"){
+		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
 		}

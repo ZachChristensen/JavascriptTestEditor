@@ -17,11 +17,11 @@ class Model{
 
 		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
-		
+
 		this.selected = []
 		this.selectedParent = undefined
 	}
-	
+
 	selectItem(item){
 		//if exist remove them
 		if (this.selected.indexOf(item) > -1){
@@ -53,48 +53,61 @@ class Model{
 	}
 
 	moveItem(targetID, newChildID){
+		console.log(targetID + ' ' + newChildID)
 		let newParent = undefined
 		let childLocationInOldParent = 0
 		let newChild = this.root.findChild(newChildID)
 		if(this.root.id == targetID){
 			newParent = this.root
+			console.log("found parent: " + newParent.id)
 		}else{
 			newParent = this.root.findChild(targetID)
+			console.log("found parent: " + newParent.id)
 		}
-		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent){
+		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent && newChild != newParent && newParent !== undefined){
+			console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
 			let oldParent = newChild.parent
+			console.log("set newchilds old parent to: " + oldParent.id)
 			for (let i = 0; i < oldParent.allMyChildren.length; i++){
 				if (newChildID == oldParent.allMyChildren[i].id){
 					childLocationInOldParent = i
+					console.log("found child location in old parent: " + childLocationInOldParent)
 				}
 			}
 			newChild.parent = newParent
+			console.log("set newparent")
 			if(newChild.type == "BeforeEach" || newChild.type == "AfterEach"){
-				newParent.allMyChildren.splice(0, 0, newChild);
+				newParent.allMyChildren.splice(0, 0, newChild)
+				console.log("adding before or after")
 			}else{
 				newParent.allMyChildren.push(newChild)
+				console.log("added new child to new parent")
 			}
+			console.log("removed child:" + oldParent.allMyChildren[childLocationInOldParent].id + " from old parent ")
 			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
+
 			return true
 		}
 		return false
 	}
 
 	checkChildToParentCompatability(child, parent){
-		if (parent.type == "Suite"){
-			return true
-		}else if (parent.type == "Spec") {
-			if (child.type == "Misc" || child.type == "Assert"){
+		if (parent != undefined && child != undefined){
+			if (parent.type == "Suite"){
 				return true
+			}else if (parent.type == "Spec") {
+				if (child.type == "Misc" || child.type == "Assert"){
+					return true
+				}
+				return false
+			}else if (parent.type == "BeforeEach" || parent.type == "AfterEach") {
+				if (child.type == "Misc" || child.type == "Assert"){
+					return true
+				}
+				return false
+			}else{
+				return false
 			}
-			return false
-		}else if (parent.type == "BeforeEach" || parent.type == "AfterEach") {
-			if (child.type == "Misc" || child.type == "Assert"){
-				return true
-			}
-			return false
-		}else{
-			return false
 		}
 	}
 
@@ -122,11 +135,11 @@ class Model{
 	setCopiedItem (item) {
 		this.copiedItems = [item]
 	}
-	
+
 	addCopiedItem (item) {
 		this.copiedItems.push(item)
 	}
-	
+
 	setCopiedItems (items) {
 		this.copiedItems = items
 	}
@@ -206,6 +219,7 @@ class Model{
 		var HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
 		if (this.root !== undefined){
+			
 			return this.root.toHTML('main')
 		}else{
 			document.getElementById('newRootBtn').style.display = "block"
