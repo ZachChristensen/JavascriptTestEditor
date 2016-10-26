@@ -112,7 +112,28 @@ document.getElementById("fileSelector").addEventListener("change", function() {
     theController = new Controller()
 	idGenerator = new idCounter();
 	theController.loadFromFile()
-});
+})
+
+function assertDropdown(e){
+	var value = e.value
+	if (value === ".not"){
+		console.log("not!")
+		
+		var z = theController.myModel.find(e.parentElement.id)
+		console.log(z)
+		z.notSelected()
+	}
+	else{
+		var z = theController.myModel.find(e.parentElement.id)
+		console.log(z)
+		console.log(e.id)
+		if (e.id.substr(5,2) == "d1"){
+			z.dropdownSelected(value, true)
+		}
+		else z.dropdownSelected(value, false)
+	}
+	console.log(value)
+}
 
 function allowDrop(ev) {
     ev.preventDefault();

@@ -63,4 +63,9 @@ class HTMLView{
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML += textContent
 	}
+	
+	setToDiv(divID, textContent){
+		var HTMLdiv = document.getElementById(divID)
+		HTMLdiv.innerHTML = textContent
+	}
 }
