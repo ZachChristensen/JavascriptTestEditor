@@ -25,7 +25,7 @@ class TestItem {
 		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (typeof this.parent != "string") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
+		if (typeof this.parent === "string") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete">Delete</a>'
