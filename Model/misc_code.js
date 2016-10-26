@@ -24,12 +24,13 @@ class MiscCode {
 		}
 
 		newText += '</div></div>'
-		newText += "&nbsp;&nbsp;" + "<textArea  rows='3' id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 115px); resize: vertical;'>" + this.contents + "</textArea> | "+ this.id + "</div>"
+		newText += "&nbsp;&nbsp;" + "<textArea  draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' rows='3' id='" + this.id + "t' type='text' style='overflow: auto; margin-left:2.5em; min-height:40px; width: calc(100% - 115px); resize: vertical;'>" + this.contents + "</textArea> | "+ this.id + "</div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}
 
     toString (tabNum) {
+        console.log(undefined.type)
         let tab = "    "
 				let lines = this.contents.split("\n")
         let resultStr = ""
@@ -71,7 +72,7 @@ class MiscCode {
 	findIndent(){
 		var current = this,
 		depth = 0
-		while (current.parent != "None"){
+		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
 		}

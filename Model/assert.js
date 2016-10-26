@@ -122,6 +122,8 @@ class Assert {
 	
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)	' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
+		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 		console.log("assert tohtml")
 		this.setCurrentDropdown()
@@ -171,7 +173,7 @@ class Assert {
 	findIndent(){
 		var current = this,
 		depth = 0
-		while (current.parent != "None"){
+		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
 		}

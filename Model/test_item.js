@@ -16,19 +16,18 @@ class TestItem {
 
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 20)
+
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		//Name used to display
 		if (this.type === "Suite") var name = theController.myModel.currentLanguage.suite
 		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
-
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (this.parent == "None") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
+		if (typeof this.parent === "string") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
-
 		newText += '<a class="btnDelete">Delete</a>'
 
 		if (this.type === "Suite"){
@@ -44,7 +43,6 @@ class TestItem {
 		if (this.parent !== "None") newText += '<a class="btnCut">Cut</a>'
 
 		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
-
 		if (this.parent !== "None"){
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
@@ -58,10 +56,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
@@ -127,7 +125,8 @@ class TestItem {
 	findIndent(){
 		var current = this,
 		depth = 0
-		while (current.parent != "None"){
+		console.log()
+		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
 		}
@@ -256,7 +255,7 @@ class TestItem {
 		else if (i.type === "Misc"){
 			var theClone = new MiscCode(i.contents, theClone)
 		}
-		
+
 		//Place cloned item directly after its original?
 		if (posAfterOrig) {
 			this.allMyChildren.splice(index+1, 0, theClone)
@@ -264,7 +263,7 @@ class TestItem {
 		else {
 			this.allMyChildren.push(theClone)
 		}
-		
+
 		theController.updateDisplay()
 
 	}
