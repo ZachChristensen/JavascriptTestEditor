@@ -15,7 +15,7 @@ class TestItem {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 21)
 
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
