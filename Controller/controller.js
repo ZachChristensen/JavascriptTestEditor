@@ -14,7 +14,6 @@ class Controller{
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
 			spec.onclick = function(event) {
-				console.log("spec func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
@@ -29,7 +28,6 @@ class Controller{
 		let suitebtns = document.getElementsByClassName("btnAddSuite")
 		for (var suite of suitebtns){
 			suite.onclick = function(event) {
-				console.log("suite func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
@@ -43,7 +41,6 @@ class Controller{
 		let deletebtns = document.getElementsByClassName("btnDelete")
 		for (var btn of deletebtns){
 			btn.onclick = function(event) {
-				console.log("delete func")
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var itemID = event.target.parentElement.parentElement.parentElement.id
 					var item = theController.myModel.find(itemID)
@@ -80,7 +77,6 @@ class Controller{
 		for (var btn of copybtns){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				console.log(event.target.parentElement.parentElement.parentElement.id)
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCopiedItem(currentItem)
 				toast_msg.showCopy()
@@ -209,9 +205,7 @@ class Controller{
 		this.myModel.addAssert("Assert == Hello")
 		var suite = this.myModel.addSuite("firstChild Suite")
 		this.myModel.addBeforeEach()
-		console.log("t")
 		this.myModel.addMiscCode("var apple = 600")
-		console.log("q")
 		this.myModel.addAfterEach()
 		this.myModel.addMiscCode("var apple = 0")
 		this.myModel.addSpec("child of  child spec 1")

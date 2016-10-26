@@ -30,7 +30,6 @@ class MiscCode {
 	}
 
     toString (tabNum) {
-        console.log(undefined.type)
         let tab = "    "
 				let lines = this.contents.split("\n")
         let resultStr = ""

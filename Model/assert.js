@@ -33,15 +33,14 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input style='width: calc(100% - 400);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
 		newText += "<select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
-		
 		//if (this.not){
 			//newText += '<option disabled>Select...</option>'
 			//newText += "<option value='.not'>.not</option>"
 		//}
 		//else{
-			newText += '<option selected disabled>Select...</option>'
+			//newText += '<option selected disabled>Select...</option>'
 			newText += "<option value='.not'>.not</option>"
 		//}
 		newText += "<option value='.toBe'>.toBe</option>"
@@ -86,33 +85,25 @@ class Assert {
 		return newText
 	}
 	
+	//sets the dropdown boxes for selecting matchers to the model data
 	setCurrentDropdown(){
 		if (this.not){
-			var a = document.getElementById(this.id+"d2")
-			
-
-			var textToFind = this.matcher;
-
-			var dd = a;
-			for (var i = 0; i < dd.options.length; i++) {
-				if (dd.options[i].text === textToFind) {
-					dd.selectedIndex = i;
+			var dropdwn = document.getElementById(this.id+"d2")
+			for (var i = 0; i < dropdwn.options.length; i++) {
+				if (dropdwn.options[i].text === this.matcher) {
+					dropdwn.selectedIndex = i;
 					break;
 				}
 			}
 			
-			a = document.getElementById(this.id+"d1")
-			textToFind = this.matcher;
-			a.selectedIndex = 1
+			dropdwn = document.getElementById(this.id+"d1")
+			dropdwn.selectedIndex = 1
 		}
 		else{
-			var a = document.getElementById(this.id+"d1")
-			var textToFind = this.matcher;
-
-			var dd = a;
-			for (var i = 0; i < dd.options.length; i++) {
-				if (dd.options[i].text === textToFind) {
-					dd.selectedIndex = i;
+			var dropdwn = document.getElementById(this.id+"d1")
+			for (var i = 0; i < dropdwn.options.length; i++) {
+				if (dropdwn.options[i].text === this.matcher) {
+					dropdwn.selectedIndex = i;
 					break;
 				}
 			}
@@ -122,8 +113,6 @@ class Assert {
 	
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)	' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 160px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input> | "+ this.id + "</div>"
-		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 		console.log("assert tohtml")
 		this.setCurrentDropdown()

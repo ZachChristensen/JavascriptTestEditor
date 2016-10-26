@@ -48,9 +48,6 @@ class HTMLView{
 	}
 	
 	changeItemBackground(theElementId){
-		let backColour = 100
-		console.log(document.getElementById(theElementId).getAttribute("style"))
-		
 		document.getElementById(theElementId).style.backgroundColor = '#9DD'
 	}
 	
