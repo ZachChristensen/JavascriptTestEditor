@@ -1,12 +1,12 @@
 class Assert {
-	constructor (contents="", contents2="", newParent = "None", not=false, matcher=""){
+	constructor (contents="", contents2="", newParent = "None", not=false, matcher=".toBe"){
 		this.id = idGenerator()
 		this.contents = contents
 		this.contents2 = contents2
 		this.parent = newParent
 		this.type = "Assert"
 		this.not = not
-		this.matcher = matcher2
+		this.matcher = matcher
 	}
 
 	toHTMLString(outerDiv = true){
@@ -22,7 +22,7 @@ class Assert {
 			var newText = ""
 		}
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
-		
+
 		newText += '<a class="btnDelete">Delete</a>'
 
 		newText += '<a class="btnClone" >Clone</a>'
@@ -53,11 +53,11 @@ class Assert {
 		newText += "<option value='.toThrow'>.toThrow</option>"
 		newText += "<option value='.toThrowError'>.toThrowError</option>"
 		newText += "</select>"
-		
+
 		if(this.not){
 			newText += "<select id='"+this.id+"d2' onchange='assertDropdown(this)'>"
-			
-			newText += '<option disabled>Select...</option>'			
+
+			newText += '<option disabled>Select...</option>'
 			newText += "<option value='.toBe'>.toBe</option>"
 			newText += "<option value='.toEqual'>.toEqual</option>"
 			newText += "<option value='.toMatch'>.toMatch</option>"
@@ -74,7 +74,7 @@ class Assert {
 			newText += "<option value='.toThrowError'>.toThrowError</option>"
 			newText += "</select>"
 		}
-		
+
 		newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
 
 
@@ -83,7 +83,7 @@ class Assert {
 		}
 		return newText
 	}
-	
+
 	//sets the dropdown boxes for selecting matchers to the model data
 	setCurrentDropdown(){
 		if (this.not){
@@ -107,7 +107,7 @@ class Assert {
 			}
 		}
 	}
-	
+
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
 		theController.myView.setItemClickListeners(this.id)
@@ -147,14 +147,14 @@ class Assert {
 		theController.myView.setToDiv(this.id, this.toHTMLString(false))
 		this.matcher = value
 		this.setCurrentDropdown()
-	} 
-	
+	}
+
 	notSelected(){
 		this.not = true
 		theController.myView.setToDiv(this.id, this.toHTMLString(false))
 		this.setCurrentDropdown()
-	} 
-	
+	}
+
 	findIndent(){
 		var current = this,
 		depth = 0

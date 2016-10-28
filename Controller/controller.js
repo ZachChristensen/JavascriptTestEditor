@@ -57,14 +57,14 @@ class Controller{
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
-										
+
 					let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
 					if (doesExist != -1){
 						console.log(theController.myModel.asserts)
 						theController.myModel.asserts.splice(doesExist, 1)
 						console.log(theController.myModel.asserts)
 					}
-					
+
 					theController.updateDisplay()
 					toast_msg.showDeleted()
 				}
@@ -201,21 +201,10 @@ class Controller{
 		this.updateDisplay()
 	}
 
-	loadTestData2(){
-		this.myModel.createNewRoot("Root Sweetie")
-		this.myModel.addSpec("first Child spec")
-		var suite = this.myModel.addSuite("firstChild Suite")
-		this.myModel.setCurrentSuite(suite)
-		this.myModel.addSpec("child of  child spec 1")
-		this.myModel.addSpec("child of  child spec 2")
-		this.myModel.addSuite("childOfChild Suite")
-		this.myModel.addSpec("child of  child spec 3")
-	}
-
 	loadTestData(){
-		this.myModel.createNewRoot("Root Sweetie")
+		this.myModel.createNewRoot("VERY interesting test suite")
 		this.myModel.addSpec("first Child spec")
-		this.myModel.addAssert("Assert == Hello")
+		this.myModel.addAssert("Asserts", true, '.toBe', 'bad')
 		var suite = this.myModel.addSuite("firstChild Suite")
 		this.myModel.addBeforeEach()
 		this.myModel.addMiscCode("var apple = 600")
@@ -223,7 +212,7 @@ class Controller{
 		this.myModel.addMiscCode("var apple = 0")
 		this.myModel.addSpec("child of  child spec 1")
 		this.myModel.addMiscCode("var bananana = 4")
-		this.myModel.addAssert("Assert 2")
+		this.myModel.addAssert("Pancakes", false, '.toEquals', 'deeelish')
 		this.myModel.addSpec("child of  child spec 2")
 
 	}
@@ -258,7 +247,7 @@ window.addEventListener('input', function (e) {
 			}
 			return
 		}
-		
+
 		let id = e.target.id.slice(0, -1)
 		console.log(theController.myModel.find(id))
 		theController.myModel.updateItem(id, e.target.value)

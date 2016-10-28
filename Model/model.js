@@ -168,9 +168,9 @@ class Model{
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
-	addAssert (contents="", contents2="", matcher="", not=false) {
+	addAssert (contents="", not=false, matcher="", contents2="") {
 		if(this.currentTestItem != undefined){
-			this.asserts.push(this.currentTestItem.addAssert(contents, contents2, this.currentTestItem, not, matcher))
+			this.asserts.push(this.currentTestItem.addAssert(contents, not, matcher, contents2))
 		}
 	}
 
@@ -219,7 +219,7 @@ class Model{
 		var HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
 		if (this.root !== undefined){
-			
+
 			return this.root.toHTML('main')
 		}else{
 			document.getElementById('newRootBtn').style.display = "block"
