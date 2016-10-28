@@ -7,6 +7,7 @@ class Spec extends TestItem {
 	addAssert (contents, newParent) {
 		let aAssert = new Assert(contents, newParent)
 		this.allMyChildren.push(aAssert)
+		return aAssert
 	}
 
   toString (tabNum) {

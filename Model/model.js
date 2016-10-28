@@ -17,7 +17,7 @@ class Model{
 
 		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
-
+		this.asserts = []
 		this.selected = []
 		this.selectedParent = undefined
 	}
@@ -168,9 +168,9 @@ class Model{
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
-	addAssert (contents) {
+	addAssert (contents="", contents2="", matcher="", not=false) {
 		if(this.currentTestItem != undefined){
-			this.currentTestItem.addAssert(contents, this.currentTestItem)
+			this.asserts.push(this.currentTestItem.addAssert(contents, contents2, this.currentTestItem, not, matcher))
 		}
 	}
 

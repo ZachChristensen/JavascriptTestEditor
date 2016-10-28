@@ -48,6 +48,7 @@ class Controller{
 					if (item.parent === "None"){
 						theController.myModel.root = undefined
 						theController.myModel.currentSuite = undefined
+						theController.myModel.asserts = []
 						idGenerator = new idCounter();
 					}
 					else{
@@ -56,6 +57,14 @@ class Controller{
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
+										
+					let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+					if (doesExist != -1){
+						console.log(theController.myModel.asserts)
+						theController.myModel.asserts.splice(doesExist, 1)
+						console.log(theController.myModel.asserts)
+					}
+					
 					theController.updateDisplay()
 					toast_msg.showDeleted()
 				}
@@ -174,6 +183,10 @@ class Controller{
 				theController.updateDisplay()
 			}
 		}
+		for (var assert of this.myModel.asserts){
+			console.log(this.myModel.asserts)
+			assert.setCurrentDropdown()
+		}
 	}
 
 	outputToDiv(divID, textContent){
@@ -230,6 +243,22 @@ class Controller{
 
 window.addEventListener('input', function (e) {
 	if (e.target.id.substr(0, 4) === "Item"){
+		console.log(1)
+		console.log(e.target.id.substr(e.target.id.length -2))
+		if (e.target.id.substr(e.target.id.length -2) === "t2"){
+			console.log(2)
+			let id = e.target.id.slice(0, -2)
+			console.log(id)
+			var item = theController.myModel.find(id)
+			console.log(item)
+			if (item.type === "Assert"){
+				console.log(3)
+				item.contents2 = e.target.value
+				console.log(item)
+			}
+			return
+		}
+		
 		let id = e.target.id.slice(0, -1)
 		console.log(theController.myModel.find(id))
 		theController.myModel.updateItem(id, e.target.value)

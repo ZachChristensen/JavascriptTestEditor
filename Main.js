@@ -5,7 +5,6 @@ jshint esversion:6
 jshint asi:true
 */
 
-//Fix dependancies in the code on theController?
 var SELECTEDSUITE = ""
 var NEWTYPE = ""
 var currentItem
@@ -29,6 +28,10 @@ var ctxDelete = document.getElementById("ctxDelete")
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
 		theController.myModel.root = undefined
+		theController.myModel.currentSuite = undefined
+		theController.myModel.asserts = []
+		idGenerator = new idCounter();
+
 		theController.updateDisplay()
 		idGenerator = new idCounter();
 	}
@@ -114,6 +117,7 @@ ctxDelete.onclick = function(event) {
 	if (currentItems[0].parent === "None"){
 		theController.myModel.root = undefined
 		theController.myModel.currentSuite = undefined
+		theController.myModel.asserts = []
 		idGenerator = new idCounter();
 		theController.updateDisplay()
 		toast_msg.showDeleted()
@@ -174,7 +178,6 @@ function drag(ev) {
 }
 
 function changeDrag(dragSetting, mouseSetting = undefined) {
-	console.log(dragSetting)
 	if (mouseSetting != undefined){
 		this.isMouseDown = mouseSetting
 	}

@@ -125,7 +125,6 @@ class TestItem {
 	findIndent(){
 		var current = this,
 		depth = 0
-		console.log()
 		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
@@ -306,7 +305,7 @@ class TestItem {
 
 	removeChild(index){
 		if (index > -1) {
-			this.allMyChildren.splice(index, 1);
+			this.allMyChildren.splice(index, 1)
 		}
 	}
 }

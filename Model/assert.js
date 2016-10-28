@@ -1,11 +1,12 @@
 class Assert {
-	constructor (contents, newParent = "None"){
+	constructor (contents="", contents2="", newParent = "None", not=false, matcher=""){
 		this.id = idGenerator()
 		this.contents = contents
+		this.contents2 = contents2
 		this.parent = newParent
 		this.type = "Assert"
-		this.not = false
-		this.matcher = ".toBe"
+		this.not = not
+		this.matcher = matcher2
 	}
 
 	toHTMLString(outerDiv = true){
@@ -35,14 +36,8 @@ class Assert {
 		newText += '</div></div>'
 		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
 		newText += "<select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
-		//if (this.not){
-			//newText += '<option disabled>Select...</option>'
-			//newText += "<option value='.not'>.not</option>"
-		//}
-		//else{
-			//newText += '<option selected disabled>Select...</option>'
-			newText += "<option value='.not'>.not</option>"
-		//}
+		newText += '<option disabled>Select...</option>'
+		newText += "<option value='.not'>.not</option>"
 		newText += "<option value='.toBe'>.toBe</option>"
 		newText += "<option value='.toEqual'>.toEqual</option>"
 		newText += "<option value='.toMatch'>.toMatch</option>"
@@ -77,8 +72,12 @@ class Assert {
 			newText += "<option value='.toBeCloseTo'>.toBeCloseTo</option>"
 			newText += "<option value='.toThrow'>.toThrow</option>"
 			newText += "<option value='.toThrowError'>.toThrowError</option>"
+			newText += "</select>"
 		}
 		
+		newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+
+
 		if (outerDiv){
 			newText += " | " + this.id +"</div>"
 		}
@@ -91,11 +90,10 @@ class Assert {
 			var dropdwn = document.getElementById(this.id+"d2")
 			for (var i = 0; i < dropdwn.options.length; i++) {
 				if (dropdwn.options[i].text === this.matcher) {
-					dropdwn.selectedIndex = i;
-					break;
+					dropdwn.selectedIndex = i
+					break
 				}
 			}
-			
 			dropdwn = document.getElementById(this.id+"d1")
 			dropdwn.selectedIndex = 1
 		}
@@ -103,18 +101,16 @@ class Assert {
 			var dropdwn = document.getElementById(this.id+"d1")
 			for (var i = 0; i < dropdwn.options.length; i++) {
 				if (dropdwn.options[i].text === this.matcher) {
-					dropdwn.selectedIndex = i;
-					break;
+					dropdwn.selectedIndex = i
+					break
 				}
 			}
-			console.log("assert not not dr")
 		}
 	}
 	
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
 		theController.myView.setItemClickListeners(this.id)
-		console.log("assert tohtml")
 		this.setCurrentDropdown()
 	}
 

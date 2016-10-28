@@ -395,7 +395,7 @@ menu:not([title]):before{
 	}
 	
 	.navInner{
-		width: 100%;
+		 width: 100%;
 	}
 
 	#content{
