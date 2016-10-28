@@ -34,7 +34,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:200px; width: calc(100% - 650px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
 		newText += "<select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
 		newText += '<option disabled>Select...</option>'
 		newText += "<option value='.not'>.not</option>"
@@ -75,18 +75,22 @@ class Assert {
 			newText += "</select>"
 		}
 
-		newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 400);' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+		newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 650px); min-width:200px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
 
 
 		if (outerDiv){
-			newText += " | " + this.id +"</div>"
+			newText += "</div>"
 		}
 		return newText
 	}
 
 	//sets the dropdown boxes for selecting matchers to the model data
 	setCurrentDropdown(){
+		console.log('setdropdown')
+		console.log(this)
+
 		if (this.not){
+			console.log('not')
 			var dropdwn = document.getElementById(this.id+"d2")
 			for (var i = 0; i < dropdwn.options.length; i++) {
 				if (dropdwn.options[i].text === this.matcher) {
@@ -98,10 +102,12 @@ class Assert {
 			dropdwn.selectedIndex = 1
 		}
 		else{
+			console.log('normal')
 			var dropdwn = document.getElementById(this.id+"d1")
-			for (var i = 0; i < dropdwn.options.length; i++) {
-				if (dropdwn.options[i].text === this.matcher) {
-					dropdwn.selectedIndex = i
+			console.log(dropdwn)
+			for (var i of dropdwn.options) {
+				if (i.value === this.matcher) {
+					dropdwn.value = i.value
 					break
 				}
 			}
@@ -111,7 +117,6 @@ class Assert {
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
 		theController.myView.setItemClickListeners(this.id)
-		this.setCurrentDropdown()
 	}
 
     toString (tabNum) {

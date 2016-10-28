@@ -113,7 +113,7 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
-					var pastedItems = theController.myModel.unsetCopiedItems()
+					var pastedItems = theController.myModel.getCopiedItems()
 					if (pastedItems == []){
 						toast_msg.show("No item copied")
 						return
@@ -203,17 +203,16 @@ class Controller{
 
 	loadTestData(){
 		this.myModel.createNewRoot("VERY interesting test suite")
-		this.myModel.addSpec("first Child spec")
-		this.myModel.addAssert("Asserts", true, '.toBe', 'bad')
-		var suite = this.myModel.addSuite("firstChild Suite")
+		this.myModel.addSpec("Cook is wearing apron")
+		this.myModel.addAssert("cook.apron", false, '.toBeDefined', '')
+		var suite = this.myModel.addSuite("Making Pancakes!")
 		this.myModel.addBeforeEach()
-		this.myModel.addMiscCode("var apple = 600")
+		this.myModel.addMiscCode("var ingredients = [flour, eggs, milk, butter, banana]")
 		this.myModel.addAfterEach()
-		this.myModel.addMiscCode("var apple = 0")
-		this.myModel.addSpec("child of  child spec 1")
-		this.myModel.addMiscCode("var bananana = 4")
-		this.myModel.addAssert("Pancakes", false, '.toEquals', 'deeelish')
-		this.myModel.addSpec("child of  child spec 2")
+		this.myModel.addMiscCode("plate.clean()")
+		this.myModel.addSpec("Pancakes should be delish")
+		this.myModel.addMiscCode("var bananana = 4\n banana.slice()")
+		this.myModel.addAssert("pancakes.eat()", false, '.toEqual', '"deeelish"')
 
 	}
 
@@ -234,7 +233,20 @@ window.addEventListener('input', function (e) {
 	if (e.target.id.substr(0, 4) === "Item"){
 		console.log(1)
 		console.log(e.target.id.substr(e.target.id.length -2))
-		if (e.target.id.substr(e.target.id.length -2) === "t2"){
+		if (e.target.id.substr(e.target.id.length -2) === "d1" ){
+			console.log(2)
+			let id = e.target.id.slice(0, -2)
+			console.log(id)
+			var item = theController.myModel.find(id)
+			console.log(item)
+			if (item.type === "Assert"){
+				console.log(3)
+				item.contents = e.target.value
+				console.log(item)
+			}
+			return
+		}
+		else if (e.target.id.substr(e.target.id.length -2) === "d2"){
 			console.log(2)
 			let id = e.target.id.slice(0, -2)
 			console.log(id)
