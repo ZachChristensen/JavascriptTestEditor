@@ -121,7 +121,13 @@ class Assert {
 
     toString (tabNum) {
         let tab = "    "
-        let resultStr = tab.repeat(tabNum) + this.contents
+		if (this.not){
+			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + this.matcher + "(" + this.contents2 + ")"
+		}
+		else{
+			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + this.matcher + "(" + this.contents2 + ")"
+		}
+
         return resultStr
     }
 
