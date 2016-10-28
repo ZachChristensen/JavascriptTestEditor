@@ -152,7 +152,7 @@ document.getElementById("fileSelector").addEventListener("change", function() {
 
 function assertDropdown(e){
 	var value = e.value
-	if (value === ".not"){		
+	if (value === ".not"){
 		var z = theController.myModel.find(e.parentElement.id)
 		z.notSelected()
 	}
@@ -178,14 +178,13 @@ function drag(ev) {
 }
 
 function changeDrag(dragSetting, mouseSetting = undefined) {
-	if (mouseSetting != undefined){
-		this.isMouseDown = mouseSetting
-	}
-	if (this.isMouseDown){
+	console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
+	if (mouseSetting != undefined || this.isMouseDown){
 		let suites = document.getElementsByClassName("Suite")
 		let specs = document.getElementsByClassName("Spec")
 		let setups = document.getElementsByClassName("Setup")
 		let asserts = document.getElementsByClassName("Assert")
+		let miscs = document.getElementsByClassName("Misc")
 
 		for (let i = 0; i < suites.length; i++){
 			suites[i].draggable = dragSetting
@@ -199,6 +198,13 @@ function changeDrag(dragSetting, mouseSetting = undefined) {
 		for (let i = 0; i < asserts.length; i++){
 			asserts[i].draggable = dragSetting
 		}
+		for (let i = 0; i < miscs.length; i++){
+			miscs[i].draggable = dragSetting
+		}
+		console.log("drag set to: " + dragSetting)
+	}
+	if (mouseSetting != undefined){
+		this.isMouseDown = mouseSetting
 	}
 }
 
