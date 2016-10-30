@@ -153,10 +153,10 @@ class Controller{
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentTestItem(currentItem)
-				theController.myModel.addMiscCode("")
+				var newMisc = theController.myModel.addMiscCode("")
 				theController.updateDisplay()
 				//focus on new misc
-				document.getElementById("modalDescription").focus()
+				var titleElement = document.getElementById(newMisc.id + 't').focus()
 			}
 		}
 
@@ -204,15 +204,15 @@ class Controller{
 	loadTestData(){
 		this.myModel.createNewRoot("VERY interesting test suite")
 		this.myModel.addSpec("Cook is wearing apron")
-		this.myModel.addAssert("cook.apron", false, '.toBeDefined', '')
+		this.myModel.addAssert("cook.apron", false, 'toBeDefined', '')
 		var suite = this.myModel.addSuite("Making Pancakes!")
 		this.myModel.addBeforeEach()
 		this.myModel.addMiscCode("var ingredients = [flour, eggs, milk, butter, banana]")
 		this.myModel.addAfterEach()
 		this.myModel.addMiscCode("plate.clean()")
 		this.myModel.addSpec("Pancakes should be delish")
-		this.myModel.addMiscCode("var bananana = 4\n banana.slice()")
-		this.myModel.addAssert("pancakes.eat()", false, '.toEqual', '"deeelish"')
+		this.myModel.addMiscCode("var bananana = 4\nbanana.slice()")
+		this.myModel.addAssert("pancakes.eat()", false, 'toEqual', '"deeelish"')
 
 	}
 
@@ -225,15 +225,17 @@ class Controller{
 		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {
 			that.myModel.myFiler.createTestItems(splitFileArray, that.myModel)
 			that.updateDisplay()
+			document.getElementById('newRootBtn').style.display = "none"
 		})
 	}
 }
 
+//update model when inputs are changed
 window.addEventListener('input', function (e) {
+	var identifier = e.target.id.substr(e.target.id.length -2)
 	if (e.target.id.substr(0, 4) === "Item"){
 		console.log(1)
-		console.log(e.target.id.substr(e.target.id.length -2))
-		if (e.target.id.substr(e.target.id.length -2) === "d1" ){
+		if (identifier === "t1" ){
 			console.log(2)
 			let id = e.target.id.slice(0, -2)
 			console.log(id)
@@ -246,7 +248,7 @@ window.addEventListener('input', function (e) {
 			}
 			return
 		}
-		else if (e.target.id.substr(e.target.id.length -2) === "d2"){
+		else if (identifier === "t2"){
 			console.log(2)
 			let id = e.target.id.slice(0, -2)
 			console.log(id)
@@ -259,7 +261,8 @@ window.addEventListener('input', function (e) {
 			}
 			return
 		}
-
+		//ignore dropdowns
+		if (identifier === "d1" || identifier === "d2") return
 		let id = e.target.id.slice(0, -1)
 		console.log(theController.myModel.find(id))
 		theController.myModel.updateItem(id, e.target.value)

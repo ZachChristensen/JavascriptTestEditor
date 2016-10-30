@@ -135,6 +135,7 @@ class TestItem {
 	addMiscCode (itStr, newParent) {
         let aMisc = new MiscCode(itStr, newParent)
         this.allMyChildren.push(aMisc)
+		return aMisc
     }
 
 	addPastedItem(theItem){

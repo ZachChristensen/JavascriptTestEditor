@@ -3,7 +3,7 @@ class Setup extends Suite{
 		super("", newParent)
 		this.type = "Setup"
 	}
-	
+
 	toHTML(Parent){
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
@@ -18,7 +18,7 @@ class Setup extends Suite{
 		newText += '<a class="btnDelete" >Delete</a>'
 		newText += '<a class="btnAddMisc" >Add Misc</a>'
 		newText += '</div></div>'
-		newText += " " + name + "&nbsp;&nbsp;" + "| "+ this.id + "</div>"
+		newText += " " + name
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){

@@ -152,7 +152,7 @@ document.getElementById("fileSelector").addEventListener("change", function() {
 
 function assertDropdown(e){
 	var value = e.value
-	if (value === ".not"){
+	if (value === "not"){
 		var z = theController.myModel.find(e.parentElement.id)
 		z.notSelected()
 	}

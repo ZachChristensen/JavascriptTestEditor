@@ -1,5 +1,5 @@
 class Assert {
-	constructor (contents="", contents2="", newParent = "None", not=false, matcher=".toBe"){
+	constructor (contents="", contents2="", newParent = "None", not=false, matcher="toBe"){
 		this.id = idGenerator()
 		this.contents = contents
 		this.contents2 = contents2
@@ -34,48 +34,50 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:200px; width: calc(100% - 650px);' id='" + this.id + "t' type='text' value='" + this.contents + "'></input>)"
-		newText += "<select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:200px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
+		newText += "<span>.</span><select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
 		newText += '<option disabled>Select...</option>'
-		newText += "<option value='.not'>.not</option>"
-		newText += "<option value='.toBe'>.toBe</option>"
-		newText += "<option value='.toEqual'>.toEqual</option>"
-		newText += "<option value='.toMatch'>.toMatch</option>"
-		newText += "<option value='.toBeDefined'>.toBeDefined</option>"
-		newText += "<option value='.toBeUndefined'>.toBeUndefined</option>"
-		newText += "<option value='.toBeNull'>.toBeNull</option>"
-		newText += "<option value='.toBeTruthy'>.toBeTruthy</option>"
-		newText += "<option value='.toBeFalsy'>.toBeFalsy</option>"
-		newText += "<option value='.toContain'>.toContain</option>"
-		newText += "<option value='.toBeLessThan'>.toBeLessThan</option>"
-		newText += "<option value='.toBeGreaterThan'>.toBeGreaterThan</option>"
-		newText += "<option value='.toBeCloseTo'>.toBeCloseTo</option>"
-		newText += "<option value='.toThrow'>.toThrow</option>"
-		newText += "<option value='.toThrowError'>.toThrowError</option>"
+		newText += "<option value='not'>not</option>"
+		newText += "<option value='toBe'>toBe</option>"
+		newText += "<option value='toEqual'>toEqual</option>"
+		newText += "<option value='toMatch'>toMatch</option>"
+		newText += "<option value='toBeDefined'>toBeDefined</option>"
+		newText += "<option value='toBeUndefined'>toBeUndefined</option>"
+		newText += "<option value='toBeNull'>toBeNull</option>"
+		newText += "<option value='toBeTruthy'>toBeTruthy</option>"
+		newText += "<option value='toBeFalsy'>toBeFalsy</option>"
+		newText += "<option value='toContain'>toContain</option>"
+		newText += "<option value='toBeLessThan'>toBeLessThan</option>"
+		newText += "<option value='toBeGreaterThan'>toBeGreaterThan</option>"
+		newText += "<option value='toBeCloseTo'>toBeCloseTo</option>"
+		newText += "<option value='toThrow'>toThrow</option>"
+		newText += "<option value='toThrowError'>toThrowError</option>"
 		newText += "</select>"
 
 		if(this.not){
-			newText += "<select id='"+this.id+"d2' onchange='assertDropdown(this)'>"
+			newText += "<span>.</span><select id='"+this.id+"d2' onchange='assertDropdown(this)'>"
 
 			newText += '<option disabled>Select...</option>'
-			newText += "<option value='.toBe'>.toBe</option>"
-			newText += "<option value='.toEqual'>.toEqual</option>"
-			newText += "<option value='.toMatch'>.toMatch</option>"
-			newText += "<option value='.toBeDefined'>.toBeDefined</option>"
-			newText += "<option value='.toBeUndefined'>.toBeUndefined</option>"
-			newText += "<option value='.toBeNull'>.toBeNull</option>"
-			newText += "<option value='.toBeTruthy'>.toBeTruthy</option>"
-			newText += "<option value='.toBeFalsy'>.toBeFalsy</option>"
-			newText += "<option value='.toContain'>.toContain</option>"
-			newText += "<option value='.toBeLessThan'>.toBeLessThan</option>"
-			newText += "<option value='.toBeGreaterThan'>.toBeGreaterThan</option>"
-			newText += "<option value='.toBeCloseTo'>.toBeCloseTo</option>"
-			newText += "<option value='.toThrow'>.toThrow</option>"
-			newText += "<option value='.toThrowError'>.toThrowError</option>"
+			newText += "<option value='toBe'>toBe</option>"
+			newText += "<option value='toEqual'>toEqual</option>"
+			newText += "<option value='toMatch'>toMatch</option>"
+			newText += "<option value='toBeDefined'>toBeDefined</option>"
+			newText += "<option value='toBeUndefined'>toBeUndefined</option>"
+			newText += "<option value='toBeNull'>toBeNull</option>"
+			newText += "<option value='toBeTruthy'>toBeTruthy</option>"
+			newText += "<option value='toBeFalsy'>toBeFalsy</option>"
+			newText += "<option value='toContain'>toContain</option>"
+			newText += "<option value='toBeLessThan'>toBeLessThan</option>"
+			newText += "<option value='toBeGreaterThan'>toBeGreaterThan</option>"
+			newText += "<option value='toBeCloseTo'>toBeCloseTo</option>"
+			newText += "<option value='toThrow'>toThrow</option>"
+			newText += "<option value='toThrowError'>toThrowError</option>"
 			newText += "</select>"
 		}
-
-		newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 650px); min-width:200px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
+			newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 660px); min-width:200px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+		}
+		else newText += "( )"
 
 
 		if (outerDiv){
@@ -122,10 +124,10 @@ class Assert {
     toString (tabNum) {
         let tab = "    "
 		if (this.not){
-			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + this.matcher + "(" + this.contents2 + ")"
+			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "(" + this.contents2 + ")"
 		}
 		else{
-			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + this.matcher + "(" + this.contents2 + ")"
+			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "(" + this.contents2 + ")"
 		}
 
         return resultStr
@@ -155,8 +157,8 @@ class Assert {
 		if (isFirstDropdwn){
 			this.not = false
 		}
-		theController.myView.setToDiv(this.id, this.toHTMLString(false))
 		this.matcher = value
+		theController.myView.setToDiv(this.id, this.toHTMLString(false))
 		this.setCurrentDropdown()
 	}
 

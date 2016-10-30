@@ -23,11 +23,6 @@ class Spec extends TestItem {
     return resultStr
 	}
 
-  addMiscCode (itStr, newParent) {
-      let aMisc = new MiscCode(itStr, newParent)
-      this.allMyChildren.push(aMisc)
-  }
-
 	findChild (theId){
 		for (var child of this.allMyChildren){
 			if (child.id === theId){

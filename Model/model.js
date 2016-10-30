@@ -144,12 +144,11 @@ class Model{
 		this.copiedItems = items
 	}
 
-	unsetCopiedItems (suite) {
+	getCopiedItems (suite) {
 		if (this.copiedItems.length === 0){
 			return
 		}
 		var item = this.copiedItems
-		this.copiedItems = []
 		return item
 	}
 
@@ -176,7 +175,7 @@ class Model{
 
 	addMiscCode (miscCode) {
 		if(this.currentTestItem != undefined){
-			this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
+			return this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 		}
 	}
 
@@ -200,6 +199,7 @@ class Model{
 	}
 
 	updateItem(elementID, newStr){
+		console.log('update item')
 		var item = this.find(elementID)
 		if (item.type === "Assert"){
 			item.contents = newStr
