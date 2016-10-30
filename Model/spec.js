@@ -4,9 +4,10 @@ class Spec extends TestItem {
 		this.allMyChildren = []
 	}
 
-	addAssert (contents, newParent) {
-		let aAssert = new Assert(contents, newParent)
+	addAssert (contents, not, matcher, contents2) {
+		let aAssert = new Assert(contents, contents2, this, not, matcher)
 		this.allMyChildren.push(aAssert)
+		return aAssert
 	}
 
   toString (tabNum) {
@@ -21,11 +22,6 @@ class Spec extends TestItem {
     resultStr += tab.repeat(theTab - 1) + "})\r\n"
     return resultStr
 	}
-
-  addMiscCode (itStr, newParent) {
-      let aMisc = new MiscCode(itStr, newParent)
-      this.allMyChildren.push(aMisc)
-  }
 
 	findChild (theId){
 		for (var child of this.allMyChildren){

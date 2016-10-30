@@ -21,7 +21,7 @@ html, body{
 
 .wrapper {
 	min-height: 100%;
-	margin: 0 auto 2em; 
+	margin: 0 auto 2em;
 }
 
 .inner {
@@ -70,17 +70,18 @@ header h1{
 .navInner li {
 	float: right;
 	display: block;
+	color:#111;
 }
 
 .navInner li:last-child{
 }
 
 .navInner li:hover {
-	background-color: #B1DCAD; 
+	background-color: #B1DCAD;
 }
 
 .current-page:hover {
-	background-color: #BCE9B7; 
+	background-color: #BCE9B7;
 }
 
 .navInner a {
@@ -92,14 +93,20 @@ header h1{
 
 .navInner a:visited {
     color: #333;
-} 
-
+}
+a:-webkit-any-link {
+	color: #333;
+}
 .nav2{
     display:none;
 }
 
 .current-page{
 	background-color: #83DC79;
+}
+
+input,select{
+	font-size: 11pt;
 }
 
 #content{
@@ -126,7 +133,7 @@ header h1{
 {
 	margin:1em;
 	padding:1em;
-	border: 1px solid #444;
+	border: 1.5px solid #FFF;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -176,15 +183,15 @@ header h1{
 
 /* The Modal (background) */
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 99; 
+    display: none;
+    position: fixed;
+    z-index: 99;
     padding-top: 100px;
     left: 0;
     top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
+    width: 100%;
+    height: 100%;
+    overflow: auto;
     background-color: rgba(0,0,0,0.4);
 }
 
@@ -258,21 +265,23 @@ menu {
     width:2em;
     padding:0;
     margin:0;
-    border:1px solid;
-    background-color:white;
+    border:1.2px solid;
+    background-color:#FFF;
     font-weight:normal;
     white-space:nowrap;
 }
 
 menu:hover{
-    background-color:#eef;
+    background-color:#8AAAFF;
     font-weight:bold;
 }
 menu > menu:hover{
 	cursor:pointer;
+	color:white;
 }
 menu:hover > menu{
     display:block;
+	color:black;
 }
 menu > menu{
     display:none;
@@ -299,7 +308,7 @@ menu:not([title]):before{
 	.left-button{
 		font-size: 0.85em;
 	}
-	
+
 	.inner {
 		width: 45em;
 	}
@@ -307,11 +316,11 @@ menu:not([title]):before{
 	#main {
 		width: 45em;
 	}
-	
+
 	.navInner {
 		width: 45em;
 	}
-	
+
 	.footerInner {
 		width: 45em;
 	}
@@ -321,7 +330,7 @@ menu:not([title]):before{
 	header h1 {
 		font-size: 2.2em;
 	}
-	
+
 	.inner {
 		width: 37em;
 	}
@@ -329,12 +338,12 @@ menu:not([title]):before{
 	#main {
 		width: 37em;
 	}
-	
+
 	.navInner {
 		width: 100%;
 		font-size: 1em;
 	}
-	
+
 	.nav1 a {
 		font-size: 0.9em;
 	}
@@ -348,12 +357,12 @@ menu:not([title]):before{
 	header h1{
 		font-size:2em;
 	}
-	
+
 	#main{
 		clear: both;
 		width: 36em;
 	}
-	
+
 	.inner {
 		width: 30em;
 	}
@@ -361,41 +370,41 @@ menu:not([title]):before{
 	.mainInner {
 		width: 30em;
 	}
-	
+
 	.navInner li {
 		border-right:none;
 	}
-	
+
 	.nav1{
         display:none;
     }
-	
+
 	.nav2{
 		width: 100%;
         display:inline;
 		margin-bottom:2em;
     }
-	
+
 	.nav{
 		width: 100%;
 		float: left;
 	}
-	
+
 	.nav2 li{
 		display:block;
 		float:none;
 	}
-	
+
 	.nav2 ul{
 		padding-left: 0;
 	}
-	
+
 	.nav2 a{
 		text-align: center;
 	}
-	
+
 	.navInner{
-		width: 100%;
+		 width: 100%;
 	}
 
 	#content{
@@ -412,7 +421,7 @@ menu:not([title]):before{
     }
     footer{
         display:none;
-    }    
+    }
     #content{
         width:100%;
     }

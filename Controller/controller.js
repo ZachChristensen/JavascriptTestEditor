@@ -14,7 +14,6 @@ class Controller{
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
 			spec.onclick = function(event) {
-				console.log("spec func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
@@ -29,7 +28,6 @@ class Controller{
 		let suitebtns = document.getElementsByClassName("btnAddSuite")
 		for (var suite of suitebtns){
 			suite.onclick = function(event) {
-				console.log("suite func")
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentSuite(currentItem)
@@ -43,7 +41,6 @@ class Controller{
 		let deletebtns = document.getElementsByClassName("btnDelete")
 		for (var btn of deletebtns){
 			btn.onclick = function(event) {
-				console.log("delete func")
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var itemID = event.target.parentElement.parentElement.parentElement.id
 					var item = theController.myModel.find(itemID)
@@ -51,6 +48,7 @@ class Controller{
 					if (item.parent === "None"){
 						theController.myModel.root = undefined
 						theController.myModel.currentSuite = undefined
+						theController.myModel.asserts = []
 						idGenerator = new idCounter();
 					}
 					else{
@@ -59,6 +57,14 @@ class Controller{
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
+
+					let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+					if (doesExist != -1){
+						console.log(theController.myModel.asserts)
+						theController.myModel.asserts.splice(doesExist, 1)
+						console.log(theController.myModel.asserts)
+					}
+
 					theController.updateDisplay()
 					toast_msg.showDeleted()
 				}
@@ -80,7 +86,6 @@ class Controller{
 		for (var btn of copybtns){
 			btn.onclick = function(event) {
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				console.log(event.target.parentElement.parentElement.parentElement.id)
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCopiedItem(currentItem)
 				toast_msg.showCopy()
@@ -108,7 +113,7 @@ class Controller{
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
-					var pastedItems = theController.myModel.unsetCopiedItems()
+					var pastedItems = theController.myModel.getCopiedItems()
 					if (pastedItems == []){
 						toast_msg.show("No item copied")
 						return
@@ -148,10 +153,10 @@ class Controller{
 				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
 				var currentItem = theController.myModel.find(SELECTEDSUITE)
 				theController.myModel.setCurrentTestItem(currentItem)
-				theController.myModel.addMiscCode("")
+				var newMisc = theController.myModel.addMiscCode("")
 				theController.updateDisplay()
 				//focus on new misc
-				document.getElementById("modalDescription").focus()
+				var titleElement = document.getElementById(newMisc.id + 't').focus()
 			}
 		}
 
@@ -178,6 +183,10 @@ class Controller{
 				theController.updateDisplay()
 			}
 		}
+		for (var assert of this.myModel.asserts){
+			console.log(this.myModel.asserts)
+			assert.setCurrentDropdown()
+		}
 	}
 
 	outputToDiv(divID, textContent){
@@ -192,30 +201,18 @@ class Controller{
 		this.updateDisplay()
 	}
 
-	loadTestData2(){
-		this.myModel.createNewRoot("Root Sweetie")
-		this.myModel.addSpec("first Child spec")
-		var suite = this.myModel.addSuite("firstChild Suite")
-		this.myModel.setCurrentSuite(suite)
-		this.myModel.addSpec("child of  child spec 1")
-		this.myModel.addSpec("child of  child spec 2")
-		this.myModel.addSuite("childOfChild Suite")
-		this.myModel.addSpec("child of  child spec 3")
-	}
-
 	loadTestData(){
-		this.myModel.createNewRoot("Root Sweetie")
-		this.myModel.addSpec("first Child spec")
-		this.myModel.addAssert("Assert == Hello")
-		var suite = this.myModel.addSuite("firstChild Suite")
+		this.myModel.createNewRoot("VERY interesting test suite")
+		this.myModel.addSpec("Cook is wearing apron")
+		this.myModel.addAssert("cook.apron", false, 'toBeDefined', '')
+		var suite = this.myModel.addSuite("Making Pancakes!")
 		this.myModel.addBeforeEach()
-		this.myModel.addMiscCode("var apple = 600")
+		this.myModel.addMiscCode("var ingredients = [flour, eggs, milk, butter, banana]")
 		this.myModel.addAfterEach()
-		this.myModel.addMiscCode("var apple = 0")
-		this.myModel.addSpec("child of  child spec 1")
-		this.myModel.addMiscCode("var bananana = 4")
-		this.myModel.addAssert("Assert 2")
-		this.myModel.addSpec("child of  child spec 2")
+		this.myModel.addMiscCode("plate.clean()")
+		this.myModel.addSpec("Pancakes should be delish")
+		this.myModel.addMiscCode("var bananana = 4\nbanana.slice()")
+		this.myModel.addAssert("pancakes.eat()", false, 'toEqual', '"deeelish"')
 
 	}
 
@@ -228,12 +225,44 @@ class Controller{
 		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {
 			that.myModel.myFiler.createTestItems(splitFileArray, that.myModel)
 			that.updateDisplay()
+			document.getElementById('newRootBtn').style.display = "none"
 		})
 	}
 }
 
+//update model when inputs are changed
 window.addEventListener('input', function (e) {
+	var identifier = e.target.id.substr(e.target.id.length -2)
 	if (e.target.id.substr(0, 4) === "Item"){
+		console.log(1)
+		if (identifier === "t1" ){
+			console.log(2)
+			let id = e.target.id.slice(0, -2)
+			console.log(id)
+			var item = theController.myModel.find(id)
+			console.log(item)
+			if (item.type === "Assert"){
+				console.log(3)
+				item.contents = e.target.value
+				console.log(item)
+			}
+			return
+		}
+		else if (identifier === "t2"){
+			console.log(2)
+			let id = e.target.id.slice(0, -2)
+			console.log(id)
+			var item = theController.myModel.find(id)
+			console.log(item)
+			if (item.type === "Assert"){
+				console.log(3)
+				item.contents2 = e.target.value
+				console.log(item)
+			}
+			return
+		}
+		//ignore dropdowns
+		if (identifier === "d1" || identifier === "d2") return
 		let id = e.target.id.slice(0, -1)
 		console.log(theController.myModel.find(id))
 		theController.myModel.updateItem(id, e.target.value)

@@ -17,7 +17,7 @@ class Model{
 
 		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
-
+		this.asserts = []
 		this.selected = []
 		this.selectedParent = undefined
 	}
@@ -144,12 +144,11 @@ class Model{
 		this.copiedItems = items
 	}
 
-	unsetCopiedItems (suite) {
+	getCopiedItems (suite) {
 		if (this.copiedItems.length === 0){
 			return
 		}
 		var item = this.copiedItems
-		this.copiedItems = []
 		return item
 	}
 
@@ -168,15 +167,15 @@ class Model{
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
-	addAssert (contents) {
+	addAssert (contents="", not=false, matcher="", contents2="") {
 		if(this.currentTestItem != undefined){
-			this.currentTestItem.addAssert(contents, this.currentTestItem)
+			this.asserts.push(this.currentTestItem.addAssert(contents, not, matcher, contents2))
 		}
 	}
 
 	addMiscCode (miscCode) {
 		if(this.currentTestItem != undefined){
-			this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
+			return this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 		}
 	}
 
@@ -200,6 +199,7 @@ class Model{
 	}
 
 	updateItem(elementID, newStr){
+		console.log('update item')
 		var item = this.find(elementID)
 		if (item.type === "Assert"){
 			item.contents = newStr
@@ -219,7 +219,7 @@ class Model{
 		var HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
 		if (this.root !== undefined){
-			
+
 			return this.root.toHTML('main')
 		}else{
 			document.getElementById('newRootBtn').style.display = "block"

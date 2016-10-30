@@ -5,7 +5,6 @@ jshint esversion:6
 jshint asi:true
 */
 
-//Fix dependancies in the code on theController?
 var SELECTEDSUITE = ""
 var NEWTYPE = ""
 var currentItem
@@ -29,6 +28,10 @@ var ctxDelete = document.getElementById("ctxDelete")
 for (var btn of clearBtns){
 	btn.onclick = function(event) {
 		theController.myModel.root = undefined
+		theController.myModel.currentSuite = undefined
+		theController.myModel.asserts = []
+		idGenerator = new idCounter();
+
 		theController.updateDisplay()
 		idGenerator = new idCounter();
 	}
@@ -114,6 +117,7 @@ ctxDelete.onclick = function(event) {
 	if (currentItems[0].parent === "None"){
 		theController.myModel.root = undefined
 		theController.myModel.currentSuite = undefined
+		theController.myModel.asserts = []
 		idGenerator = new idCounter();
 		theController.updateDisplay()
 		toast_msg.showDeleted()
@@ -144,7 +148,22 @@ document.getElementById("fileSelector").addEventListener("change", function() {
     theController = new Controller()
 	idGenerator = new idCounter();
 	theController.loadFromFile()
-});
+})
+
+function assertDropdown(e){
+	var value = e.value
+	if (value === "not"){
+		var z = theController.myModel.find(e.parentElement.id)
+		z.notSelected()
+	}
+	else{
+		var z = theController.myModel.find(e.parentElement.id)
+		if (e.id.substr(5,2) == "d1"){
+			z.dropdownSelected(value, true)
+		}
+		else z.dropdownSelected(value, false)
+	}
+}
 
 function allowDrop(ev) {
     ev.preventDefault();

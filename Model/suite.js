@@ -4,22 +4,22 @@ class Suite extends TestItem{
 		this.allMyChildren = []
 	}
 
-  addBefore () {
+	addBefore () {
 		let aBefore = new BeforeEach(this)
 		this.allMyChildren.unshift(aBefore)
 		return aBefore
 	}
 
-  addAfter () {
+	addAfter () {
 		let aAfter = new AfterEach(this)
 		this.allMyChildren.unshift(aAfter)
 		return aAfter
-  }
+	}
 
 	addSpec (itStr, newParent) {
 		let aSpec = new Spec(itStr, newParent)
 		this.allMyChildren.push(aSpec)
-    return aSpec
+		return aSpec
 	}
 
 	addSuite (itStr, newParent) {
@@ -27,7 +27,7 @@ class Suite extends TestItem{
 		this.allMyChildren.push(aSuite)
 	}
 
-  toString (tabNum) {
+	toString (tabNum) {
 		var resultStr, theTab, child
 		var tab = "    "
 		theTab = tabNum

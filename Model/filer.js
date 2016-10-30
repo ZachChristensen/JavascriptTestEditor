@@ -105,11 +105,53 @@ class Filer{
                   this.myModel.addMiscCode(this.miscCode)
                   this.miscCode = ""
               }
-              this.myModel.addAssert(items[i].trim())
+              this.splitAssert(items[i].trim())
           }else if (items[i].trim() != ""){
               this.miscCode += items[i].trim() + "\r\n"
           }
       }
+  }
+
+  splitAssert(str){
+      console.log("TRY ADD ASSERT")
+      var arr = str.substring(str.indexOf('(')+1)
+      var not = false
+      var content = ""
+      var matcher = "toEqual"
+      var arr2 = arr.split("")
+      var numBrack = 1
+      var arr2Num = 0
+      var cycleLimit = 50
+      while (numBrack >= 1){
+          if (cycleLimit-- === 0){
+              //prevent inf loop
+              console.log('inf loop prevented??')
+              return
+          }
+          if (arr2[arr2Num] === "("){
+              numBrack++
+          }
+          if (arr2[arr2Num] === ")"){
+              numBrack--
+          }
+          arr2Num++
+      }
+      content = arr.substr(0, arr2Num-1)
+
+      let matchStr = arr.substr(arr2Num)
+      let cnt2 = arr.substr(arr2Num)
+      cnt2 = cnt2.substring(cnt2.indexOf('('))
+      matchStr = matchStr.substring(0, matchStr.indexOf('('))
+      let matchers = matchStr.split('.')
+      if (matchers[1] === 'not'){
+          not = true
+          matcher = matchers[2]
+      }
+      else{
+          matcher = matchers[1]
+      }
+      cnt2 = cnt2.substr(1,cnt2.length-2)
+      this.myModel.addAssert(content, not, matcher, cnt2)
   }
 
   getNodeDescription(node){

@@ -56,10 +56,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 180px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 120px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> | "+ this.id + "</div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
@@ -125,7 +125,6 @@ class TestItem {
 	findIndent(){
 		var current = this,
 		depth = 0
-		console.log()
 		while (typeof current.parent != "string"){
 			depth++
 			current = current.parent
@@ -136,6 +135,7 @@ class TestItem {
 	addMiscCode (itStr, newParent) {
         let aMisc = new MiscCode(itStr, newParent)
         this.allMyChildren.push(aMisc)
+		return aMisc
     }
 
 	addPastedItem(theItem){
@@ -163,11 +163,10 @@ class TestItem {
 				else if (i.type === "Suite"){
 					var newSuite = new Suite(i.description, theClone)
 					newSuite.allMyChildren = i.duplicateMyChildren(i, newSuite)
-
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
-					var newAssert = new Assert(i.contents, theClone)
+					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
 				}
 				else if (i.type === "Misc"){
@@ -187,7 +186,7 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, this)
+			var newAssert = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
 		}
 		else if (orig.type === "Misc"){
 			var theClone = new MiscCode(orig.contents, this)
@@ -230,7 +229,7 @@ class TestItem {
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
-					var newAssert = new Assert(i.contents, theClone)
+					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
 				}
 				else if (i.type === "Misc"){
@@ -250,7 +249,7 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, this)
+			var theClone = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
 		}
 		else if (i.type === "Misc"){
 			var theClone = new MiscCode(i.contents, theClone)
@@ -306,7 +305,7 @@ class TestItem {
 
 	removeChild(index){
 		if (index > -1) {
-			this.allMyChildren.splice(index, 1);
+			this.allMyChildren.splice(index, 1)
 		}
 	}
 }
