@@ -70,6 +70,7 @@ header h1{
 .navInner li {
 	float: right;
 	display: block;
+	color:#111;
 }
 
 .navInner li:last-child{
@@ -93,7 +94,9 @@ header h1{
 .navInner a:visited {
     color: #333;
 }
-
+a:-webkit-any-link {
+	color: #333;
+}
 .nav2{
     display:none;
 }
