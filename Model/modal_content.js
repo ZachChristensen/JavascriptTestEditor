@@ -52,7 +52,30 @@ class modal_content{
 
 	static setAddAssert(){
 		var title = "Add New Assert"
-		var content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Assert Content"></input><input type="text" id="modalDescription2" placeholder="Assert Content 2"></input><button id="modalAddBtn">Add</button></div>'
+		var content = `<div id="modalContent"><br>
+		expect(<input type="text" id="modalDescription" placeholder="Assert Content"></input>)
+
+		 <span>.</span>
+		 <select id='modald1' onchange='assertDropdown(this)'>
+			 <option disabled>Select...</option>
+			 <option value='toBe'>toBe</option>
+			 <option value='toEqual'>toEqual</option>
+			 <option value='toMatch'>toMatch</option>
+			 <option value='toBeDefined'>toBeDefined</option>
+			 <option value='toBeUndefined'>toBeUndefined</option>
+			 <option value='toBeNull'>toBeNull</option>
+			 <option value='toBeTruthy'>toBeTruthy</option>
+			 <option value='toBeFalsy'>toBeFalsy</option>
+			 <option value='toContain'>toContain</option>
+			 <option value='toBeLessThan'>toBeLessThan</option>
+			 <option value='toBeGreaterThan'>toBeGreaterThan</option>
+			 <option value='toBeCloseTo'>toBeCloseTo</option>
+			 <option value='toThrow'>toThrow</option>
+			 <option value='toThrowError'>toThrowError</option>
+		 </select>
+		 (<input type="text" id="modalDescription2" placeholder="Assert Content 2"></input>)
+ 		<button id="modalAddBtn">Add</button>
+		</div>`
 		var titleID = "modalTitle"
 		var contentID = "modalContent"
 		var titleElement = document.getElementById(titleID)
@@ -63,8 +86,9 @@ class modal_content{
 		modalAddBtn.onclick = function(event) {
 			var modalDescr = document.getElementById("modalDescription")
 			var modalDescr2 = document.getElementById("modalDescription2")
+			var modald1 = document.getElementById("modald1")
 
-			theController.myModel.addAssert(modalDescr.value, true, 'toEqual', modalDescr2.value)
+			theController.myModel.addAssert(modalDescr.value, false, modald1.value, modalDescr2.value)
 			theController.updateDisplay()
 			modal.style.display = "none"
 			modalDescr.value = ""

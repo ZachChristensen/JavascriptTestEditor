@@ -123,13 +123,23 @@ class Assert {
 
     toString (tabNum) {
         let tab = "    "
-		if (this.not){
-			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "(" + this.contents2 + ")"
+		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
+			if (this.not){
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "(" + this.contents2 + ")"
+			}
+			else{
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "(" + this.contents2 + ")"
+			}
 		}
 		else{
-			var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "(" + this.contents2 + ")"
-		}
+			if (this.not){
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "()"
+			}
+			else{
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "()"
+			}
 
+		}
         return resultStr
     }
 
