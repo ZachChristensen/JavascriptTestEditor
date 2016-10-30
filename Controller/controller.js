@@ -123,6 +123,10 @@ class Controller{
 							toast_msg.show("Error Spec cannot contain Suites")
 							return
 						}
+						if ( (item.type == "Spec" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain spec")
+							return
+						}
 					}
 					for (var item of pastedItems){
 						currentItem.addPastedItem( item )
