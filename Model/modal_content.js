@@ -149,6 +149,10 @@ class modal_content{
 		var contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
 
+		var filenameInput = document.getElementById("filenameInput")
+
+		filenameInput.value = theController.myModel.filename.split('.')[0]
+
 		var modalSaveButton = document.getElementById("modalSaveButton")
 		modalSaveButton.onclick = function(event) {
 			var filename = document.getElementById("filenameInput").value

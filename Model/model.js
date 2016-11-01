@@ -181,16 +181,26 @@ class Model{
 		}
 	}
 
-	addBeforeEach(){
+	addBeforeEach(toEnd = false){
 		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-		this.currentTestItem = parentSuite.addBefore()
+		if (toEnd){
+			this.currentTestItem = parentSuite.addBeforeToEnd()
+		}
+		else{
+			this.currentTestItem = parentSuite.addBefore()
+		}
 	}
 
-	addAfterEach(){
+	addAfterEach(toEnd = false){
 		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
-		this.currentTestItem = parentSuite.addAfter()
+		if (toEnd){
+			this.currentTestItem = parentSuite.addAfterToEnd()
+		}
+		else{
+			this.currentTestItem = parentSuite.addAfter()
+		}
 	}
 
 	find (idStr) {

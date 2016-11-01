@@ -131,6 +131,14 @@ class Controller{
 							toast_msg.show("Error Spec cannot contain spec")
 							return
 						}
+						if ( (item.type == "BeforeEach" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain AfterEach")
+							return
+						}
+						if ( (item.type == "AfterEach" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain BeforeEach")
+							return
+						}
 					}
 					for (var item of pastedItems){
 						currentItem.addPastedItem( item )

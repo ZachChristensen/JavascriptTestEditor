@@ -80,10 +80,10 @@ class Filer{
                   this.myModel.addSpec(this.getNodeDescription(items[i]))
               }else if (type == "beforeeach"){
                   this.setPreviousTestItemMiscCode()
-                  this.myModel.addBeforeEach()
+                  this.myModel.addBeforeEach(true)
               }else if (type == "aftereach"){
                   this.setPreviousTestItemMiscCode()
-                  this.myModel.addAfterEach()
+                  this.myModel.addAfterEach(true)
               }else{
                   this.checkForMiscCode(items[i])
               }
