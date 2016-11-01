@@ -9,6 +9,10 @@ class Controller{
 
 	updateDisplay(){
 		this.myModel.toHTML()
+
+		let filename = document.getElementById("filename")
+		filename.innerHTML = this.myModel.filename
+
 		theController.myModel.selected = []
 		//set onclick methods for dropdown addSpec/Suite btns
 		let specbtns = document.getElementsByClassName("btnAddSpec")

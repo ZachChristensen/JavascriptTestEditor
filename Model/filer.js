@@ -21,6 +21,7 @@ class Filer{
 
   loadSuiteFromFile(inputElementId, currentFrameWork, callback){
     let file = document.getElementById(inputElementId).files[0]
+    theController.myModel.filename = file.name
     let that = this
     this.readFile(file, function(e) {
       callback(that.splitString(e.target.result, "{"))
@@ -28,8 +29,8 @@ class Filer{
   }
 
   saveToFile(currentFrameWork, filename){
-    let blob = new Blob([currentFrameWork.toString()], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, filename + ".txt");
+    let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"});
+    saveAs(blob, filename + ".js");
   }
   createTestItems(splitFileArray, model){
       this.myModel = model

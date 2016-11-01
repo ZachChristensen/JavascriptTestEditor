@@ -10,6 +10,8 @@ class Model{
 		this.root = undefined
 		this.copiedItems = []
 
+		this.filename = 'newTest.js'
+
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 

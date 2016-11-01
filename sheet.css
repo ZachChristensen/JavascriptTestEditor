@@ -12,6 +12,17 @@ h1,h2,h3,h4,h5,h6{
 
 header h1{
 	text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
+	float:left;
+    font-family: 'Merriweather', serif;
+	color:#FFF;
+    font-size:3em;
+}
+
+#filename{
+	float:right;
+	font-size:1em;
+	color:#FFF;
+	font-family: 'Arial', serif;
 }
 
 html, body{
@@ -43,13 +54,6 @@ header{
     line-height:6em;
 	background-color:#93B2E8;
 	z-index:3;
-}
-
-header h1{
-    float:left;
-    font-family: 'Merriweather', serif;
-	color:#FFF;
-    font-size:3em;
 }
 
 .nav{
