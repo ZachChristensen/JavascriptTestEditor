@@ -4,7 +4,7 @@ class Model{
 	constructor(newController){
 		console.log("model")
 		this.myController = newController
-		this.myFiler = new Filer()
+		this.myFiler = new Filer(this)
 
 		//danger code!
 		this.root = undefined

@@ -4,12 +4,13 @@ class HTMLView{
 	constructor(newController){
 		console.log("view")
 		this.controller = newController
+		this.inputs = []
 	}
 
 	cleanView(){
 		document.getElementById('main').innerHTML = ""
 	}
-	
+
 	setItemClickListeners(elementID){
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
@@ -19,13 +20,13 @@ class HTMLView{
 			ctxMenu.style.top = "";
 
 			if (e.ctrlKey) {
-				
+
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))
-				
+
 			}
 			e.stopPropagation()
 		});
-		
+
 		theElement.addEventListener("contextmenu",function(event){
 			if (event.ctrlKey) {
 				event.preventDefault();
@@ -35,7 +36,7 @@ class HTMLView{
 				ctxMenu.style.top = (event.pageY - 10)+"px";
 			}
 		},false);
-				
+
 		//Incomplete highlight on hover
 		// theElement.addEventListener("mouseover", function( event ) {
 			// if (event.target.className === "dropbtn" || event.target.className.slice(0,3) === "btn") return false
@@ -45,11 +46,11 @@ class HTMLView{
 				// }, 500);
 		// }, false);
 	}
-	
+
 	changeItemBackground(theElementId){
 		document.getElementById(theElementId).style.backgroundColor = '#9DD'
 	}
-	
+
 	resetItemBackground(theElementId){
 		let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
 		document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
@@ -59,7 +60,7 @@ class HTMLView{
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML += textContent
 	}
-	
+
 	setToDiv(divID, textContent){
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML = textContent

@@ -9,6 +9,10 @@ class Controller{
 
 	updateDisplay(){
 		this.myModel.toHTML()
+
+		let filename = document.getElementById("filename")
+		filename.innerHTML = this.myModel.filename
+
 		theController.myModel.selected = []
 		this.setButtonOnlicks()
 	}
@@ -129,6 +133,14 @@ class Controller{
 						}
 						if ( (item.type == "Spec" && currentItem.type == "Spec")){
 							toast_msg.show("Error Spec cannot contain spec")
+							return
+						}
+						if ( (item.type == "BeforeEach" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain AfterEach")
+							return
+						}
+						if ( (item.type == "AfterEach" && currentItem.type == "Spec")){
+							toast_msg.show("Error Spec cannot contain BeforeEach")
 							return
 						}
 					}

@@ -139,7 +139,7 @@ class modal_content{
 		  <input type="radio" name="assert" value="should"> should
 		</form>
 		<h5 style="margin-top:1em;">Filename</h5>
-		<input  value="TestCase" id='filenameInput'/>.txt<br>
+		<input  value="TestCase" id='filenameInput'/>.js<br>
 		<button style="margin-top:1em;" id="modalSaveButton">Save File</button>
 		`
 		var titleID = "modalTitle"
@@ -149,10 +149,14 @@ class modal_content{
 		var contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
 
+		var filenameInput = document.getElementById("filenameInput")
+
+		filenameInput.value = theController.myModel.filename.split('.')[0]
+
 		var modalSaveButton = document.getElementById("modalSaveButton")
 		modalSaveButton.onclick = function(event) {
 			var filename = document.getElementById("filenameInput").value
-			if (filename == "") return //Error popup ToDo - Zach
+			if (filename == "") return toast_msg.show("Filename cannot be empty")
 			theController.saveToFile(filename)
 		}
 	}

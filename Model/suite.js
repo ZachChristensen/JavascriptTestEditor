@@ -10,9 +10,21 @@ class Suite extends TestItem{
 		return aBefore
 	}
 
+	addBeforeToEnd () {
+		let aBefore = new BeforeEach(this)
+		this.allMyChildren.push(aBefore)
+		return aBefore
+	}
+
 	addAfter () {
 		let aAfter = new AfterEach(this)
 		this.allMyChildren.unshift(aAfter)
+		return aAfter
+	}
+
+	addAfterToEnd () {
+		let aAfter = new AfterEach(this)
+		this.allMyChildren.push(aAfter)
 		return aAfter
 	}
 
