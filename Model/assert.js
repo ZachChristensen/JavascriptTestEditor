@@ -34,7 +34,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:200px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
 		newText += "<span>.</span><select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
 		newText += '<option disabled>Select...</option>'
 		newText += "<option value='not'>not</option>"
@@ -75,7 +75,7 @@ class Assert {
 			newText += "</select>"
 		}
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
-			newText += "(<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 660px); min-width:200px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+			newText += "(<input class='input' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 660px); min-width:180px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
 		}
 		else newText += "( )"
 
@@ -86,7 +86,7 @@ class Assert {
 		return newText
 	}
 
-	//sets the dropdown boxes for selecting matchers to the model data
+
 	setCurrentDropdown(){
 		console.log('setdropdown')
 		console.log(this)
@@ -170,11 +170,13 @@ class Assert {
 		this.matcher = value
 		theController.myView.setToDiv(this.id, this.toHTMLString(false))
 		this.setCurrentDropdown()
+		theController.setButtonOnlicks()
 	}
 
 	notSelected(){
 		this.not = true
 		theController.myView.setToDiv(this.id, this.toHTMLString(false))
+		theController.setButtonOnlicks()
 		this.setCurrentDropdown()
 	}
 

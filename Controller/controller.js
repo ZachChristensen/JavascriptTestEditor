@@ -10,6 +10,10 @@ class Controller{
 	updateDisplay(){
 		this.myModel.toHTML()
 		theController.myModel.selected = []
+		this.setButtonOnlicks()
+	}
+
+	setButtonOnlicks(){
 		//set onclick methods for dropdown addSpec/Suite btns
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
@@ -187,6 +191,9 @@ class Controller{
 				theController.updateDisplay()
 			}
 		}
+
+		theController.myView.inputs = Array.prototype.slice.call(document.getElementsByClassName("input"))
+
 		for (var assert of this.myModel.asserts){
 			console.log(this.myModel.asserts)
 			assert.setCurrentDropdown()
@@ -196,7 +203,7 @@ class Controller{
 	outputToDiv(divID, textContent){
 		this.myView.appendToDiv(divID, textContent)
 		document.getElementById(divID).addEventListener('dragstart', function(event) {
-   		event.stopPropagation();
+			event.stopPropagation();
 		});
 	}
 

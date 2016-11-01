@@ -1,7 +1,7 @@
 class Filer{
-  constructor () {
+  constructor (myModel) {
       this.currentTestItem = undefined
-      this.myModel = undefined
+      this.myModel = myModel
       this.miscCode = ""
 	}
 

@@ -7,7 +7,6 @@ class HTMLView{
 	}
 
 	cleanView(){
-		//untested
 		document.getElementById('main').innerHTML = ""
 	}
 	

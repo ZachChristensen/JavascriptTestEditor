@@ -47,7 +47,6 @@ for (var btn of saveBtns){
 for (var btn of loadBtns){
 	btn.onclick = function(event) {
 		document.getElementById("fileSelector").click();
-
 	}
 }
 
@@ -158,7 +157,7 @@ function assertDropdown(e){
 	}
 	else{
 		var z = theController.myModel.find(e.parentElement.id)
-		if (e.id.substr(5,2) == "d1"){
+		if (e.id.substr(e.id.length -2) == "d1"){
 			z.dropdownSelected(value, true)
 		}
 		else z.dropdownSelected(value, false)
@@ -216,6 +215,26 @@ function drop(ev) {
 		theController.updateTestItem(ev.target.id, data)
 	}
 }
+
+window.onkeypress = function(e) {
+	console.log(e)
+    if (e.key == 'ArrowDown') {
+		console.log('down!')
+		console.log(theController.myView.inputs)
+		console.log(e.target.id)
+		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
+		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+		e.preventDefault();
+    }
+	else if (e.key == 'ArrowUp') {
+		console.log('down!')
+		console.log(theController.myView.inputs)
+		console.log(e.target.id)
+		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
+		if (newIndex >= 0)  theController.myView.inputs[newIndex].focus()
+		e.preventDefault();
+	}
+};
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {

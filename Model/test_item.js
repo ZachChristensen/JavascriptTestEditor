@@ -56,10 +56,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input  class='input' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input  class='input' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
@@ -168,6 +168,7 @@ class TestItem {
 				else if (i.type === "Assert"){
 					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
+					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
 					var newAssert = new MiscCode(i.contents, theClone)
@@ -187,6 +188,7 @@ class TestItem {
 		}
 		else if (orig.type === "Assert"){
 			var newAssert = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
+			theController.myModel.asserts.push(newAssert)
 		}
 		else if (orig.type === "Misc"){
 			var theClone = new MiscCode(orig.contents, this)
@@ -231,6 +233,7 @@ class TestItem {
 				else if (i.type === "Assert"){
 					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
+					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
 					var newAssert = new MiscCode(i.contents, theClone)
@@ -249,10 +252,11 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
+			var theClone = new Assert(orig.contents, orig.contents2, orig.parent, orig.not, orig.matcher)
+			theController.myModel.asserts.push(theClone)
 		}
 		else if (i.type === "Misc"){
-			var theClone = new MiscCode(i.contents, theClone)
+			var theClone = new MiscCode(i.contents, orig.parent)
 		}
 
 		//Place cloned item directly after its original?
@@ -282,7 +286,8 @@ class TestItem {
 				newArray.push(newSuite)
 			}
 			else if (i.type === "Assert"){
-				var newSuite = new Assert(i.contents, newParent)
+				var newSuite = new Assert(i.contents, i.contents2, newParent, i.not, i.matcher)
+				theController.myModel
 				newArray.push(newSuite)
 			}
 			else if (i.type === "Misc"){
