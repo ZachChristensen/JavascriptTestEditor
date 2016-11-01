@@ -217,13 +217,13 @@ function drop(ev) {
 }
 
 window.onkeypress = function(e) {
-	console.log(e)
     if (e.key == 'ArrowDown') {
 		console.log('down!')
 		console.log(theController.myView.inputs)
 		console.log(e.target.id)
 		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
 		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+		else window.scrollTo(0,document.body.scrollHeight);
 		e.preventDefault();
     }
 	else if (e.key == 'ArrowUp') {
@@ -232,6 +232,7 @@ window.onkeypress = function(e) {
 		console.log(e.target.id)
 		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
 		if (newIndex >= 0)  theController.myView.inputs[newIndex].focus()
+		else window.scrollTo(0,0);
 		e.preventDefault();
 	}
 };
