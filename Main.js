@@ -1,4 +1,3 @@
-import "main1"
 /*
 jshint esversion:6, jshint asi:true
 */
