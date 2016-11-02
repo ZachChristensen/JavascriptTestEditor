@@ -13,7 +13,7 @@ class Model{
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 
-		this.filename = 'hello.js'
+		this.filename = 'newFile.js'
 
 		this.currentTestItem = undefined
 
