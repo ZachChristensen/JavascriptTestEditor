@@ -54,7 +54,7 @@ class Model{
 		}
 	}
 
-	moveItem(targetID, newChildID){
+	moveItem(targetID, newChildID, newPosition = undefined){
 		console.log(targetID + ' ' + newChildID)
 		let newParent = undefined
 		let childLocationInOldParent = 0
@@ -82,8 +82,13 @@ class Model{
 				newParent.allMyChildren.splice(0, 0, newChild)
 				console.log("adding before or after")
 			}else{
-				newParent.allMyChildren.push(newChild)
-				console.log("added new child to new parent")
+				console.log(newPosition)
+				if (newPosition != undefined) {
+					newParent.allMyChildren.splice(newPosition, 0, newChild)
+					console.log("added new child to new parent")
+				}else{
+					newParent.allMyChildren.push(newChild)
+				}
 			}
 			console.log("removed child:" + oldParent.allMyChildren[childLocationInOldParent].id + " from old parent ")
 			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
