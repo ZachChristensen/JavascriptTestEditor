@@ -13,7 +13,7 @@ class modal_content{
 		modalAddBtn.onclick = function(event) {
 			theController.myModel.addSpec(modalDescr.value)
 			theController.updateDisplay()
-			modal.style.display = "none"
+			theController.myView.modal.style.display = "none"
 			modalDescr.value = ""
 		}
 		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
@@ -39,7 +39,7 @@ class modal_content{
 			var modalDescr = document.getElementById("modalDescription")
 			theController.myModel.addSuite(modalDescr.value)
 			theController.updateDisplay()
-			modal.style.display = "none"
+			theController.myView.modal.style.display = "none"
 			modalDescr.value = ""
 		}
 		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
@@ -54,9 +54,8 @@ class modal_content{
 		var title = "Add New Assert"
 		var content = `<div id="modalContent"><br>
 		expect(<input type="text" id="modalDescription" placeholder="Assert Content"></input>)
-
 		 <span>.</span>
-		 <select id='modald1' onchange='assertDropdown(this)'>
+		 <select id='modald1'>
 			 <option disabled>Select...</option>
 			 <option value='toBe'>toBe</option>
 			 <option value='toEqual'>toEqual</option>
@@ -90,7 +89,7 @@ class modal_content{
 
 			theController.myModel.addAssert(modalDescr.value, false, modald1.value, modalDescr2.value)
 			theController.updateDisplay()
-			modal.style.display = "none"
+			theController.myView.modal.style.display = "none"
 			modalDescr.value = ""
 		}
 		document.getElementById("modalDescription").addEventListener("keyup", function(event) {
@@ -117,7 +116,7 @@ class modal_content{
 			console.log(modalDescr.value)
 			theController.myModel.createNewRoot(modalDescr.value)
 			theController.updateDisplay()
-			modal.style.display = "none"
+			theController.myView.modal.style.display = "none"
 			modalDescr.value = ""
 
 		}

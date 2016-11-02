@@ -35,7 +35,7 @@ class Assert {
 
 		newText += '</div></div>'
 		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
-		newText += "<span>.</span><select id='"+this.id+"d1' onchange='assertDropdown(this)'>"
+		newText += "<span>.</span><select id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
 		newText += '<option disabled>Select...</option>'
 		newText += "<option value='not'>not</option>"
 		newText += "<option value='toBe'>toBe</option>"
@@ -55,7 +55,7 @@ class Assert {
 		newText += "</select>"
 
 		if(this.not){
-			newText += "<span>.</span><select id='"+this.id+"d2' onchange='assertDropdown(this)'>"
+			newText += "<span>.</span><select id='"+this.id+"d2' onchange='theController.myView.assertDropdown(this)'>"
 
 			newText += '<option disabled>Select...</option>'
 			newText += "<option value='toBe'>toBe</option>"

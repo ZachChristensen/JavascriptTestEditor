@@ -22,12 +22,10 @@ class Controller{
 		let specbtns = document.getElementsByClassName("btnAddSpec")
 		for (var spec of specbtns){
 			spec.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				theController.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSpec()
-				modal.style.display = "block"
-				NEWTYPE = "SPEC"
+				theController.myView.modal.style.display = "block"
 				document.getElementById("modalDescription").focus()
 
 			}
@@ -36,12 +34,10 @@ class Controller{
 		let suitebtns = document.getElementsByClassName("btnAddSuite")
 		for (var suite of suitebtns){
 			suite.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				theController.myModel.setCurrentSuite(currentItem)
 				modal_content.setAddSuite()
-				modal.style.display = "block"
-				NEWTYPE = "SUITE"
+				theController.myView.modal.style.display = "block"
 				document.getElementById("modalDescription").focus()
 			}
 		}
@@ -50,14 +46,13 @@ class Controller{
 		for (var btn of deletebtns){
 			btn.onclick = function(event) {
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
-					var itemID = event.target.parentElement.parentElement.parentElement.id
-					var item = theController.myModel.find(itemID)
+					var item = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 					//If deleting root suite
 					if (item.parent === "None"){
 						theController.myModel.root = undefined
 						theController.myModel.currentSuite = undefined
 						theController.myModel.asserts = []
-						idGenerator = new idCounter();
+						idGenerator = new idCounter()
 					}
 					else{
 						theController.myModel.currentSuite = item.parent
@@ -65,8 +60,9 @@ class Controller{
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
-
+					console.log('assert delete')
 					let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+					console.log('does exist?: ' +doesExist )
 					if (doesExist != -1){
 						console.log(theController.myModel.asserts)
 						theController.myModel.asserts.splice(doesExist, 1)
@@ -82,8 +78,7 @@ class Controller{
 		let clonebtns = document.getElementsByClassName("btnClone")
 		for (var btn of clonebtns){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				currentItem.parent.cloneChild(index, true)
 				toast_msg.showClone()
@@ -93,9 +88,7 @@ class Controller{
 		let copybtns = document.getElementsByClassName("btnCopy")
 		for (var btn of copybtns){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				theController.myModel.setCopiedItem(currentItem)
+				theController.myModel.setCopiedItem(theController.myModel.find(event.target.parentElement.parentElement.parentElement.id))
 				toast_msg.showCopy()
 			}
 		}
@@ -103,8 +96,7 @@ class Controller{
 		let cutbtns = document.getElementsByClassName("btnCut")
 		for (var btn of cutbtns){
 			btn.onclick = function(event) {
-				let SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				let currentItem = theController.myModel.find(SELECTEDSUITE)
+				let currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
 				var parent = currentItem.parent
 				theController.myModel.setCopiedItem(currentItem)
@@ -117,8 +109,7 @@ class Controller{
 		let pastebtns = document.getElementsByClassName("btnPaste")
 		for (var btn of pastebtns){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
+				var currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
 					var pastedItems = theController.myModel.getCopiedItems()
@@ -157,12 +148,9 @@ class Controller{
 		for (var spec of assertbtns){
 			spec.onclick = function(event) {
 				console.log("assert func")
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				theController.myModel.setCurrentTestItem(currentItem)
+				theController.myModel.setCurrentTestItem(theController.myModel.find(event.target.parentElement.parentElement.parentElement.id))
 				modal_content.setAddAssert()
-				modal.style.display = "block"
-				NEWTYPE = "Assert"
+				theController.myView.modal.style.display = "block"
 				document.getElementById("modalDescription").focus()
 			}
 		}
@@ -170,9 +158,7 @@ class Controller{
 		let miscbtns = document.getElementsByClassName("btnAddMisc")
 		for (var misc of miscbtns){
 			misc.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				theController.myModel.setCurrentTestItem(currentItem)
+				theController.myModel.setCurrentTestItem(theController.myModel.find(event.target.parentElement.parentElement.parentElement.id))
 				var newMisc = theController.myModel.addMiscCode("")
 				theController.updateDisplay()
 				//focus on new misc
@@ -183,9 +169,7 @@ class Controller{
 		let beforeBtn = document.getElementsByClassName("btnAddBeforeEach")
 		for (var btn of beforeBtn){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				theController.myModel.setCurrentSuite(currentItem)
+				theController.myModel.setCurrentSuite(theController.myModel.find(event.target.parentElement.parentElement.parentElement.id))
 				theController.myModel.addBeforeEach()
 				theController.myModel.addMiscCode("")
 				theController.updateDisplay()
@@ -195,9 +179,7 @@ class Controller{
 		let afterBtn = document.getElementsByClassName("btnAddAfterEach")
 		for (var btn of afterBtn){
 			btn.onclick = function(event) {
-				var SELECTEDSUITE = event.target.parentElement.parentElement.parentElement.id
-				var currentItem = theController.myModel.find(SELECTEDSUITE)
-				theController.myModel.setCurrentSuite(currentItem)
+				theController.myModel.setCurrentSuite(theController.myModel.find(event.target.parentElement.parentElement.parentElement.id))
 				theController.myModel.addAfterEach()
 				theController.myModel.addMiscCode("")
 				theController.updateDisplay()
@@ -215,8 +197,8 @@ class Controller{
 	outputToDiv(divID, textContent){
 		this.myView.appendToDiv(divID, textContent)
 		document.getElementById(divID).addEventListener('dragstart', function(event) {
-			event.stopPropagation();
-		});
+			event.stopPropagation()
+		})
 	}
 
 	updateTestItem(targetID, newChildID, newPosition = undefined){
@@ -252,42 +234,3 @@ class Controller{
 		})
 	}
 }
-
-//update model when inputs are changed
-window.addEventListener('input', function (e) {
-	var identifier = e.target.id.substr(e.target.id.length -2)
-	if (e.target.id.substr(0, 4) === "Item"){
-		console.log(1)
-		if (identifier === "t1" ){
-			console.log(2)
-			let id = e.target.id.slice(0, -2)
-			console.log(id)
-			var item = theController.myModel.find(id)
-			console.log(item)
-			if (item.type === "Assert"){
-				console.log(3)
-				item.contents = e.target.value
-				console.log(item)
-			}
-			return
-		}
-		else if (identifier === "t2"){
-			console.log(2)
-			let id = e.target.id.slice(0, -2)
-			console.log(id)
-			var item = theController.myModel.find(id)
-			console.log(item)
-			if (item.type === "Assert"){
-				console.log(3)
-				item.contents2 = e.target.value
-				console.log(item)
-			}
-			return
-		}
-		//ignore dropdowns
-		if (identifier === "d1" || identifier === "d2") return
-		let id = e.target.id.slice(0, -1)
-		console.log(theController.myModel.find(id))
-		theController.myModel.updateItem(id, e.target.value)
-	}
- }, false);
