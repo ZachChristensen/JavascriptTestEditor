@@ -13,6 +13,8 @@ class Model{
 		this.currentSuite = this.root
 		//Attempt loading, if nothing then create new?
 
+		this.filename = 'hello.js'
+
 		this.currentTestItem = undefined
 
 		//Library of key words used during output(screen & file)

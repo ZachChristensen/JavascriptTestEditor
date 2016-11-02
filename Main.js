@@ -1,8 +1,6 @@
+import "main1"
 /*
-jshint esversion:6
-*/
-/*
-jshint asi:true
+jshint esversion:6, jshint asi:true
 */
 
 var SELECTEDSUITE = ""
@@ -24,17 +22,18 @@ var ctxCut = document.getElementById("ctxCut")
 var ctxClone = document.getElementById("ctxClone")
 var ctxDelete = document.getElementById("ctxDelete")
 
+let clearBtnFunction = function(event) {
+	theController.myModel.root = undefined
+	theController.myModel.currentSuite = undefined
+	theController.myModel.asserts = []
+	idGenerator = new idCounter();
+
+	theController.updateDisplay()
+	idGenerator = new idCounter();
+}
 
 for (var btn of clearBtns){
-	btn.onclick = function(event) {
-		theController.myModel.root = undefined
-		theController.myModel.currentSuite = undefined
-		theController.myModel.asserts = []
-		idGenerator = new idCounter();
-
-		theController.updateDisplay()
-		idGenerator = new idCounter();
-	}
+	btn.onclick = clearBtnFunction
 }
 
 for (var btn of saveBtns){
