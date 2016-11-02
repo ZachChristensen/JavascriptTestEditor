@@ -115,6 +115,7 @@ class Filer{
 
   splitAssert(str){
       console.log("TRY ADD ASSERT")
+      str = str.replace(/\'/g,"&#8217;")
       var arr = str.substring(str.indexOf('(')+1)
       var not = false
       var content = ""
@@ -158,6 +159,7 @@ class Filer{
   getNodeDescription(node){
       if(/"[\s\S]+"/i.exec(node) != null){
           let description = /"[\s\S]+"/i.exec(node)[0]
+          description = description.replace(/\'/g, "&#8217;")
           return description.replace(/\"/g, "")
       }else{
           return null
