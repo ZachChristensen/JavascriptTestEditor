@@ -219,8 +219,8 @@ class Controller{
 		});
 	}
 
-	updateTestItem(targetID, newChildID){
-		this.myModel.moveItem(targetID, newChildID)
+	updateTestItem(targetID, newChildID, newPosition = undefined){
+		this.myModel.moveItem(targetID, newChildID, newPosition)
 		this.updateDisplay()
 	}
 
