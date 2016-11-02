@@ -261,20 +261,42 @@ window.addEventListener('input', function (e) {
 	}
  }, false);
 
+ // <textarea onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();"></textarea>
+ // <div id="lineNo"></div>
+ // <script>
+ //     function getLineNumber(textarea, indicator) {
+ //         indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
+ //     }
+ // </script>
+
  window.onkeypress = function(e) {
      if (e.key == 'ArrowDown') {
- 		console.log('down!')
- 		console.log(theController.myView.inputs)
- 		console.log(e.target.id)
+		if(e.target.type === "textarea"){
+			if(e.target.value.substr(0, e.target.selectionEnd).split("\n").length === e.target.value.split("\n").length){
+				let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
+				if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+				e.preventDefault()
+			}
+			else{
+				return
+			}
+		}
  		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
  		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
  		else window.scrollTo(0,document.body.scrollHeight)
  		e.preventDefault()
      }
  	else if (e.key == 'ArrowUp') {
- 		console.log('down!')
- 		console.log(theController.myView.inputs)
- 		console.log(e.target.id)
+		if(e.target.type === "textarea"){
+			if(e.target.value.substr(0, e.target.selectionEnd).split("\n").length === 1){
+				let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
+				if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+				e.preventDefault()
+			}
+			else{
+				return
+			}
+		}
  		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
  		if (newIndex >= 0)  theController.myView.inputs[newIndex].focus()
  		else window.scrollTo(0,0)
