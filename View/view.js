@@ -251,8 +251,8 @@ class HTMLView{
 		}
 		for (var input of inputs){
 			if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
-			  input.style.marginBottom = '23px'
-			  input.style.marginBottom = '23px'
+			  input.style.marginTop = '8px'
+			  input.style.marginBottom = '23.5px'
 			}
 		}
 		for (var btn of setupBtns){
@@ -269,14 +269,16 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-	  	for (var suite of suites){
+	  	for (let i = 0; i < suites.length; i++){
 	  		let div = document.createElement("DIV")
 	  		div.className = "droptarget"
 	        div.ondragover = onEnterFunc
 	        div.ondragleave = onLeaveFunc
-	  		suite.parentNode.insertBefore(div, suite.nextSibling)
-	        suite.style.marginBottom = 0
-	        suite.style.marginTop = 0
+			if (i !== 0){
+				suites[i].parentNode.insertBefore(div, suites[i].nextSibling)
+			}
+	        suites[i].style.marginBottom = 0
+	        suites[i].style.marginTop = 0
 	  	}
 	  	for (var spec of specs){
 	  		let div = document.createElement("DIV")
