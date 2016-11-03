@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="sheet.css">
 </head>
 
-<body ondrop='theController.myView.dragEndCheck(event)'ondragover='theController.myView.allowDrop(event)'>
+<body ondrop='dragEndCheck(event)'ondragover='allowDrop(event)'>
 	<div class="wrapper"  contextmenu="mymenu">
 	<header>
 		<div class="inner">
@@ -72,6 +72,13 @@
 		<menu id="ctxClone" title="Clone Selected"></menu>
 		<menu id="ctxDelete" title="Delete Selected"></menu>
     </menu>
+
+	<div id='ctx2' style="position: absolute; top: 200px;"><div class="ctx2-content">
+		<a class="btnDelete">Delete</a>
+		<a class="btnDelete">Delete</a>
+		<a class="btnDelete">Delete</a>
+		<a class="btnDelete">Delete</a>
+	</div></div>
 </body>
 
 <script src="Model\filer.js"></script>
