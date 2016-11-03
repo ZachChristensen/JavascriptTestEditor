@@ -66,33 +66,32 @@ class Model{
 			newParent = this.root.findChild(targetID)
 			console.log("found parent: " + newParent.id)
 		}
-		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent && newChild != newParent && newParent !== undefined){
-			console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
-			let oldParent = newChild.parent
-			console.log("set newchilds old parent to: " + oldParent.id)
-			for (let i = 0; i < oldParent.allMyChildren.length; i++){
-				if (newChildID == oldParent.allMyChildren[i].id){
-					childLocationInOldParent = i
-					console.log("found child location in old parent: " + childLocationInOldParent)
+		if(newChild != newParent && newParent !== undefined && this.checkChildToParentCompatability(newChild, newParent)){
+				console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
+				let oldParent = newChild.parent
+				console.log("set newchilds old parent to: " + oldParent.id)
+				for (let i = 0; i < oldParent.allMyChildren.length; i++){
+					if (newChildID == oldParent.allMyChildren[i].id){
+						childLocationInOldParent = i
+						console.log("found child location in old parent: " + childLocationInOldParent)
+					}
 				}
-			}
-			newChild.parent = newParent
-			console.log("set newparent")
+				newChild.parent = newParent
+				console.log("set newparent")
+				oldParent.allMyChildren.splice(childLocationInOldParent, 1)
 			if(newChild.type == "BeforeEach" || newChild.type == "AfterEach"){
 				newParent.allMyChildren.splice(0, 0, newChild)
 				console.log("adding before or after")
 			}else{
 				console.log(newPosition)
 				if (newPosition != undefined) {
+					console.log(newPosition)
 					newParent.allMyChildren.splice(newPosition, 0, newChild)
 					console.log("added new child to new parent")
 				}else{
 					newParent.allMyChildren.push(newChild)
 				}
 			}
-			console.log("removed child:" + oldParent.allMyChildren[childLocationInOldParent].id + " from old parent ")
-			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
-
 			return true
 		}
 		return false
