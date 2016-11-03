@@ -60,15 +60,13 @@ class Controller{
 						let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
 						theParent.removeChild(index)
 					}
-					console.log('assert delete')
-					let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
-					console.log('does exist?: ' +doesExist )
-					if (doesExist != -1){
-						console.log(theController.myModel.asserts)
-						theController.myModel.asserts.splice(doesExist, 1)
-						console.log(theController.myModel.asserts)
+					if (item.type === "Assert"){
+						let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+						if (doesExist != -1){
+							theController.myModel.asserts.splice(doesExist, 1)
+						}
 					}
-
+					item.findAssertForRemoval()
 					theController.updateDisplay()
 					toast_msg.showDeleted()
 				}
@@ -101,6 +99,9 @@ class Controller{
 				var parent = currentItem.parent
 				theController.myModel.setCopiedItem(currentItem)
 				parent.removeChild(index)
+
+				currentItem.findAssertForRemoval()
+
 				theController.updateDisplay()
 				toast_msg.showCut()
 			}
@@ -112,11 +113,11 @@ class Controller{
 				var currentItem = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 				//Check if paste legal
 				if (currentItem.hasOwnProperty('allMyChildren')){
-					var pastedItems = theController.myModel.getCopiedItems()
-					if (pastedItems == []){
+					if (theController.myModel.copiedItems.length === 0){
 						toast_msg.show("No item copied")
 						return
 					}
+					var pastedItems = theController.myModel.getCopiedItems()
 					for (var item of pastedItems){
 						if ( (item.type == "Suite" && currentItem.type == "Spec")){
 							toast_msg.show("Error Spec cannot contain Suites")
@@ -134,13 +135,16 @@ class Controller{
 							toast_msg.show("Error Spec cannot contain BeforeEach")
 							return
 						}
+						if ( (item.type == "Assert" && currentItem.type == "Suite")){
+							toast_msg.show("Error Suite cannot contain Assert")
+							return
+						}
 					}
 					for (var item of pastedItems){
 						currentItem.addPastedItem( item )
 					}
-
+					toast_msg.showPaste()
 				}
-				toast_msg.showPaste()
 			}
 		}
 

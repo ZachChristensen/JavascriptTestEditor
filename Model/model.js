@@ -151,10 +151,7 @@ class Model{
 		this.copiedItems = items
 	}
 
-	getCopiedItems (suite) {
-		if (this.copiedItems.length === 0){
-			return
-		}
+	getCopiedItems () {
 		var item = this.copiedItems
 		return item
 	}

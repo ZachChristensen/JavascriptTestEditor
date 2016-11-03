@@ -5,6 +5,8 @@ class HTMLView{
 		console.log("view")
 		this.controller = newController
 		this.inputs = []
+		this.errorElements = []
+		this.errorElementIndex = 0
 		this.modal = undefined
 		this.initialise()
 	}
@@ -19,7 +21,8 @@ class HTMLView{
 		var ctxCut = document.getElementById("ctxCut")
 		var ctxClone = document.getElementById("ctxClone")
 		var ctxDelete = document.getElementById("ctxDelete")
-
+		this.errorElements = document.getElementsByClassName("error")
+		
 		let clearBtnFunction = function(event) {
 			theController.myModel.root = undefined
 			theController.myModel.currentSuite = undefined

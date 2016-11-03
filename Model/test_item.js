@@ -187,8 +187,8 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var newAssert = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
-			theController.myModel.asserts.push(newAssert)
+			var theClone = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
+			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
 			var theClone = new MiscCode(orig.contents, this)
@@ -306,6 +306,20 @@ class TestItem {
 			}
 		}
 		return newArray
+	}
+
+	findAssertForRemoval(){
+		for (var item of this.allMyChildren){
+			if (item.type === "Assert"){
+				let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+				if (doesExist != -1){
+					theController.myModel.asserts.splice(doesExist, 1)
+				}
+			}
+			if (item.hasOwnProperty('allMyChildren')){
+				item.findAssertForRemoval()
+			}
+		}
 	}
 
 	removeChild(index){
