@@ -220,134 +220,134 @@ class HTMLView{
 	}
 
 
-  allowDrop(ev) {
-   ev.preventDefault()
-  }
+	allowDrop(ev) {
+		ev.preventDefault()
+	}
 
-  drag(ev) {
-   if (!this.isDragging){
-  	 console.log("drag start")
-  	 this.isDragging = true
-  	 ev.dataTransfer.setData("text", ev.target.id)
-  	 this.createDropElements()
-  	 console.log(ev.target.id)
-   }
-  }
+	drag(ev) {
+		if (!this.isDragging){
+			console.log("drag start")
+			this.isDragging = true
+			ev.dataTransfer.setData("text", ev.target.id)
+			this.createDropElements()
+			console.log(ev.target.id)
+		}
+	}
 
-  createDropElements(){
-  	console.log("gg")
-  	let suites = document.getElementsByClassName("Suite")
-  	let specs = document.getElementsByClassName("Spec")
-  	let setups = document.getElementsByClassName("Setup")
-  	let asserts = document.getElementsByClassName("Assert")
-  	let miscs = document.getElementsByClassName("Misc")
-      let inputs = document.getElementsByClassName("input")
-      let setupBtns = document.getElementsByClassName("setupBtn")
-      let onEnterFunc = function(e){
-          e.target.style.background = 'green'
-      }
-      let onLeaveFunc = function(e){
-          e.target.style.background = 'black'
-      }
-      for (var input of inputs){
-          if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
-              input.style.marginBottom = '23px'
-              input.style.marginBottom = '23px'
-          }
-      }
-      for (var btn of setupBtns){
-          btn.style.marginBottom = '1em'
-      }
-      for (var misc of miscs){
-          let div = document.createElement("DIV")
-          div.className = "droptarget"
-          div.ondragover = onEnterFunc
-          div.ondragleave = onLeaveFunc
+	createDropElements(){
+	  	console.log("gg")
+	  	let suites = document.getElementsByClassName("Suite")
+	  	let specs = document.getElementsByClassName("Spec")
+	  	let setups = document.getElementsByClassName("Setup")
+	  	let asserts = document.getElementsByClassName("Assert")
+	  	let miscs = document.getElementsByClassName("Misc")
+		let inputs = document.getElementsByClassName("input")
+		let setupBtns = document.getElementsByClassName("setupBtn")
+		let onEnterFunc = function(e){
+			e.target.style.background = 'green'
+		}
+		let onLeaveFunc = function(e){
+			e.target.style.background = 'black'
+		}
+		for (var input of inputs){
+			if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
+			  input.style.marginBottom = '23px'
+			  input.style.marginBottom = '23px'
+			}
+		}
+		for (var btn of setupBtns){
+			btn.style.marginBottom = '1em'
+		}
+		for (var misc of miscs){
+			let div = document.createElement("DIV")
+			div.className = "droptarget"
+			div.ondragover = onEnterFunc
+			div.ondragleave = onLeaveFunc
 
-          misc.parentNode.insertBefore(div, misc.nextSibling)
-          misc.style.marginBottom = 0
-          misc.style.marginTop = 0
+			misc.parentNode.insertBefore(div, misc.nextSibling)
+			misc.style.marginBottom = 0
+			misc.style.marginTop = 0
+		}
 
-      }
-  	for (var suite of suites){
-  		let div = document.createElement("DIV")
-  		div.className = "droptarget"
-          div.ondragover = onEnterFunc
-          div.ondragleave = onLeaveFunc
-  		suite.parentNode.insertBefore(div, suite.nextSibling)
-          suite.style.marginBottom = 0
-          suite.style.marginTop = 0
-  	}
-  	for (var spec of specs){
-  		let div = document.createElement("DIV")
-  		div.className = "droptarget"
-          div.ondragover = onEnterFunc
-          div.ondragleave = onLeaveFunc
+	  	for (var suite of suites){
+	  		let div = document.createElement("DIV")
+	  		div.className = "droptarget"
+	        div.ondragover = onEnterFunc
+	        div.ondragleave = onLeaveFunc
+	  		suite.parentNode.insertBefore(div, suite.nextSibling)
+	        suite.style.marginBottom = 0
+	        suite.style.marginTop = 0
+	  	}
+	  	for (var spec of specs){
+	  		let div = document.createElement("DIV")
+	  		div.className = "droptarget"
+			div.ondragover = onEnterFunc
+			div.ondragleave = onLeaveFunc
 
-  		spec.parentNode.insertBefore(div, spec.nextSibling)
-          spec.style.marginBottom = 0
-          spec.style.marginTop = 0
+	  		spec.parentNode.insertBefore(div, spec.nextSibling)
+			spec.style.marginBottom = 0
+			spec.style.marginTop = 0
 
-  	}
-  	for (var setup of setups){
-  		let div = document.createElement("DIV")
-  		div.className = "droptarget"
-          div.ondragover = onEnterFunc
-          div.ondragleave = onLeaveFunc
+	  	}
+	  	for (var setup of setups){
+	  		let div = document.createElement("DIV")
+	  		div.className = "droptarget"
+			div.ondragover = onEnterFunc
+			div.ondragleave = onLeaveFunc
 
-  		setup.parentNode.insertBefore(div, setup.nextSibling)
-          setup.style.marginBottom = 0
-          setup.style.marginTop = 0
+	  		setup.parentNode.insertBefore(div, setup.nextSibling)
+			setup.style.marginBottom = 0
+			setup.style.marginTop = 0
 
-  	}
-  	for (var assert of asserts){
-  		let div = document.createElement("DIV")
-  		div.className = "droptarget"
-          div.ondragover = onEnterFunc
-          div.ondragleave = onLeaveFunc
+	  	}
+	  	for (var assert of asserts){
+	  		let div = document.createElement("DIV")
+	  		div.className = "droptarget"
+			div.ondragover = onEnterFunc
+			div.ondragleave = onLeaveFunc
 
-  		assert.parentNode.insertBefore(div, assert.nextSibling)
-          assert.style.marginBottom = 0
-          assert.style.marginTop = 0
-  	}
-  }
+	  		assert.parentNode.insertBefore(div, assert.nextSibling)
+			assert.style.marginBottom = 0
+			assert.style.marginTop = 0
+	  	}
+	}
 
-  dragEndCheck(ev){
-   console.log("drag end check" )
-   this.isDragging = false
-   this.drop(ev)
-   ev.preventDefault()
-  }
+	dragEndCheck(ev){
+		console.log("drag end check" )
+		this.isDragging = false
+		this.drop(ev)
+		ev.preventDefault()
+	}
 
-  changeDrag(dragSetting, mouseSetting = undefined) {
-   console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
-   if (mouseSetting != undefined || this.isMouseDown){
-  	 let suites = document.getElementsByClassName("Suite")
-  	 let specs = document.getElementsByClassName("Spec")
-  	 let setups = document.getElementsByClassName("Setup")
-  	 let asserts = document.getElementsByClassName("Assert")
-  	 let miscs = document.getElementsByClassName("Misc")
+	changeDrag(dragSetting, mouseSetting = undefined) {
+		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
+		if (mouseSetting != undefined || this.isMouseDown){
+		let suites = document.getElementsByClassName("Suite")
+		let specs = document.getElementsByClassName("Spec")
+		let setups = document.getElementsByClassName("Setup")
+		let asserts = document.getElementsByClassName("Assert")
+		let miscs = document.getElementsByClassName("Misc")
 
-  	 for (let i = 0; i < suites.length; i++){
-  		 suites[i].draggable = dragSetting
-  	 }
-  	 for (let i = 0; i < specs.length; i++){
-  		 specs[i].draggable = dragSetting
-  	 }
-  	 for (let i = 0; i < setups.length; i++){
-  		 setups[i].draggable = dragSetting
-  	 }
-  	 for (let i = 0; i < asserts.length; i++){
-  		 asserts[i].draggable = dragSetting
-  	 }
-  	 for (let i = 0; i < miscs.length; i++){
-  		 miscs[i].draggable = dragSetting
-  	 }
-  	 console.log("drag set to: " + dragSetting)
-   }
-   if (mouseSetting != undefined){
-  	 this.isMouseDown = mouseSetting
-   }
+		for (let i = 0; i < suites.length; i++){
+			suites[i].draggable = dragSetting
+		}
+		for (let i = 0; i < specs.length; i++){
+			specs[i].draggable = dragSetting
+		}
+		for (let i = 0; i < setups.length; i++){
+			setups[i].draggable = dragSetting
+		}
+		for (let i = 0; i < asserts.length; i++){
+			asserts[i].draggable = dragSetting
+		}
+		for (let i = 0; i < miscs.length; i++){
+			miscs[i].draggable = dragSetting
+		}
+		console.log("drag set to: " + dragSetting)
+		}
+		if (mouseSetting != undefined){
+			this.isMouseDown = mouseSetting
+		}
   }
 
   findIndexOfNode(node){
