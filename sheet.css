@@ -19,18 +19,22 @@ header h1{
 }
 
 .droptarget {
-    width: 96%;
-    height: 10px;
-    margin: 0 20px;
+    width: calc(100% - 2em);
+    height: 1em;
+	margin-left: 1em;
     background: black;
-		overflow: hidden;
-		opacity: 0.2;
-		position:absolute;
+	opacity: 0.2;
+	top:0em;
+	position: relative;
 }
 
-.droptarget.dragover {
+.droptarget:hover {
+	background-color: red;
     padding: 15px;
-    border: 5px dashed #000;
+    border: 5px dashed #3F3;
+}
+.somethingover {
+    background-color: #FCD;
 }
 
 #filename{
@@ -46,7 +50,7 @@ html, body{
 }
 
 .wrapper {
-	min-height: 100%;
+	min-height: 96%;
 	margin: 0 auto 2em;
 }
 
@@ -79,6 +83,7 @@ header{
 .nav1 {
 	overflow: hidden;
 	border-right: 1px solid #a3c3d2;
+	margin-bottom: 1em;
 }
 
 .navInner {
@@ -154,6 +159,15 @@ input,select{
 	padding:1em;
 	border: 1.5px solid #FFF;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.setupName{
+	margin-left: 5px;
+	margin-bottom: 50px;
+}
+
+.setupBtn{
+	margin-bottom: 0px;
 }
 
 .dropbtn {

@@ -13,12 +13,12 @@ class Setup extends Suite{
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='Setup' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
-		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='Setup' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		newText += '<div class="dropdown setupBtn"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete" >Delete</a>'
 		newText += '<a class="btnAddMisc" >Add Misc</a>'
 		newText += '</div></div>'
-		newText += " " + name
+		newText += "<span class='setupName'>" + name + "</span>"
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){

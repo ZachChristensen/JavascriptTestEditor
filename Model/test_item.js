@@ -25,8 +25,8 @@ class TestItem {
 		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (typeof this.parent === "string") var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
-		else var newText = "<div ondrop='drop(event)' ondragstart='drag(event)' ondragover='allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		if (typeof this.parent === "string") var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='margin:1em 0' id='" + this.id + "'>"
+		else var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete">Delete</a>'
 
@@ -44,10 +44,10 @@ class TestItem {
 
 		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
 		if (this.parent !== "None"){
-			//out
-			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//in
 			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
+			//out
+			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
 			//down
@@ -56,10 +56,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='changeDrag(false, true)' onmouseup='changeDrag(true, false)' onmouseleave='(changeDrag(true))' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){

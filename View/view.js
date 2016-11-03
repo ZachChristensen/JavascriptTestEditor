@@ -8,6 +8,9 @@ class HTMLView{
 		this.errorElements = []
 		this.errorElementIndex = 0
 		this.modal = undefined
+		this.currentItem
+		this.isDragging = false
+		this.isMouseDown = false
 		this.initialise()
 	}
 
@@ -22,7 +25,7 @@ class HTMLView{
 		var ctxClone = document.getElementById("ctxClone")
 		var ctxDelete = document.getElementById("ctxDelete")
 		this.errorElements = document.getElementsByClassName("error")
-		
+
 		let clearBtnFunction = function(event) {
 			theController.myModel.root = undefined
 			theController.myModel.currentSuite = undefined
@@ -161,13 +164,10 @@ class HTMLView{
 			ctxMenu.style.display = "";
 			ctxMenu.style.left = "";
 			ctxMenu.style.top = "";
-
 			if (e.ctrlKey) {
-
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))
-
+				e.stopPropagation()
 			}
-			e.stopPropagation()
 		});
 
 		theElement.addEventListener("contextmenu",function(event){
@@ -177,17 +177,12 @@ class HTMLView{
 				ctxMenu.style.display = "block";
 				ctxMenu.style.left = (event.pageX - 10)+"px";
 				ctxMenu.style.top = (event.pageY - 10)+"px";
+				return
+			}
+			if (event.target.className !== "input") {
+				//event.preventDefault();
 			}
 		},false);
-
-		//Incomplete highlight on hover
-		// theElement.addEventListener("mouseover", function( event ) {
-			// if (event.target.className === "dropbtn" || event.target.className.slice(0,3) === "btn") return false
-			// document.getElementById(event.target.id).style.backColour = "#AAA";
-			    // setTimeout(function() {
-					// event.target.style.backColour = "";
-				// }, 500);
-		// }, false);
 	}
 
 	assertDropdown(e){
@@ -223,6 +218,177 @@ class HTMLView{
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML = textContent
 	}
+
+
+  allowDrop(ev) {
+   ev.preventDefault()
+  }
+
+  drag(ev) {
+   if (!this.isDragging){
+  	 console.log("drag start")
+  	 this.isDragging = true
+  	 ev.dataTransfer.setData("text", ev.target.id)
+  	 this.createDropElements()
+  	 console.log(ev.target.id)
+   }
+  }
+
+  createDropElements(){
+  	console.log("gg")
+  	let suites = document.getElementsByClassName("Suite")
+  	let specs = document.getElementsByClassName("Spec")
+  	let setups = document.getElementsByClassName("Setup")
+  	let asserts = document.getElementsByClassName("Assert")
+  	let miscs = document.getElementsByClassName("Misc")
+      let inputs = document.getElementsByClassName("input")
+      let setupBtns = document.getElementsByClassName("setupBtn")
+      let onEnterFunc = function(e){
+          e.target.style.background = 'green'
+      }
+      let onLeaveFunc = function(e){
+          e.target.style.background = 'black'
+      }
+      for (var input of inputs){
+          if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
+              input.style.marginBottom = '23px'
+              input.style.marginBottom = '23px'
+          }
+      }
+      for (var btn of setupBtns){
+          btn.style.marginBottom = '1em'
+      }
+      for (var misc of miscs){
+          let div = document.createElement("DIV")
+          div.className = "droptarget"
+          div.ondragover = onEnterFunc
+          div.ondragleave = onLeaveFunc
+
+          misc.parentNode.insertBefore(div, misc.nextSibling)
+          misc.style.marginBottom = 0
+          misc.style.marginTop = 0
+
+      }
+  	for (var suite of suites){
+  		let div = document.createElement("DIV")
+  		div.className = "droptarget"
+          div.ondragover = onEnterFunc
+          div.ondragleave = onLeaveFunc
+  		suite.parentNode.insertBefore(div, suite.nextSibling)
+          suite.style.marginBottom = 0
+          suite.style.marginTop = 0
+  	}
+  	for (var spec of specs){
+  		let div = document.createElement("DIV")
+  		div.className = "droptarget"
+          div.ondragover = onEnterFunc
+          div.ondragleave = onLeaveFunc
+
+  		spec.parentNode.insertBefore(div, spec.nextSibling)
+          spec.style.marginBottom = 0
+          spec.style.marginTop = 0
+
+  	}
+  	for (var setup of setups){
+  		let div = document.createElement("DIV")
+  		div.className = "droptarget"
+          div.ondragover = onEnterFunc
+          div.ondragleave = onLeaveFunc
+
+  		setup.parentNode.insertBefore(div, setup.nextSibling)
+          setup.style.marginBottom = 0
+          setup.style.marginTop = 0
+
+  	}
+  	for (var assert of asserts){
+  		let div = document.createElement("DIV")
+  		div.className = "droptarget"
+          div.ondragover = onEnterFunc
+          div.ondragleave = onLeaveFunc
+
+  		assert.parentNode.insertBefore(div, assert.nextSibling)
+          assert.style.marginBottom = 0
+          assert.style.marginTop = 0
+  	}
+  }
+
+  dragEndCheck(ev){
+   console.log("drag end check" )
+   this.isDragging = false
+   this.drop(ev)
+   ev.preventDefault()
+  }
+
+  changeDrag(dragSetting, mouseSetting = undefined) {
+   console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
+   if (mouseSetting != undefined || this.isMouseDown){
+  	 let suites = document.getElementsByClassName("Suite")
+  	 let specs = document.getElementsByClassName("Spec")
+  	 let setups = document.getElementsByClassName("Setup")
+  	 let asserts = document.getElementsByClassName("Assert")
+  	 let miscs = document.getElementsByClassName("Misc")
+
+  	 for (let i = 0; i < suites.length; i++){
+  		 suites[i].draggable = dragSetting
+  	 }
+  	 for (let i = 0; i < specs.length; i++){
+  		 specs[i].draggable = dragSetting
+  	 }
+  	 for (let i = 0; i < setups.length; i++){
+  		 setups[i].draggable = dragSetting
+  	 }
+  	 for (let i = 0; i < asserts.length; i++){
+  		 asserts[i].draggable = dragSetting
+  	 }
+  	 for (let i = 0; i < miscs.length; i++){
+  		 miscs[i].draggable = dragSetting
+  	 }
+  	 console.log("drag set to: " + dragSetting)
+   }
+   if (mouseSetting != undefined){
+  	 this.isMouseDown = mouseSetting
+   }
+  }
+
+  findIndexOfNode(node){
+  	let i = 1
+  	let prev
+  	while (true)
+  			if (prev = node.previousElementSibling) {
+  					node = prev
+  				 if (node.nodeType === 1 && (this.id || this.className == "droptarget")) {
+  						 ++i
+  				 }
+  			}
+  		 else if (node = node.previousSibling) {
+  					if (node.nodeType === 1 && (this.id || this.className == "droptarget")) {
+  							++i
+  					}
+  			}
+  		 else {
+  			 break
+  		 }
+  	return i
+  }
+
+  drop(ev) {
+   if (this.isDragging){
+  		 console.log("dropped")
+  	 this.isDragging = false
+  	 console.log(ev.target.nodeName)
+  	 let data = ev.dataTransfer.getData("text")
+  	 if (ev.target.className == "droptarget") {
+  		 theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+  		 console.log("a")
+  	 }else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
+  		 theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
+  					 console.log("b")
+  	 }else{
+  		 theController.updateTestItem(ev.target.id, data)
+  					 console.log("c")
+  	 }
+   }
+  }
 }
 
 //update model when inputs are changed
@@ -263,14 +429,6 @@ window.addEventListener('input', function (e) {
 		theController.myModel.updateItem(id, e.target.value)
 	}
  }, false);
-
- // <textarea onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();"></textarea>
- // <div id="lineNo"></div>
- // <script>
- //     function getLineNumber(textarea, indicator) {
- //         indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
- //     }
- // </script>
 
  window.onkeypress = function(e) {
      if (e.key == 'ArrowDown') {
@@ -313,7 +471,7 @@ window.addEventListener('input', function (e) {
          theController.myView.modal.style.display = "none"
      }
  	var ctxMenu = document.getElementById("ctxMenu")
- 	ctxMenu.style.display = ""
- 	ctxMenu.style.left = ""
- 	ctxMenu.style.top = ""
+ 	ctxMenu.style.display = "none"
+ 	ctxMenu.style.left = "0"
+ 	ctxMenu.style.top = "0"
  }
