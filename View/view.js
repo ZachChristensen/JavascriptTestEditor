@@ -432,29 +432,42 @@ window.addEventListener('input', function (e) {
 	}
  }, false);
 
- window.onkeypress = function(e) {
-     if (e.key == 'ArrowDown') {
+window.onkeypress = function(e) {
+    if (e.key == 'ArrowDown') {
 		if(e.target.type === "textarea"){
 			if(e.target.value.substr(0, e.target.selectionEnd).split("\n").length === e.target.value.split("\n").length){
-				let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
-				if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+				if(e.target.selectionStart === e.target.value.length){
+					let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
+					if (newIndex < theController.myView.inputs.length)theController.myView.inputs[newIndex].focus()
+				}else{
+					e.target.selectionStart = e.target.value.length
+					e.target.selectionEnd = e.target.value.length
+				}
 				e.preventDefault()
+				return
 			}
 			else{
 				return
 			}
 		}
- 		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
- 		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
- 		else window.scrollTo(0,document.body.scrollHeight)
- 		e.preventDefault()
-     }
+		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
+		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+		else window.scrollTo(0,document.body.scrollHeight)
+		e.preventDefault()
+    }
  	else if (e.key == 'ArrowUp') {
 		if(e.target.type === "textarea"){
 			if(e.target.value.substr(0, e.target.selectionEnd).split("\n").length === 1){
-				let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
-				if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+				if(e.target.selectionEnd === 0){
+					let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
+					if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
+				}
+				else{
+					e.target.selectionStart = 0
+					e.target.selectionEnd = 0
+				}
 				e.preventDefault()
+				return
 			}
 			else{
 				return
@@ -468,12 +481,12 @@ window.addEventListener('input', function (e) {
  }
 
  // When the user clicks anywhere outside of the modal, close it
- window.onclick = function(event) {
-     if (event.target == theController.myView.modal) {
-         theController.myView.modal.style.display = "none"
-     }
- 	var ctxMenu = document.getElementById("ctxMenu")
- 	ctxMenu.style.display = "none"
- 	ctxMenu.style.left = "0"
- 	ctxMenu.style.top = "0"
- }
+window.onclick = function(event) {
+	if (event.target == theController.myView.modal) {
+		theController.myView.modal.style.display = "none"
+	}
+	var ctxMenu = document.getElementById("ctxMenu")
+	ctxMenu.style.display = "none"
+	ctxMenu.style.left = "0"
+	ctxMenu.style.top = "0"
+}
