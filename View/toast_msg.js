@@ -33,6 +33,5 @@ class toast_msg{
 		contentElement.innerHTML = msg
 		contentElement.style.opacity = 1;
 		HideErrorMsg2()
-        //theController.myView.errorElementIndex++
 	}
 }

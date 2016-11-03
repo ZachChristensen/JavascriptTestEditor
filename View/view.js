@@ -22,7 +22,7 @@ class HTMLView{
 		var ctxClone = document.getElementById("ctxClone")
 		var ctxDelete = document.getElementById("ctxDelete")
 		this.errorElements = document.getElementsByClassName("error")
-		
+
 		let clearBtnFunction = function(event) {
 			theController.myModel.root = undefined
 			theController.myModel.currentSuite = undefined
@@ -161,13 +161,10 @@ class HTMLView{
 			ctxMenu.style.display = "";
 			ctxMenu.style.left = "";
 			ctxMenu.style.top = "";
-
 			if (e.ctrlKey) {
-
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))
-
+				e.stopPropagation()
 			}
-			e.stopPropagation()
 		});
 
 		theElement.addEventListener("contextmenu",function(event){
@@ -177,17 +174,12 @@ class HTMLView{
 				ctxMenu.style.display = "block";
 				ctxMenu.style.left = (event.pageX - 10)+"px";
 				ctxMenu.style.top = (event.pageY - 10)+"px";
+				return
+			}
+			if (event.target.className !== "input") {
+				//event.preventDefault();
 			}
 		},false);
-
-		//Incomplete highlight on hover
-		// theElement.addEventListener("mouseover", function( event ) {
-			// if (event.target.className === "dropbtn" || event.target.className.slice(0,3) === "btn") return false
-			// document.getElementById(event.target.id).style.backColour = "#AAA";
-			    // setTimeout(function() {
-					// event.target.style.backColour = "";
-				// }, 500);
-		// }, false);
 	}
 
 	assertDropdown(e){
@@ -264,14 +256,6 @@ window.addEventListener('input', function (e) {
 	}
  }, false);
 
- // <textarea onkeyup="getLineNumber(this, document.getElementById('lineNo'));" onmouseup="this.onkeyup();"></textarea>
- // <div id="lineNo"></div>
- // <script>
- //     function getLineNumber(textarea, indicator) {
- //         indicator.innerHTML = textarea.value.substr(0, textarea.selectionStart).split("\n").length;
- //     }
- // </script>
-
  window.onkeypress = function(e) {
      if (e.key == 'ArrowDown') {
 		if(e.target.type === "textarea"){
@@ -313,7 +297,7 @@ window.addEventListener('input', function (e) {
          theController.myView.modal.style.display = "none"
      }
  	var ctxMenu = document.getElementById("ctxMenu")
- 	ctxMenu.style.display = ""
- 	ctxMenu.style.left = ""
- 	ctxMenu.style.top = ""
+ 	ctxMenu.style.display = "none"
+ 	ctxMenu.style.left = "0"
+ 	ctxMenu.style.top = "0"
  }

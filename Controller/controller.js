@@ -66,7 +66,7 @@ class Controller{
 							theController.myModel.asserts.splice(doesExist, 1)
 						}
 					}
-					item.findAssertForRemoval()
+					if (item.hasOwnProperty('allMyChildren')) item.findAssertForRemoval()
 					theController.updateDisplay()
 					toast_msg.showDeleted()
 				}
