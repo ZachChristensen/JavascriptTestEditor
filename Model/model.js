@@ -66,7 +66,7 @@ class Model{
 			newParent = this.root.findChild(targetID)
 			console.log("found parent: " + newParent.id)
 		}
-		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent && newChild != newParent && newParent !== undefined){
+		if( newChild.parent != newParent && newChild != newParent && newParent !== undefined && this.checkChildToParentCompatability(newChild, newParent)){
 			console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
 			let oldParent = newChild.parent
 			console.log("set newchilds old parent to: " + oldParent.id)

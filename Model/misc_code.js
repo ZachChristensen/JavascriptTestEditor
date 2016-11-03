@@ -24,7 +24,7 @@ class MiscCode {
 		}
 
 		newText += '</div></div>'
-		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t' type='text' style='overflow: auto; margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents + "</textArea> </div>"
+		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows=\"3\" id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents + "</textArea> </div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}

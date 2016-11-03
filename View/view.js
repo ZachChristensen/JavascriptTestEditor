@@ -252,7 +252,7 @@ class HTMLView{
 		for (var input of inputs){
 			if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
 			  input.style.marginTop = '8px'
-			  input.style.marginBottom = '23.5px'
+			  input.style.marginBottom = '24.5px'
 			}
 		}
 		for (var btn of setupBtns){
