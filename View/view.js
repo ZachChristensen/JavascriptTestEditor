@@ -183,9 +183,12 @@ class HTMLView{
 			if (event.target.className !== "input") {
 				event.preventDefault();
 				var ctxMenu2 = document.getElementById("ctx2");
+				if (event.target.classList.contains("Suite")){
+					set_context.setCtx1Suite()
+				}
 				ctxMenu2.style.display = "block";
-				ctxMenu2.style.left = (event.pageX - 10)+"px";
-				ctxMenu2.style.top = (event.pageY - 10)+"px";
+				ctxMenu2.style.left = (event.pageX - 1)+"px";
+				ctxMenu2.style.top = (event.pageY - 1)+"px";
 			}
 		},false);
 	}
