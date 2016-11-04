@@ -254,7 +254,7 @@ class HTMLView{
 			e.target.style.background = 'black'
 		}
 		for (var input of inputs){
-			if (input.parentNode.className === "Suite" || input.parentNode.className === "Spec"){
+			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
 			  input.style.marginTop = '8px'
 			  input.style.marginBottom = '24.5px'
 			}
@@ -323,6 +323,7 @@ class HTMLView{
 		this.isDragging = false
 		this.drop(ev)
 		ev.preventDefault()
+		theController.updateDisplay()
 	}
 
 	changeDrag(dragSetting, mouseSetting = undefined) {
@@ -357,24 +358,16 @@ class HTMLView{
   }
 
   findIndexOfNode(node){
-  	let i = 1
-  	let prev
-  	while (true)
-  			if (prev = node.previousElementSibling) {
-  					node = prev
-  				 if (node.nodeType === 1 && (this.id || this.className == "droptarget")) {
-  						 ++i
-  				 }
-  			}
-  		 else if (node = node.previousSibling) {
-  					if (node.nodeType === 1 && (this.id || this.className == "droptarget")) {
-  							++i
-  					}
-  			}
-  		 else {
-  			 break
-  		 }
-  	return i
+	let index = 1
+    while ( (node = node.previousSibling) ) {
+        if (node.tagName == "DIV") {
+			if (node.classList.contains("droptarget")) {
+				console.log(node.className)
+            	index++
+			}
+        }
+    }
+    return index
   }
 
   drop(ev) {

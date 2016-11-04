@@ -15,6 +15,22 @@ class Controller{
 
 		theController.myModel.selected = []
 		this.setButtonOnlicks()
+		this.disableDragOnButtons()
+	}
+
+	disableDragOnButtons(){
+		for (let button of document.getElementsByTagName('Button')){
+			button.setAttribute('draggable', false)
+			button.setAttribute('onmousedown', 'theController.myView.changeDrag(false, true)')
+			button.setAttribute('onmouseup', 'theController.myView.changeDrag(true, false)')
+			button.setAttribute('onmouseleave','theController.myView.changeDrag(true)')
+		}
+		for (let button of document.getElementsByTagName('a')){
+			button.setAttribute('draggable', false)
+			button.setAttribute('onmousedown', 'theController.myView.changeDrag(false, true)')
+			button.setAttribute('onmouseup', 'theController.myView.changeDrag(true, false)')
+			button.setAttribute('onmouseleave','theController.myView.changeDrag(true)')
+		}
 	}
 
 	setButtonOnlicks(){
