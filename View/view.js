@@ -256,7 +256,7 @@ class HTMLView{
 		for (var input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
 			  input.style.marginTop = '8px'
-			  input.style.marginBottom = '24.5px'
+			  input.style.marginBottom = '23.5px'
 			}
 		}
 		for (var btn of setupBtns){
@@ -443,9 +443,7 @@ window.onkeypress = function(e) {
 				e.preventDefault()
 				return
 			}
-			else{
-				return
-			}
+			else return
 		}
 		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
 		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
@@ -466,9 +464,7 @@ window.onkeypress = function(e) {
 				e.preventDefault()
 				return
 			}
-			else{
-				return
-			}
+			else return
 		}
  		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
  		if (newIndex >= 0)  theController.myView.inputs[newIndex].focus()
