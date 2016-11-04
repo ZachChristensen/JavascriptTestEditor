@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class language{
 	constructor(){
 		this.suite = ""
@@ -17,4 +20,4 @@ class jasmineLanguage extends language{
 		this.beforeEach = "beforeEach"
 		this.afterEach = "afterEach"
 	}
-} 
+}

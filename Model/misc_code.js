@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class MiscCode {
 	constructor (contents, newParent = "None"){
 		this.id = idGenerator()

@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Filer{
   constructor (myModel) {
       this.currentTestItem = undefined

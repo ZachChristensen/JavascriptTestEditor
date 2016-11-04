@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Assert {
 	constructor (contents="", contents2="", newParent = "None", not=false, matcher="toBe"){
 		this.id = idGenerator()

@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class TestItem {
 	constructor ( newDesc, newType, newParent = "None") {
 		this.description = newDesc

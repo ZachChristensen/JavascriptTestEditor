@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Setup extends Suite{
 	constructor (newParent) {
 		super("", newParent)

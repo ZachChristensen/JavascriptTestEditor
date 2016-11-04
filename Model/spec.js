@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Spec extends TestItem {
 	constructor (newDesc, newParent = "None") {
 		super(newDesc, "Spec", newParent)
