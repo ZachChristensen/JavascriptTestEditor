@@ -66,7 +66,7 @@ class Model{
 			newParent = this.root.findChild(targetID)
 			console.log("found parent: " + newParent.id)
 		}
-		if(this.checkChildToParentCompatability(newChild, newParent) && newChild.parent != newParent && newChild != newParent && newParent !== undefined){
+		if( newChild.parent != newParent && newChild != newParent && newParent !== undefined && this.checkChildToParentCompatability(newChild, newParent)){
 			console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
 			let oldParent = newChild.parent
 			console.log("set newchilds old parent to: " + oldParent.id)
@@ -101,16 +101,22 @@ class Model{
 	checkChildToParentCompatability(child, parent){
 		if (parent != undefined && child != undefined){
 			if (parent.type == "Suite"){
+				if (child.type == "Assert") {
+					toast_msg.show("Suite cannot contain " + child.type+"s")
+					return false
+				}
 				return true
 			}else if (parent.type == "Spec") {
 				if (child.type == "Misc" || child.type == "Assert"){
 					return true
 				}
+				toast_msg.show("Spec cannot contain " + child.type)
 				return false
 			}else if (parent.type == "BeforeEach" || parent.type == "AfterEach") {
-				if (child.type == "Misc" || child.type == "Assert"){
+				if (child.type == "Misc"){
 					return true
 				}
+				toast_msg.show(parent.type +" cannot contain " + child.type+"s")
 				return false
 			}else{
 				return false
