@@ -11,7 +11,7 @@ class Setup extends Suite{
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
 		else var name = this.type
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 		var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 
 		if (backColour < 40) backColour = 40

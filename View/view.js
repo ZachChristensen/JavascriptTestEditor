@@ -89,12 +89,17 @@ class HTMLView{
 					toast_msg.show("Cannot cut root suite")
 					return
 				}
-        let findIndexOfChild = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 				for (var i of currentItems){
-					let index = findIndexOfChild
+					let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 					let parent = i.parent
 					theController.myModel.addCopiedItem(i)
 					parent.removeChild(index)
+					if (i.type === "Assert"){
+						let doesExist = theController.myModel.asserts.findIndex(x => x.id == i.id)
+						if (doesExist != -1){
+							theController.myModel.asserts.splice(doesExist, 1)
+						}
+					}
 				}
 				theController.updateDisplay()
 				toast_msg.showCut()
@@ -111,9 +116,8 @@ class HTMLView{
 				toast_msg.show("Cannot clone root suite")
 				return
 			}
-      let findIndexOfChild = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 			for (var i of currentItems){
-				let index = findIndexOfChild
+				let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 				i.parent.cloneChild(index, false)
 			}
 			toast_msg.showClone()
@@ -134,10 +138,15 @@ class HTMLView{
 				toast_msg.showDeleted()
 				return
 			}
-      let findIndexOfChild = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 			for (var i of currentItems){
-				let index = findIndexOfChild
+				let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 				i.parent.removeChild(index)
+				if (i.type === "Assert"){
+					let doesExist = theController.myModel.asserts.findIndex(x => x.id == i.id)
+					if (doesExist != -1){
+						theController.myModel.asserts.splice(doesExist, 1)
+					}
+				}
 			}
 			theController.updateDisplay()
 			toast_msg.showDeleted()
@@ -332,28 +341,28 @@ class HTMLView{
 	changeDrag(dragSetting, mouseSetting = undefined) {
 		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
 		if (mouseSetting !== undefined || this.isMouseDown){
-		let suites = document.getElementsByClassName("Suite")
-		let specs = document.getElementsByClassName("Spec")
-		let setups = document.getElementsByClassName("Setup")
-		let asserts = document.getElementsByClassName("Assert")
-		let miscs = document.getElementsByClassName("Misc")
+			let suites = document.getElementsByClassName("Suite")
+			let specs = document.getElementsByClassName("Spec")
+			let setups = document.getElementsByClassName("Setup")
+			let asserts = document.getElementsByClassName("Assert")
+			let miscs = document.getElementsByClassName("Misc")
 
-		for (let i = 0; i < suites.length; i++){
-			suites[i].draggable = dragSetting
-		}
-		for (let i = 0; i < specs.length; i++){
-			specs[i].draggable = dragSetting
-		}
-		for (let i = 0; i < setups.length; i++){
-			setups[i].draggable = dragSetting
-		}
-		for (let i = 0; i < asserts.length; i++){
-			asserts[i].draggable = dragSetting
-		}
-		for (let i = 0; i < miscs.length; i++){
-			miscs[i].draggable = dragSetting
-		}
-		console.log("drag set to: " + dragSetting)
+			for (let i = 0; i < suites.length; i++){
+				suites[i].draggable = dragSetting
+			}
+			for (let i = 0; i < specs.length; i++){
+				specs[i].draggable = dragSetting
+			}
+			for (let i = 0; i < setups.length; i++){
+				setups[i].draggable = dragSetting
+			}
+			for (let i = 0; i < asserts.length; i++){
+				asserts[i].draggable = dragSetting
+			}
+			for (let i = 0; i < miscs.length; i++){
+				miscs[i].draggable = dragSetting
+			}
+			console.log("drag set to: " + dragSetting)
 		}
 		if (mouseSetting !== undefined){
 			this.isMouseDown = mouseSetting
@@ -373,24 +382,24 @@ class HTMLView{
     return index
   }
 
-  drop(ev) {
-   if (this.isDragging){
-  		 console.log("dropped")
-  	 this.isDragging = false
-  	 console.log(ev.target.nodeName)
-  	 let data = ev.dataTransfer.getData("text")
-  	 if (ev.target.className == "droptarget") {
-  		 theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
-  		 console.log("a")
-  	 }else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
-  		 theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
-  					 console.log("b")
-  	 }else{
-  		 theController.updateTestItem(ev.target.id, data)
-  					 console.log("c")
-  	 }
-   }
-  }
+	drop(ev) {
+		if (this.isDragging){
+			console.log("dropped")
+			this.isDragging = false
+			console.log(ev.target.nodeName)
+			let data = ev.dataTransfer.getData("text")
+			if (ev.target.className == "droptarget") {
+				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+				console.log("a")
+			}else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
+				theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
+				console.log("b")
+			}else{
+				theController.updateTestItem(ev.target.id, data)
+				console.log("c")
+			}
+		}
+	}
 }
 
 //update model when inputs are changed

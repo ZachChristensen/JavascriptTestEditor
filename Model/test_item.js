@@ -18,7 +18,7 @@ class TestItem {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
@@ -141,8 +141,7 @@ class TestItem {
 		return aMisc
     }
 
-	addPastedItem(theItem){
-		var orig = theItem;
+	addPastedItem(orig){
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
 				var theClone = new Spec(orig.description, this)
@@ -190,7 +189,7 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
+			var theClone = new Assert(orig.contents, orig.contents2, this, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){

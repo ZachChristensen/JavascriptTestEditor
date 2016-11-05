@@ -10,7 +10,7 @@ class MiscCode {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
