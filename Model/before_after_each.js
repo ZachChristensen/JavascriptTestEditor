@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Setup extends Suite{
 	constructor (newParent) {
 		super("", newParent)
@@ -8,15 +11,14 @@ class Setup extends Suite{
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
 		else var name = this.type
-		let backColour = 240-(this.findIndent() * 20)
-		if (this.parent !== "None"){
-			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
-		}
+		let backColour = 240-(this.findIndent() * 22)
+		var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+
 		if (backColour < 40) backColour = 40
 		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='Setup TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown setupBtn"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete" >Delete</a>'
-		newText += '<a class="btnAddMisc" >Add Misc</a>'
+		newText += '<a class="btnAddMisc" >Add code</a>'
 		newText += '</div></div>'
 		newText += "<span class='setupName'>" + name + "</span>"
 		theController.outputToDiv(Parent, newText)

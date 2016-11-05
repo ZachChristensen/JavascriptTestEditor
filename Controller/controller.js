@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 //Controller
 
 class Controller{

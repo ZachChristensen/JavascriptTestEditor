@@ -1,4 +1,5 @@
-//VIEW
+/*jshint esversion:6, asi:true, unused:false*/
+/*globals theController:true, idGenerator:true, idCounter, modal_content, toast_msg, Controller*/
 
 class HTMLView{
 	constructor(newController){
@@ -8,6 +9,9 @@ class HTMLView{
 		this.errorElements = []
 		this.errorElementIndex = 0
 		this.modal = undefined
+		this.currentItem = undefined
+		this.isDragging = false
+		this.isMouseDown = false
 		this.initialise()
 	}
 
@@ -33,28 +37,34 @@ class HTMLView{
 			idGenerator = new idCounter();
 		}
 
-		for (var btn of clearBtns){
+		for (let btn of clearBtns){
 			btn.onclick = clearBtnFunction
 		}
 
-		for (var btn of saveBtns){
-			btn.onclick = function(event) {
+    let saveFunc = function(event) {
 				modal_content.setSave()
 				theController.myView.modal.style.display = "block"
-			}
 		}
 
-		for (var btn of loadBtns){
-			btn.onclick = function(event) {
+		for (let btn of saveBtns){
+			btn.onclick = saveFunc
+		}
+
+    let loadFunc = function(event) {
 				document.getElementById("fileSelector").click();
-			}
 		}
 
-		for (var btn of helpBtns){
-			btn.onclick = function(event) {
+		for (let btn of loadBtns){
+			btn.onclick = loadFunc
+		}
+
+    let helpFunc = function(event) {
 				modal_content.setHelp()
 				theController.myView.modal.style.display = "block"
-			}
+		}
+
+		for (let btn of helpBtns){
+			btn.onclick = helpFunc
 		}
 
 		ctxCopy.onclick = function(event) {
@@ -84,6 +94,12 @@ class HTMLView{
 					let parent = i.parent
 					theController.myModel.addCopiedItem(i)
 					parent.removeChild(index)
+					if (i.type === "Assert"){
+						let doesExist = theController.myModel.asserts.findIndex(x => x.id == i.id)
+						if (doesExist != -1){
+							theController.myModel.asserts.splice(doesExist, 1)
+						}
+					}
 				}
 				theController.updateDisplay()
 				toast_msg.showCut()
@@ -125,6 +141,12 @@ class HTMLView{
 			for (var i of currentItems){
 				let index = i.parent.allMyChildren.findIndex(x => x.id == i.id)
 				i.parent.removeChild(index)
+				if (i.type === "Assert"){
+					let doesExist = theController.myModel.asserts.findIndex(x => x.id == i.id)
+					if (doesExist != -1){
+						theController.myModel.asserts.splice(doesExist, 1)
+					}
+				}
 			}
 			theController.updateDisplay()
 			toast_msg.showDeleted()
@@ -194,13 +216,13 @@ class HTMLView{
 	}
 
 	assertDropdown(e){
-		var value = e.value
+		let value = e.value
 		if (value === "not"){
-			var assert = theController.myModel.find(e.parentElement.id)
+			let assert = theController.myModel.find(e.parentElement.id)
 			assert.notSelected()
 		}
 		else{
-			var assert = theController.myModel.find(e.parentElement.id)
+			let assert = theController.myModel.find(e.parentElement.id)
 			if (e.id.substr(e.id.length -2) == "d1"){
 				assert.dropdownSelected(value, true)
 			}
@@ -242,7 +264,6 @@ class HTMLView{
 	}
 
 	createDropElements(){
-	  	console.log("gg")
 	  	let suites = document.getElementsByClassName("Suite")
 	  	let specs = document.getElementsByClassName("Spec")
 	  	let setups = document.getElementsByClassName("Setup")
@@ -256,16 +277,16 @@ class HTMLView{
 		let onLeaveFunc = function(e){
 			e.target.style.background = 'black'
 		}
-		for (var input of inputs){
+		for (let input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
 			  input.style.marginTop = '8px'
 			  input.style.marginBottom = '23.5px'
 			}
 		}
-		for (var btn of setupBtns){
+		for (let btn of setupBtns){
 			btn.style.marginBottom = '1em'
 		}
-		for (var misc of miscs){
+		for (let misc of miscs){
 			let div = document.createElement("DIV")
 			div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -276,18 +297,16 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-	  	for (let i = 0; i < suites.length; i++){
+	  	for (let suite of suites){
 	  		let div = document.createElement("DIV")
 	  		div.className = "droptarget"
 	        div.ondragover = onEnterFunc
 	        div.ondragleave = onLeaveFunc
-			if (i !== 0){
-				suites[i].parentNode.insertBefore(div, suites[i].nextSibling)
-			}
-	        suites[i].style.marginBottom = 0
-	        suites[i].style.marginTop = 0
+			suite.parentNode.insertBefore(div, suite.nextSibling)
+	        suite.style.marginBottom = 0
+	        suite.style.marginTop = 0
 	  	}
-	  	for (var spec of specs){
+	  	for (let spec of specs){
 	  		let div = document.createElement("DIV")
 	  		div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -298,7 +317,7 @@ class HTMLView{
 			spec.style.marginTop = 0
 
 	  	}
-	  	for (var setup of setups){
+	  	for (let setup of setups){
 	  		let div = document.createElement("DIV")
 	  		div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -331,31 +350,31 @@ class HTMLView{
 
 	changeDrag(dragSetting, mouseSetting = undefined) {
 		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
-		if (mouseSetting != undefined || this.isMouseDown){
-		let suites = document.getElementsByClassName("Suite")
-		let specs = document.getElementsByClassName("Spec")
-		let setups = document.getElementsByClassName("Setup")
-		let asserts = document.getElementsByClassName("Assert")
-		let miscs = document.getElementsByClassName("Misc")
+		if (mouseSetting !== undefined || this.isMouseDown){
+			let suites = document.getElementsByClassName("Suite")
+			let specs = document.getElementsByClassName("Spec")
+			let setups = document.getElementsByClassName("Setup")
+			let asserts = document.getElementsByClassName("Assert")
+			let miscs = document.getElementsByClassName("Misc")
 
-		for (let i = 0; i < suites.length; i++){
-			suites[i].draggable = dragSetting
+			for (let i = 0; i < suites.length; i++){
+				suites[i].draggable = dragSetting
+			}
+			for (let i = 0; i < specs.length; i++){
+				specs[i].draggable = dragSetting
+			}
+			for (let i = 0; i < setups.length; i++){
+				setups[i].draggable = dragSetting
+			}
+			for (let i = 0; i < asserts.length; i++){
+				asserts[i].draggable = dragSetting
+			}
+			for (let i = 0; i < miscs.length; i++){
+				miscs[i].draggable = dragSetting
+			}
+			console.log("drag set to: " + dragSetting)
 		}
-		for (let i = 0; i < specs.length; i++){
-			specs[i].draggable = dragSetting
-		}
-		for (let i = 0; i < setups.length; i++){
-			setups[i].draggable = dragSetting
-		}
-		for (let i = 0; i < asserts.length; i++){
-			asserts[i].draggable = dragSetting
-		}
-		for (let i = 0; i < miscs.length; i++){
-			miscs[i].draggable = dragSetting
-		}
-		console.log("drag set to: " + dragSetting)
-		}
-		if (mouseSetting != undefined){
+		if (mouseSetting !== undefined){
 			this.isMouseDown = mouseSetting
 		}
   }
@@ -373,36 +392,36 @@ class HTMLView{
     return index
   }
 
-  drop(ev) {
-   if (this.isDragging){
-  		 console.log("dropped")
-  	 this.isDragging = false
-  	 console.log(ev.target.nodeName)
-  	 let data = ev.dataTransfer.getData("text")
-  	 if (ev.target.className == "droptarget") {
-  		 theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
-  		 console.log("a")
-  	 }else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
-  		 theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
-  					 console.log("b")
-  	 }else{
-  		 theController.updateTestItem(ev.target.id, data)
-  					 console.log("c")
-  	 }
-   }
-  }
+	drop(ev) {
+		if (this.isDragging){
+			console.log("dropped")
+			this.isDragging = false
+			console.log(ev.target.nodeName)
+			let data = ev.dataTransfer.getData("text")
+			if (ev.target.className == "droptarget") {
+				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+				console.log("a")
+			}else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
+				theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
+				console.log("b")
+			}else{
+				theController.updateTestItem(ev.target.id, data)
+				console.log("c")
+			}
+		}
+	}
 }
 
 //update model when inputs are changed
 window.addEventListener('input', function (e) {
-	var identifier = e.target.id.substr(e.target.id.length -2)
+	let identifier = e.target.id.substr(e.target.id.length -2)
 	if (e.target.id.substr(0, 4) === "Item"){
 		console.log(1)
 		if (identifier === "t1" ){
 			console.log(2)
 			let id = e.target.id.slice(0, -2)
 			console.log(id)
-			var item = theController.myModel.find(id)
+			let item = theController.myModel.find(id)
 			console.log(item)
 			if (item.type === "Assert"){
 				console.log(3)
@@ -415,7 +434,7 @@ window.addEventListener('input', function (e) {
 			console.log(2)
 			let id = e.target.id.slice(0, -2)
 			console.log(id)
-			var item = theController.myModel.find(id)
+			let item = theController.myModel.find(id)
 			console.log(item)
 			if (item.type === "Assert"){
 				console.log(3)

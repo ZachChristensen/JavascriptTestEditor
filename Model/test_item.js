@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class TestItem {
 	constructor ( newDesc, newType, newParent = "None") {
 		this.description = newDesc
@@ -15,7 +18,7 @@ class TestItem {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
@@ -31,12 +34,12 @@ class TestItem {
 		newText += '<a class="btnDelete">Delete</a>'
 
 		if (this.type === "Suite"){
-			newText += '<a class="btnAddSpec">Add Spec</a> <a class="btnAddSuite">Add Suite</a>'
-			newText += '<a class="btnAddBeforeEach">Add BeforeEach</a>'
-			newText += '<a class="btnAddAfterEach">Add AfterEach</a>'
+			newText += '<a class="btnAddSpec">Add '+theController.myModel.currentLanguage.spec+'</a> <a class="btnAddSuite">Add '+theController.myModel.currentLanguage.suite+'</a>'
+			newText += '<a class="btnAddBeforeEach">Add '+theController.myModel.currentLanguage.beforeEach+'</a>'
+			newText += '<a class="btnAddAfterEach">Add '+theController.myModel.currentLanguage.afterEach+'</a>'
 		}
-		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>'
-		newText += '<a class="btnAddMisc">Add Misc</a>'
+		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add '+theController.myModel.currentLanguage.assert+'</a>'
+		newText += '<a class="btnAddMisc">Add code</a>'
 
 		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
 		newText += '<a class="btnCopy">Copy</a>'
@@ -138,8 +141,7 @@ class TestItem {
 		return aMisc
     }
 
-	addPastedItem(theItem){
-		var orig = theItem;
+	addPastedItem(orig){
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
 				var theClone = new Spec(orig.description, this)
@@ -187,7 +189,7 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, orig.contents2, theClone, orig.not, orig.matcher)
+			var theClone = new Assert(orig.contents, orig.contents2, this, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
@@ -255,8 +257,8 @@ class TestItem {
 			var theClone = new Assert(orig.contents, orig.contents2, orig.parent, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
-		else if (i.type === "Misc"){
-			var theClone = new MiscCode(i.contents, orig.parent)
+		else if (orig.type === "Misc"){
+			var theClone = new MiscCode(orig.contents, orig.parent)
 		}
 
 		//Place cloned item directly after its original?

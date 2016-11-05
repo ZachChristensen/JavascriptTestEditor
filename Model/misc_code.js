@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class MiscCode {
 	constructor (contents, newParent = "None"){
 		this.id = idGenerator()
@@ -7,7 +10,7 @@ class MiscCode {
 	}
 
 	toHTML(Parent){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
@@ -16,6 +19,7 @@ class MiscCode {
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
+		newText += '<a class="btnClone">Clone</a>'
 		if (this.parent !== "None"){
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"

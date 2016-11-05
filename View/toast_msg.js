@@ -1,3 +1,7 @@
+/*
+jshint esversion:6, asi:true
+*/
+/*globals theController*/
 function HideErrorMsg2() {
     setTimeout(function(){ theController.myView.errorElements[theController.myView.errorElementIndex].style.opacity = 0}, 2000);
 }

@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class Assert {
 	constructor (contents="", contents2="", newParent = "None", not=false, matcher="toBe"){
 		this.id = idGenerator()
@@ -10,7 +13,7 @@ class Assert {
 	}
 
 	toHTMLString(outerDiv = true){
-		let backColour = 240-(this.findIndent() * 20)
+		let backColour = 240-(this.findIndent() * 22)
 		if (this.parent !== "None"){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
@@ -34,44 +37,44 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
-		newText += "<span>.</span><select id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
-		newText += '<option disabled>Select...</option>'
-		newText += "<option value='not'>not</option>"
-		newText += "<option value='toBe'>toBe</option>"
-		newText += "<option value='toEqual'>toEqual</option>"
-		newText += "<option value='toMatch'>toMatch</option>"
-		newText += "<option value='toBeDefined'>toBeDefined</option>"
-		newText += "<option value='toBeUndefined'>toBeUndefined</option>"
-		newText += "<option value='toBeNull'>toBeNull</option>"
-		newText += "<option value='toBeTruthy'>toBeTruthy</option>"
-		newText += "<option value='toBeFalsy'>toBeFalsy</option>"
-		newText += "<option value='toContain'>toContain</option>"
-		newText += "<option value='toBeLessThan'>toBeLessThan</option>"
-		newText += "<option value='toBeGreaterThan'>toBeGreaterThan</option>"
-		newText += "<option value='toBeCloseTo'>toBeCloseTo</option>"
-		newText += "<option value='toThrow'>toThrow</option>"
-		newText += "<option value='toThrowError'>toThrowError</option>"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
+		newText += "<span>.</span><select  id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
+		newText += "<option onmousedown='return false' disabled>Select...</option>"
+		newText += "<option onmousedown='return false' value='not'>not</option>"
+		newText += "<option onmousedown='return false' value='toBe'>toBe</option>"
+		newText += "<option onmousedown='return false' draggable='false' value='toEqual'>toEqual</option>"
+		newText += "<option onmousedown='return false' value='toMatch'>toMatch</option>"
+		newText += "<option onmousedown='return false' value='toBeDefined'>toBeDefined</option>"
+		newText += "<option onmousedown='return false' value='toBeUndefined'>toBeUndefined</option>"
+		newText += "<option onmousedown='return false' value='toBeNull'>toBeNull</option>"
+		newText += "<option onmousedown='return false' value='toBeTruthy'>toBeTruthy</option>"
+		newText += "<option onmousedown='return false' value='toBeFalsy'>toBeFalsy</option>"
+		newText += "<option onmousedown='return false' value='toContain'>toContain</option>"
+		newText += "<option onmousedown='return false' value='toBeLessThan'>toBeLessThan</option>"
+		newText += "<option onmousedown='return false' value='toBeGreaterThan'>toBeGreaterThan</option>"
+		newText += "<option onmousedown='return false' value='toBeCloseTo'>toBeCloseTo</option>"
+		newText += "<option onmousedown='return false' value='toThrow'>toThrow</option>"
+		newText += "<option onmousedown='return false' value='toThrowError'>toThrowError</option>"
 		newText += "</select>"
 
 		if(this.not){
 			newText += "<span>.</span><select id='"+this.id+"d2' onchange='theController.myView.assertDropdown(this)'>"
 
-			newText += '<option disabled>Select...</option>'
-			newText += "<option value='toBe'>toBe</option>"
-			newText += "<option value='toEqual'>toEqual</option>"
-			newText += "<option value='toMatch'>toMatch</option>"
-			newText += "<option value='toBeDefined'>toBeDefined</option>"
-			newText += "<option value='toBeUndefined'>toBeUndefined</option>"
-			newText += "<option value='toBeNull'>toBeNull</option>"
-			newText += "<option value='toBeTruthy'>toBeTruthy</option>"
-			newText += "<option value='toBeFalsy'>toBeFalsy</option>"
-			newText += "<option value='toContain'>toContain</option>"
-			newText += "<option value='toBeLessThan'>toBeLessThan</option>"
-			newText += "<option value='toBeGreaterThan'>toBeGreaterThan</option>"
-			newText += "<option value='toBeCloseTo'>toBeCloseTo</option>"
-			newText += "<option value='toThrow'>toThrow</option>"
-			newText += "<option value='toThrowError'>toThrowError</option>"
+			newText += '<option onmousedown="return false" disabled>Select...</option>'
+			newText += "<option onmousedown='return false' value='toBe'>toBe</option>"
+			newText += "<option onmousedown='return false' value='toEqual'>toEqual</option>"
+			newText += "<option onmousedown='return false' value='toMatch'>toMatch</option>"
+			newText += "<option onmousedown='return false' value='toBeDefined'>toBeDefined</option>"
+			newText += "<option onmousedown='return false' value='toBeUndefined'>toBeUndefined</option>"
+			newText += "<option onmousedown='return false' value='toBeNull'>toBeNull</option>"
+			newText += "<option onmousedown='return false' value='toBeTruthy'>toBeTruthy</option>"
+			newText += "<option onmousedown='return false' value='toBeFalsy'>toBeFalsy</option>"
+			newText += "<option onmousedown='return false' value='toContain'>toContain</option>"
+			newText += "<option onmousedown='return false' value='toBeLessThan'>toBeLessThan</option>"
+			newText += "<option onmousedown='return false' value='toBeGreaterThan'>toBeGreaterThan</option>"
+			newText += "<option onmousedown='return false' value='toBeCloseTo'>toBeCloseTo</option>"
+			newText += "<option onmousedown='return false' value='toThrow'>toThrow</option>"
+			newText += "<option onmousedown='return false' value='toThrowError'>toThrowError</option>"
 			newText += "</select>"
 		}
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){

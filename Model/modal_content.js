@@ -1,3 +1,6 @@
+/*
+jshint esversion:6, jshint asi:true
+*/
 class modal_content{
 	static setAddSpec(){
 		var title = "Add New Spec"
