@@ -41,8 +41,15 @@ class Filer{
       for (let item of splitFileArray){
           if (pattern.test(item)){
               let splitLine = item.split("})")
-              this.createTestItem(splitLine[0])
-              this.createTestItem(splitLine[1])
+              for (let splitItem of splitLine){
+                if(/^\s*$/.test(splitItem)){
+                  if(this.myModel.currentSuite != this.myModel.root) {
+                    this.myModel.setCurrentSuite(this.myModel.currentSuite.parent)
+                  }
+                }else{
+                  this.createTestItem(splitItem)
+                }
+              }
           }else{
               this.createTestItem(item)
           }
