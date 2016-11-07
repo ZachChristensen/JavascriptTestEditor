@@ -95,6 +95,7 @@ header{
 	float: right;
 	display: block;
 	color:#111;
+	cursor: pointer;
 }
 
 .navInner li:last-child{
@@ -227,7 +228,7 @@ textarea{
     display: none;
     position: fixed;
     z-index: 99;
-    padding-top: 100px;
+    padding-top: 6em;
     left: 0;
     top: 0;
     width: 100%;

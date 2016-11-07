@@ -46,7 +46,6 @@ class Controller{
 				modal_content.setAddSpec()
 				theController.myView.modal.style.display = "block"
 				document.getElementById("modalDescription").focus()
-
 			}
 		}
 
@@ -67,7 +66,7 @@ class Controller{
 				if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
 					var item = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
 					//If deleting root suite
-					if (item.parent === "None"){
+					if (item.parent === theController.myModel.root){
 						theController.myModel.root = undefined
 						theController.myModel.currentSuite = undefined
 						theController.myModel.asserts = []

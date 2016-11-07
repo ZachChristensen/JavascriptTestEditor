@@ -12,6 +12,7 @@ class HTMLView{
 		this.currentItem = undefined
 		this.isDragging = false
 		this.isMouseDown = false
+		this.contextTarget = undefined
 		this.initialise()
 	}
 
@@ -206,7 +207,19 @@ class HTMLView{
 				event.preventDefault();
 				var ctxMenu2 = document.getElementById("ctx2");
 				if (event.target.classList.contains("Suite")){
-					set_context.setCtx1Suite()
+					set_context.setCtx1Suite(event.target.id)
+				}
+				else if (event.target.classList.contains("Spec")){
+					set_context.setCtx1Spec(event.target.id)
+				}
+				else if (event.target.classList.contains("Assert")){
+					set_context.setCtx1Assert(event.target.id)
+				}
+				else if (event.target.classList.contains("Misc")){
+					set_context.setCtx1Code(event.target.id)
+				}
+				else if (event.target.classList.contains("Setup")){
+					set_context.setCtx1Setup(event.target.id)
 				}
 				ctxMenu2.style.display = "block";
 				ctxMenu2.style.left = (event.pageX - 1)+"px";
@@ -280,7 +293,7 @@ class HTMLView{
 		for (let input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
 			  input.style.marginTop = '8px'
-			  input.style.marginBottom = '23.5px'
+			  input.style.marginBottom = '24.5px'
 			}
 		}
 		for (let btn of setupBtns){

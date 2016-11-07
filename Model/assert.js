@@ -14,7 +14,7 @@ class Assert {
 
 	toHTMLString(outerDiv = true){
 		let backColour = 240-(this.findIndent() * 22)
-		if (this.parent !== "None"){
+		if (this.parent !== theController.myModel.root){
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
@@ -29,12 +29,10 @@ class Assert {
 		newText += '<a class="btnDelete">Delete</a>'
 
 		newText += '<a class="btnClone" >Clone</a>'
-		if (this.parent !== "None"){
-			//up
-			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
-			//down
-			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
-		}
+		//up
+		if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+		//down
+		if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 
 		newText += '</div></div>'
 		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"

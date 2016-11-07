@@ -48,11 +48,6 @@ class BeforeEach extends Setup{
 		super(newParent)
 		this.type = "BeforeEach"
 	}
-
-    addMiscCode (itStr, newParent) {
-        let aMisc = new MiscCode(itStr, newParent)
-        this.allMyChildren.push(aMisc)
-    }
 }
 
 class AfterEach extends Setup{
