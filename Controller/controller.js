@@ -4,9 +4,11 @@ jshint esversion:6, jshint asi:true
 //Controller
 
 class Controller{
-	constructor(){
+	constructor(testing = false){
 		this.myModel = new Model(this)
-		this.myView = new HTMLView(this)
+		if (!testing){
+			this.myView = new HTMLView(this)
+		}
 		console.log("controller")
 	}
 

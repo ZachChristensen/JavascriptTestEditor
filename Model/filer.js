@@ -32,6 +32,7 @@ class Filer{
   }
 
   saveToFile(currentFrameWork, filename){
+    console.log(currentFrameWork.toString())
     let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"});
     saveAs(blob, filename + ".js");
   }
@@ -71,6 +72,7 @@ class Filer{
   }
 
   createTestItem(item){
+      item = item.replace(/;/g, "")
       let items = item.split("\n")
       for (let i = 0; i < items.length; i++){
           if(this.myModel.root == undefined){
@@ -125,7 +127,6 @@ class Filer{
 
   splitAssert(str){
       console.log("TRY ADD ASSERT")
-      str = str.replace(/\'/g,"&#8217;")
       var arr = str.substring(str.indexOf('(')+1)
       var not = false
       var content = ""

@@ -59,10 +59,10 @@ class TestItem {
 		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
-			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description.replace(/\'/g,"&#8217;") + "'></input> </div>"
 		}
 		else{
-			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"
+			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 60px);' id='" + this.id + "t' type='text' value='" + this.description.replace(/\'/g,"&#8217;") + "'></input> </div>"
 		}
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){

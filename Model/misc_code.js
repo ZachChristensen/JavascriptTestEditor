@@ -28,25 +28,27 @@ class MiscCode {
 		}
 
 		newText += '</div></div>'
-		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows=\"3\" id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents + "</textArea> </div>"
+		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows=\"3\" id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents.replace(/\'/g,"&#8217;") + "</textArea> </div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}
 
     toString (tabNum) {
         let tab = "    "
-				let lines = this.contents.split("\n")
+				let lines = this.contents.split("\r\n")
         let resultStr = ""
 				for (let i = 0; i < lines.length; i++){
 					if (lines[i] == "") {
 						lines.splice(i, 1)
+					}else{
+						lines[i] += ";"
+					}
+					if (i < lines.length - 1){
+						lines[i] += "\r\n"
 					}
 				}
-				for (let i = 0; i < lines.length; i++){
-					resultStr += tab.repeat(tabNum) + lines[i]
-					if (i <= lines.length - 2){
-						 resultStr += "\r\n"
-					}
+				for (let line of lines){
+					resultStr += tab.repeat(tabNum) + line
 				}
         return resultStr
     }
