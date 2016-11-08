@@ -15,8 +15,8 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div class='Misc TestItem' ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
-		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents + "</textArea> </div>"
+		var newText = "<div class='Misc TestItem' ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+");' id='" + this.id + "'>"
+		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t'>" + this.contents + "</textArea> </div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}

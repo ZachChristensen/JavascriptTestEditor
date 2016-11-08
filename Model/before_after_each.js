@@ -16,7 +16,7 @@ class Setup extends Suite{
 
 		if (backColour < 40) backColour = 40
 		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='Setup TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
-		newText += "<span class='setupName'>" + name + "</span>"
+		newText += name
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){

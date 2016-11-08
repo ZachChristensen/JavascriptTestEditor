@@ -205,7 +205,7 @@ class HTMLView{
 				ctxMenu.style.top = (event.pageY - 10)+"px"
 				return
 			}
-			if (event.target.className !== "input" && event.target.className !== "assertDropdown") {
+			if (event.target.classList.contains("TestItem")) {
 				event.preventDefault();
 				var ctxMenu2 = document.getElementById("ctx2");
 				if (event.target.classList.contains("Suite")){
