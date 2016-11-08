@@ -125,7 +125,9 @@ a:-webkit-any-link {
 .nav2{
     display:none;
 }
-
+.helpBtn{
+	cursor: help;
+}
 .current-page{
 	background-color: #83DC79;
 }
@@ -160,10 +162,37 @@ input,select{
 	padding:1em;
 	border: 1.5px solid #FFF;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	cursor: grab;;
 }
+
+.Root:active,
+.Suite:active,
+.Spec:active,
+.Assert:active,
+.Misc:active,
+.Setup:active
+{
+	cursor: grabbing;;
+}
+
+.Root{
+	margin:0;
+}
+
+.Suite input{
+	width: calc(100% - 75px);
+}
+
+.Spec input{
+	width: calc(100% - 25px);
+}
+
 
 textarea{
 	overflow-x: hidden;
+	min-height:40px;
+	width: calc(100% - 12px);
+	resize: vertical;
 }
 
 .input{
@@ -172,11 +201,7 @@ textarea{
 
 .setupName{
 	margin-left: 5px;
-	margin-bottom: 50px;
-}
-
-.setupBtn{
-	margin-bottom: 0px;
+	display: inline-block;
 }
 
 .dropbtn {
@@ -221,7 +246,6 @@ textarea{
     background-color: #4863a8;
 	border:1px solid #333;
 }
-
 
 /* The Modal (background) */
 .modal {
@@ -294,53 +318,28 @@ textarea{
 }
 
 #ctxMenu{
-    display:none;
-    z-index:90;
-}
-
-menu {
-    position:absolute;
-    display:block;
-    left:0px;
-    top:0px;
-    height:2em;
-    width:2em;
-    padding:0;
-    margin:0;
-    border:1.2px solid;
-    background-color:#FFF;
-    font-weight:normal;
-    white-space:nowrap;
-}
-
-menu:hover{
-    background-color:#8AAAFF;
-    font-weight:bold;
-}
-menu > menu:hover{
-	cursor:pointer;
-	color:white;
-}
-menu:hover > menu{
-    display:block;
-	color:black;
-}
-menu > menu{
-    display:none;
-    position:relative;
-    top:-30px;
-    left:100%;
-    width:140px;
-}
-menu[title]:before{
-    content:attr(title);
-}
-menu:not([title]):before{
-    content:" \2630";
-	font-size:1.3em;
-	left: 5px;
+	z-index: 50;
+	display: none;
 	position: relative;
 }
+
+.ctx-content {
+    position: absolute;
+    background-color: #BDE8E4;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
+	z-index: 1;
+}
+
+.ctx-content a{
+    color: black;
+	cursor: pointer;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.ctx-content a:hover {background-color: #CFFFFB}
 
 #ctx2{
 	z-index: 50;

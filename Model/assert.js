@@ -24,17 +24,6 @@ class Assert {
 		else{
 			var newText = ""
 		}
-		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
-
-		newText += '<a class="btnDelete">Delete</a>'
-
-		newText += '<a class="btnClone" >Clone</a>'
-		//up
-		if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
-		//down
-		if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
-
-		newText += '</div></div>'
 		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
 		newText += "<span>.</span><select  id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
 		newText += "<option onmousedown='return false' disabled>Select...</option>"

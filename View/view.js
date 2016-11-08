@@ -13,6 +13,7 @@ class HTMLView{
 		this.isDragging = false
 		this.isMouseDown = false
 		this.contextTarget = undefined
+		this.hoveredItem = undefined
 		this.initialise()
 	}
 
@@ -178,6 +179,7 @@ class HTMLView{
 	}
 
 	setItemClickListeners(elementID){
+		console.log(elementID)
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
 			var ctxMenu = document.getElementById("ctxMenu");
@@ -198,12 +200,12 @@ class HTMLView{
 			if (event.ctrlKey) {
 				event.preventDefault();
 				var ctxMenu = document.getElementById("ctxMenu");
-				ctxMenu.style.display = "block";
-				ctxMenu.style.left = (event.pageX - 10)+"px";
-				ctxMenu.style.top = (event.pageY - 10)+"px";
+				ctxMenu.style.display = "block"
+				ctxMenu.style.left = (event.pageX - 10)+"px"
+				ctxMenu.style.top = (event.pageY - 10)+"px"
 				return
 			}
-			if (event.target.className !== "input") {
+			if (event.target.className !== "input" && event.target.className !== "assertDropdown") {
 				event.preventDefault();
 				var ctxMenu2 = document.getElementById("ctx2");
 				if (event.target.classList.contains("Suite")){
@@ -221,9 +223,9 @@ class HTMLView{
 				else if (event.target.classList.contains("Setup")){
 					set_context.setCtx1Setup(event.target.id)
 				}
-				ctxMenu2.style.display = "block";
-				ctxMenu2.style.left = (event.pageX - 1)+"px";
-				ctxMenu2.style.top = (event.pageY - 1)+"px";
+				ctxMenu2.style.display = "block"
+				ctxMenu2.style.left = (event.pageX - 1)+"px"
+				ctxMenu2.style.top = (event.pageY - 1)+"px"
 			}
 		},false);
 	}
@@ -244,17 +246,24 @@ class HTMLView{
 	}
 
 	changeItemBackground(theElementId){
-		document.getElementById(theElementId).style.backgroundColor = '#9DD'
+		document.getElementById(theElementId).style.backgroundColor = '#B0D9D5'
+	}
+
+	setItemBackgroundHover(theElementId){
+		let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
+		document.getElementById(theElementId).style.border.color = "rgb("+backColour+", "+backColour+", "+backColour+")"
 	}
 
 	resetItemBackground(theElementId){
-		let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
-		document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		if (theElementId.substr(0, 4) === "Item"){
+			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
+			document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		}
 	}
 
-	appendToDiv(divID, textContent){
+	appendToDiv(divID, content){
 		var HTMLdiv = document.getElementById(divID)
-		HTMLdiv.innerHTML += textContent
+		HTMLdiv.innerHTML += content
 	}
 
 	setToDiv(divID, textContent){
@@ -283,7 +292,9 @@ class HTMLView{
 	  	let asserts = document.getElementsByClassName("Assert")
 	  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
-		let setupBtns = document.getElementsByClassName("setupBtn")
+		let setupName = document.getElementsByClassName("setupName")
+
+
 		let onEnterFunc = function(e){
 			e.target.style.background = 'green'
 		}
@@ -292,12 +303,11 @@ class HTMLView{
 		}
 		for (let input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
-			  input.style.marginTop = '8px'
-			  input.style.marginBottom = '24.5px'
+			  input.style.marginBottom = '16px'
 			}
 		}
-		for (let btn of setupBtns){
-			btn.style.marginBottom = '1em'
+		for (let name of setupName){
+			name.style.marginBottom = '1em'
 		}
 		for (let misc of miscs){
 			let div = document.createElement("DIV")
@@ -310,14 +320,16 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-	  	for (let suite of suites){
-	  		let div = document.createElement("DIV")
-	  		div.className = "droptarget"
-	        div.ondragover = onEnterFunc
-	        div.ondragleave = onLeaveFunc
-			suite.parentNode.insertBefore(div, suite.nextSibling)
-	        suite.style.marginBottom = 0
-	        suite.style.marginTop = 0
+	  	for (let i = 0; i < suites.length; i++){
+			if (i!== 0){
+		  		let div = document.createElement("DIV")
+		  		div.className = "droptarget"
+		        div.ondragover = onEnterFunc
+		        div.ondragleave = onLeaveFunc
+				suites[i].parentNode.insertBefore(div, suites[i].nextSibling)
+		        suites[i].style.marginBottom = 0
+		        suites[i].style.marginTop = 0
+			}
 	  	}
 	  	for (let spec of specs){
 	  		let div = document.createElement("DIV")
@@ -507,6 +519,17 @@ window.onkeypress = function(e) {
  		e.preventDefault()
  	}
  }
+
+function myScript(e){
+	if (e.target.className === "ctxItem"){
+		console.log("I QUIT!")
+		return
+	}
+	var ctxMenu2 = document.getElementById("ctx2")
+	ctxMenu2.style.display = "none"
+}
+
+ window.addEventListener("mousedown", myScript);
 
  // When the user clicks anywhere outside of the modal, close it
  window.onclick = function(event) {

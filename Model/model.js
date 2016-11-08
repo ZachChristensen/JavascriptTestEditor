@@ -9,18 +9,15 @@ class Model{
 		this.myController = newController
 		this.myFiler = new Filer(this)
 
-		//danger code!
 		this.root = undefined
 		this.copiedItems = []
 
 		this.currentSuite = this.root
-		//Attempt loading, if nothing then create new?
 
 		this.filename = 'newFile.js'
 
 		this.currentTestItem = undefined
 
-		//Library of key words used during output(screen & file)
 		this.currentLanguage = new jasmineLanguage()
 		this.asserts = []
 		this.selected = []
