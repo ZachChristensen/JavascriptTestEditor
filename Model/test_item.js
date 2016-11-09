@@ -30,6 +30,33 @@ class TestItem {
 		if (backColour < 60) backColour = 60
 		if (typeof this.parent === "string") var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='margin:1em 0' id='" + this.id + "'>"
 		else var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		newText += '<a class="btnDelete">Delete</a>'
+
+		if (this.type === "Suite"){
+			newText += '<a class="btnAddSpec">Add '+theController.myModel.currentLanguage.spec+'</a> <a class="btnAddSuite">Add '+theController.myModel.currentLanguage.suite+'</a>'
+			newText += '<a class="btnAddBeforeEach">Add beforeEach</a>'
+			newText += '<a class="btnAddAfterEach">Add afterEach</a>'
+		}
+		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>'
+		newText += '<a class="btnAddMisc">Add Code</a>'
+
+		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
+		newText += '<a class="btnCopy">Copy</a>'
+		if (this.parent !== "None") newText += '<a class="btnCut">Cut</a>'
+
+		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
+		if (this.parent !== "None"){
+			//out
+			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
+			//in
+			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
+			//up
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+			//down
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
+		}
+		newText += '</div></div>'
 		//for the different text box sizes move to css later
 		if (this.type === "Suite"){
 			newText += " " + name + "&nbsp;&nbsp;" + "<input class='input' placeholder='Describe this section of your test...' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='width: calc(100% - 115px);' id='" + this.id + "t' type='text' value='" + this.description + "'></input> </div>"

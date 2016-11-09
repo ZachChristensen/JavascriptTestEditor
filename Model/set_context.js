@@ -94,7 +94,7 @@ class set_context{
 
         var a = document.createElement("a")
         a.onclick = set_context.addAssertToThis
-        var text = document.createTextNode("Add "+ theController.myModel.currentLanguage.afterEach)
+        var text = document.createTextNode("Add "+ theController.myModel.currentLanguage.assert)
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)
@@ -161,9 +161,6 @@ class set_context{
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 
-        var a = document.createElement("a")
-        a.onclick = set_context.pasteThis
-        var text = document.createTextNode("Paste")
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)
@@ -195,9 +192,6 @@ class set_context{
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 
-        var a = document.createElement("a")
-        a.onclick = set_context.pasteThis
-        var text = document.createTextNode("Paste")
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)
@@ -229,9 +223,6 @@ class set_context{
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 
-        var a = document.createElement("a")
-        a.onclick = set_context.pasteThis
-        var text = document.createTextNode("Paste")
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)

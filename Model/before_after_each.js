@@ -16,7 +16,15 @@ class Setup extends Suite{
 
 		if (backColour < 40) backColour = 40
 		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='Setup TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
-		newText += name
+		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
+		newText += '<a class="btnDelete" >Delete</a>'
+		newText += '<a class="btnClone">Clone</a>'
+		newText += '<a class="btnCopy">Copy</a>'
+		newText += '<a class="btnCut">Cut</a>'
+
+		newText += '<a class="btnAddMisc" >Add code</a>'
+		newText += '</div></div>'
+		newText += " " + name
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){

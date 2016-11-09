@@ -187,12 +187,16 @@ input,select{
 	width: calc(100% - 25px);
 }
 
+.Misc{
+	position: relative;;
+}
 
 textarea{
 	overflow-x: hidden;
 	min-height:40px;
-	width: calc(100% - 12px);
+	width: calc(100% - 48px);
 	resize: vertical;
+	margin-left:2.5em;
 }
 
 .input{

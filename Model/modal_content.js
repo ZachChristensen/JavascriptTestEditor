@@ -133,14 +133,7 @@ class modal_content{
 
 	static setSave(){
 		var title = "Save File"
-		var content = `<H3 style="margin-top:1em;">Save Options</H3>
-		<form>
-		  <h5>Assertion type:(coming soon)</h5>
-		  <input type="radio" name="assert" value="assert" checked> assert<br>
-		  <input type="radio" name="assert" value="expect"> expect<br>
-		  <input type="radio" name="assert" value="should"> should
-		</form>
-		<h5 style="margin-top:1em;">Filename</h5>
+		var content = `<h5 style="margin-top:1em;">Filename</h5>
 		<input  value="TestCase" id='filenameInput'/>.js<br>
 		<button style="margin-top:1em;" id="modalSaveButton">Save File</button>
 		`

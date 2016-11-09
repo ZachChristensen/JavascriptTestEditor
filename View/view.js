@@ -249,14 +249,6 @@ class HTMLView{
 		document.getElementById(theElementId).style.backgroundColor = '#B0D9D5'
 	}
 
-	setItemBackgroundHover(theElementId){
-		if (theElementId.substr(0, 4) === "Item"){
-			//includes()
-			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
-			document.getElementById(theElementId).style.border.color = "rgb("+backColour+", "+backColour+", "+backColour+")"
-		}
-	}
-
 	resetItemBackground(theElementId){
 		if (theElementId.substr(0, 4) === "Item"){
 			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)

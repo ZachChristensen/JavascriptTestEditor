@@ -37,27 +37,95 @@ class Controller{
 	}
 
 	setButtonOnlicks(){
-		let divs = document.getElementsByClassName('TestItem')
-		for (let i of divs){
-			i.addEventListener("mouseenter", function( event ) {
-				console.log("WOrking!")
-				console.log(this)
-				if (theController.myView.hoveredItem !== undefined){
-					theController.myView.resetItemBackground(theController.myView.hoveredItem.id)
-				}
-				theController.myView.setItemBackgroundHover(event.target.id)
-				theController.myView.hoveredItem = event.target
-			})
-			i.addEventListener("mouseleave", function( event ) {
-				console.log("WOrking!")
-				console.log(this)
-				if (theController.myView.hoveredItem !== undefined){
-					theController.myView.resetItemBackground(theController.myView.hoveredItem.id)
-				}
-				theController.myView.setItemBackgroundHover(event.target.parentElement.id)
-				theController.myView.hoveredItem = event.target.parentElement
-			})
+		//set onclick methods for dropdown addSpec/Suite btns
+		let specbtns = document.getElementsByClassName("btnAddSpec")
+		for (var spec of specbtns){
+			spec.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addSpecToThis()
+			}
 		}
+
+		let suitebtns = document.getElementsByClassName("btnAddSuite")
+		for (var suite of suitebtns){
+			suite.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addSuiteToThis()
+			}
+		}
+
+		let deletebtns = document.getElementsByClassName("btnDelete")
+		for (var btn of deletebtns){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.deleteThis()
+			}
+		}
+
+		let clonebtns = document.getElementsByClassName("btnClone")
+		for (var btn of clonebtns){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.cloneThis()
+			}
+		}
+
+		let copybtns = document.getElementsByClassName("btnCopy")
+		for (var btn of copybtns){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.copyThis()
+			}
+		}
+
+		let cutbtns = document.getElementsByClassName("btnCut")
+		for (var btn of cutbtns){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.cutThis()
+			}
+		}
+
+		let pastebtns = document.getElementsByClassName("btnPaste")
+		for (var btn of pastebtns){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.pasteThis()
+			}
+		}
+
+		let assertbtns = document.getElementsByClassName("btnAddAssert")
+		for (var spec of assertbtns){
+			spec.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addAssertToThis()
+			}
+		}
+
+		let miscbtns = document.getElementsByClassName("btnAddMisc")
+		for (var misc of miscbtns){
+			misc.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addMiscToThis()
+			}
+		}
+
+		let beforeBtn = document.getElementsByClassName("btnAddBeforeEach")
+		for (var btn of beforeBtn){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addBeforeToThis()
+			}
+		}
+
+		let afterBtn = document.getElementsByClassName("btnAddAfterEach")
+		for (var btn of afterBtn){
+			btn.onclick = function(event) {
+				theController.myView.contextTarget = theController.myModel.find(event.target.parentElement.parentElement.parentElement.id)
+				set_context.addAfterToThis()
+			}
+		}
+
 		theController.myView.inputs = Array.prototype.slice.call(document.getElementsByClassName("input"))
 		for (var assert of this.myModel.asserts){
 			assert.setCurrentDropdown()
