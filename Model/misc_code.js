@@ -15,7 +15,7 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
+		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'

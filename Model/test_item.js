@@ -179,12 +179,12 @@ class TestItem {
 				else if (i.type === "BeforeEach"){
 					var newSetup = new BeforeEach(theClone)
 					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.unshift(newSetup)
+					theClone.allMyChildren.push(newSetup)
 				}
 				else if (i.type === "AfterEach"){
 					var newSetup = new AfterEach(theClone)
 					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.unshift(newSetup)
+					theClone.allMyChildren.push(newSetup)
 				}
 			}
 		}
