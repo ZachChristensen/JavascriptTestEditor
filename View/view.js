@@ -390,13 +390,12 @@ class HTMLView{
 			let data = ev.dataTransfer.getData("text")
 			if (ev.target.className == "droptarget") {
 				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
-				console.log("a")
 			}else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
-				theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
-				console.log("b")
+				if(ev.target.parentNode.id != data) {
+					theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
+				}
 			}else{
 				theController.updateTestItem(ev.target.id, data)
-				console.log("c")
 			}
 		}
 	}
