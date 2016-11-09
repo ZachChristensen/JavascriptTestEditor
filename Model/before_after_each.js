@@ -19,12 +19,6 @@ class Setup extends Suite{
 		newText += '<div class="dropdown setupBtn"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete" >Delete</a>'
 		newText += '<a class="btnAddMisc" >Add code</a>'
-		if (this.parent !== "None"){
-			//up
-			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
-			//down
-			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
-		}
 		newText += '</div></div>'
 		newText += "<span class='setupName'>" + name + "</span>"
 		theController.outputToDiv(Parent, newText)

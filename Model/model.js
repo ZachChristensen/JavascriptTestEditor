@@ -70,25 +70,30 @@ class Model{
 			console.log("found parent: " + newParent.id)
 		}
 		if(newChild != newParent && newParent !== undefined && this.checkChildToParentCompatability(newChild, newParent)){
-			let oldParent = newChild.parent
-			for (let i = 0; i < oldParent.allMyChildren.length; i++){
-				if (newChildID == oldParent.allMyChildren[i].id){
-					childLocationInOldParent = i
-					console.log("found child location in old parent: " + childLocationInOldParent)
+				console.log("compatible child and parent. new child:" + newChild.id + " newparent:" + newParent.id)
+				let oldParent = newChild.parent
+				console.log("set newchilds old parent to: " + oldParent.id)
+				for (let i = 0; i < oldParent.allMyChildren.length; i++){
+					if (newChildID == oldParent.allMyChildren[i].id){
+						childLocationInOldParent = i
+						console.log("found child location in old parent: " + childLocationInOldParent)
+					}
 				}
-			}
-			console.log(newPosition + " " + (newParent != oldParent) + " " + (childLocationInOldParent == newPosition - 1) + " :cliop")
-			console.log("c")
-			newChild.parent = newParent
-			console.log("set newparent")
-			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
-			console.log(newPosition)
-			if (newPosition != undefined) {
-				console.log(newPosition)
-				newParent.allMyChildren.splice(newPosition, 0, newChild)
-				console.log("added new child to new parent")
+				newChild.parent = newParent
+				console.log("set newparent")
+				oldParent.allMyChildren.splice(childLocationInOldParent, 1)
+			if(newChild.type == "BeforeEach" || newChild.type == "AfterEach"){
+				newParent.allMyChildren.splice(0, 0, newChild)
+				console.log("adding before or after")
 			}else{
-				newParent.allMyChildren.push(newChild)
+				console.log(newPosition)
+				if (newPosition != undefined) {
+					console.log(newPosition)
+					newParent.allMyChildren.splice(newPosition, 0, newChild)
+					console.log("added new child to new parent")
+				}else{
+					newParent.allMyChildren.push(newChild)
+				}
 			}
 			return true
 		}
@@ -187,22 +192,10 @@ class Model{
 		}
 	}
 
-	addBeforeEachToEnd(){
-		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
-		this.currentTestItem = parentSuite.addBeforeToEnd()
-	}
-
 	addBeforeEach(){
 		//set current suite before calling
 		var parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addBefore()
-	}
-
-	addAfterEachToEnd(){
-		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
-		this.currentTestItem = parentSuite.addAfterToEnd()
 	}
 
 	addAfterEach(){
