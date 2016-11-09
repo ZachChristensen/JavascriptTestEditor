@@ -136,10 +136,10 @@ class TestItem {
 	}
 
 	addMiscCode (itStr, newParent) {
-        let aMisc = new MiscCode(itStr, newParent)
-        this.allMyChildren.push(aMisc)
+    let aMisc = new MiscCode(itStr, newParent)
+    this.allMyChildren.push(aMisc)
 		return aMisc
-    }
+  }
 
 	addPastedItem(orig){
 		if (orig.hasOwnProperty('allMyChildren')){
