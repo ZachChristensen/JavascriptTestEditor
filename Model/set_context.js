@@ -200,14 +200,7 @@ class set_context{
     static setCtx1Setup(id){
         theController.myView.contextTarget = theController.myModel.find(id)
         var contextMenu = document.getElementsByClassName("ctx2-content")[0]
-        contextMenu.innerHTML = ""
-
-        var a = document.createElement("a")
-        a.onclick = set_context.addMiscToThis
-        var text = document.createTextNode("Add Code")
-        a.appendChild(text)
-        a.className = "ctxItem"
-        contextMenu.appendChild(a)
+        contextMenu.innerHTML = ""    
 
         var a = document.createElement("a")
         a.onclick = set_context.deleteThis
@@ -217,9 +210,29 @@ class set_context{
         contextMenu.appendChild(a)
 
         var a = document.createElement("a")
+        a.onclick = set_context.addMiscToThis
+        var text = document.createTextNode("Add Code")
+        a.appendChild(text)
+        a.className = "ctxItem"
+        contextMenu.appendChild(a)
+
+        var a = document.createElement("a")
         a.onclick = set_context.copyThis
         var text = document.createTextNode("Copy")
         a.appendChild(text)
+        a.className = "ctxItem"
+        contextMenu.appendChild(a)
+
+        var a = document.createElement("a")
+        a.onclick = set_context.cutThis
+        var text = document.createTextNode("Cut")
+        a.appendChild(text)
+        a.className = "ctxItem"
+        contextMenu.appendChild(a)
+
+        var a = document.createElement("a")
+        a.onclick = set_context.pasteThis
+        var text = document.createTextNode("Paste")
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 

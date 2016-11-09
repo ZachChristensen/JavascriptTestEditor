@@ -15,7 +15,7 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div class='Misc TestItem' ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+");' id='" + this.id + "'>"
+		var newText = "<div class='Misc TestItem' ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+"' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+");' id='" + this.id + "'>"
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
@@ -30,25 +30,27 @@ class MiscCode {
 		}
 
 		newText += '</div></div>'
-		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t'>" + this.contents + "</textArea> </div>"
+		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' ondragend='theController.myView.dragEndCheck()' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t'>" + this.contents + "</textArea> </div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}
 
     toString (tabNum) {
         let tab = "    "
-				let lines = this.contents.split("\n")
+				let lines = this.contents.split(/\r\n|\r|\n/)
         let resultStr = ""
 				for (let i = 0; i < lines.length; i++){
 					if (lines[i] == "") {
 						lines.splice(i, 1)
+					}else{
+						lines[i] += ";"
+					}
+					if (i < lines.length - 1){
+						lines[i] += "\r\n"
 					}
 				}
-				for (let i = 0; i < lines.length; i++){
-					resultStr += tab.repeat(tabNum) + lines[i]
-					if (i <= lines.length - 2){
-						 resultStr += "\r\n"
-					}
+				for (let line of lines){
+					resultStr += tab.repeat(tabNum) + line
 				}
         return resultStr
     }

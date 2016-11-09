@@ -35,19 +35,31 @@ class Filer{
     let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"});
     saveAs(blob, filename + ".js");
   }
+
+  setCurrentTestItemToParent(){
+    this.setPreviousTestItemMiscCode()
+    if(this.myModel.currentTestItem != this.myModel.root) {
+      console.log(this.myModel.currentTestItem)
+      this.myModel.setCurrentTestItem(this.myModel.currentTestItem.parent)
+    }
+  }
+
   createTestItems(splitFileArray, model){
       this.myModel = model
       let pattern = /(\}\))/i
       for (let item of splitFileArray){
           if (pattern.test(item)){
               let splitLine = item.split("})")
-              for (let splitItem of splitLine){
-                if(/^\s*$/.test(splitItem)){
+              for (let i = 0; i < splitLine.length; i++){
+                if(/^\s*$/.test(splitLine[i])){
                   if(this.myModel.currentSuite != this.myModel.root) {
                     this.myModel.setCurrentSuite(this.myModel.currentSuite.parent)
                   }
                 }else{
-                  this.createTestItem(splitItem)
+                  this.createTestItem(splitLine[i])
+                  if(i < splitLine.length - 1) {
+                    this.setCurrentTestItemToParent()
+                  }
                 }
               }
           }else{
@@ -71,6 +83,7 @@ class Filer{
   }
 
   createTestItem(item){
+      item = item.replace(/;/g, "")
       let items = item.split("\n")
       for (let i = 0; i < items.length; i++){
           if(this.myModel.root == undefined){
@@ -125,7 +138,6 @@ class Filer{
 
   splitAssert(str){
       console.log("TRY ADD ASSERT")
-      str = str.replace(/\'/g,"&#8217;")
       var arr = str.substring(str.indexOf('(')+1)
       var not = false
       var content = ""

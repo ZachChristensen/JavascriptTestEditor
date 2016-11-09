@@ -19,7 +19,7 @@ class Assert {
 		}
 		if (backColour < 40) backColour = 40
 		if (outerDiv){
-			var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+			var newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		}
 		else{
 			var newText = ""
@@ -39,7 +39,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents.replace(/\'/g,"&#8217;") + "'></input>)"
 		newText += "<span>.</span><select  id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
 		newText += "<option onmousedown='return false' disabled>Select...</option>"
 		newText += "<option onmousedown='return false' value='not'>not</option>"
@@ -80,7 +80,7 @@ class Assert {
 			newText += "</select>"
 		}
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
-			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' style='width: calc(100% - 660px); min-width:180px;' id='" + this.id + "t2' type='text' value='" + this.contents2 + "'></input>)"
+			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' style='width: calc(100% - 660px); min-width:180px;' id='" + this.id + "t2' type='text' value='" + this.contents2.replace(/\'/g,"&#8217;") + "'></input>)"
 		}
 		else newText += "( )"
 
@@ -126,26 +126,26 @@ class Assert {
 		theController.myView.setItemClickListeners(this.id)
 	}
 
-    toString (tabNum) {
+	toString (tabNum) {
         let tab = "    "
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "(" + this.contents2 + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "(" + this.contents2 + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
 			}
 		}
 		else{
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "()"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "()"
 			}
 
 		}
-        return resultStr
+        return resultStr + ";"
     }
 
 	moveUp(){
