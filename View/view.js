@@ -250,13 +250,17 @@ class HTMLView{
 	}
 
 	setItemBackgroundHover(theElementId){
-		let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
-		document.getElementById(theElementId).style.border.color = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		if (theElementId.substr(0, 4) === "Item"){
+			//includes()
+			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
+			document.getElementById(theElementId).style.border.color = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		}
 	}
 
 	resetItemBackground(theElementId){
 		if (theElementId.substr(0, 4) === "Item"){
 			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
+			if(theController.myModel.find(theElementId))
 			document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
 		}
 	}
@@ -374,7 +378,7 @@ class HTMLView{
 	}
 
 	changeDrag(dragSetting, mouseSetting = undefined) {
-		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
+		//console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
 		if (mouseSetting !== undefined || this.isMouseDown){
 			let suites = document.getElementsByClassName("Suite")
 			let specs = document.getElementsByClassName("Spec")
@@ -409,7 +413,6 @@ class HTMLView{
     while ( (node = node.previousSibling) ) {
         if (node.tagName == "DIV") {
 			if (node.classList.contains("droptarget")) {
-				console.log(node.className)
             	index++
 			}
         }
@@ -425,13 +428,10 @@ class HTMLView{
 			let data = ev.dataTransfer.getData("text")
 			if (ev.target.className == "droptarget") {
 				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
-				console.log("a")
 			}else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
 				theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
-				console.log("b")
 			}else{
 				theController.updateTestItem(ev.target.id, data)
-				console.log("c")
 			}
 		}
 	}

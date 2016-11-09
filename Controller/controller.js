@@ -45,7 +45,7 @@ class Controller{
 				if (theController.myView.hoveredItem !== undefined){
 					theController.myView.resetItemBackground(theController.myView.hoveredItem.id)
 				}
-				theController.myView.setItemBackgroundHover(theController.myView.hoveredItem.id)
+				theController.myView.setItemBackgroundHover(event.target.id)
 				theController.myView.hoveredItem = event.target
 			})
 			i.addEventListener("mouseleave", function( event ) {

@@ -27,13 +27,15 @@ class Setup extends Suite{
 	}
 
 	toString (tabNum) {
-    let tab = "    "
+	    let tab = "    "
+		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
+		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
 		var theTab, child
 		theTab = tabNum
-    let resultStr = tab.repeat(tabNum) + this.type + "(function() {\r\n"
-    for (child of this.allMyChildren) {
-        resultStr += child.toString(theTab + 1) + "\r\n"
-    }
+	    let resultStr = tab.repeat(tabNum) + name + "(function() {\r\n"
+	    for (child of this.allMyChildren) {
+	        resultStr += child.toString(theTab + 1) + "\r\n"
+	    }
         resultStr += tab.repeat(theTab) + "})\r\n"
         return resultStr
     }
