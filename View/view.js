@@ -1,6 +1,5 @@
 /*jshint esversion:6, asi:true, unused:false*/
 /*globals theController:true, idGenerator:true, idCounter, modal_content, toast_msg, Controller*/
-
 class HTMLView{
 	constructor(newController){
 		console.log("view")
@@ -10,8 +9,8 @@ class HTMLView{
 		this.errorElementIndex = 0
 		this.modal = undefined
 		this.currentItem = undefined
-		this.isDragging = false
 		this.isMouseDown = false
+		this.lastElem
 		this.initialise()
 	}
 
@@ -244,21 +243,19 @@ class HTMLView{
 	}
 
 	drag(ev) {
-		if (!this.isDragging){
-			console.log("drag start")
-			this.isDragging = true
+		if (this.lastElem != ev.target){
+			this.lastElem = ev.target
 			ev.dataTransfer.setData("text", ev.target.id)
 			this.createDropElements()
-			console.log(ev.target.id)
 		}
 	}
 
 	createDropElements(){
-	  	let suites = document.getElementsByClassName("Suite")
-	  	let specs = document.getElementsByClassName("Spec")
-	  	let setups = document.getElementsByClassName("Setup")
-	  	let asserts = document.getElementsByClassName("Assert")
-	  	let miscs = document.getElementsByClassName("Misc")
+  	let suites = document.getElementsByClassName("Suite")
+  	let specs = document.getElementsByClassName("Spec")
+  	let setups = document.getElementsByClassName("Setup")
+  	let asserts = document.getElementsByClassName("Assert")
+  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
 		let setupBtns = document.getElementsByClassName("setupBtn")
 		let onEnterFunc = function(e){
@@ -332,35 +329,32 @@ class HTMLView{
 
 	dragEndCheck(ev){
 		console.log("drag end check" )
-		this.isDragging = false
-		this.drop(ev)
-		ev.preventDefault()
 		theController.updateDisplay()
 	}
 
 	changeDrag(dragSetting, mouseSetting = undefined) {
 		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
 		if (mouseSetting !== undefined || this.isMouseDown){
-			let suites = document.getElementsByClassName("Suite")
+			let suites = document.getElementsByClassName("TestItem")
 			let specs = document.getElementsByClassName("Spec")
 			let setups = document.getElementsByClassName("Setup")
 			let asserts = document.getElementsByClassName("Assert")
 			let miscs = document.getElementsByClassName("Misc")
 
-			for (let i = 0; i < suites.length; i++){
-				suites[i].draggable = dragSetting
+			for (let suite of suites){
+				suite.draggable = dragSetting
 			}
-			for (let i = 0; i < specs.length; i++){
-				specs[i].draggable = dragSetting
+			for (let spec of specs){
+				spec.draggable = dragSetting
 			}
-			for (let i = 0; i < setups.length; i++){
-				setups[i].draggable = dragSetting
+			for (let setup of setups){
+				setup.draggable = dragSetting
 			}
-			for (let i = 0; i < asserts.length; i++){
-				asserts[i].draggable = dragSetting
+			for (let assert of asserts){
+				assert.draggable = dragSetting
 			}
-			for (let i = 0; i < miscs.length; i++){
-				miscs[i].draggable = dragSetting
+			for (let misc of miscs){
+				misc.draggable = dragSetting
 			}
 			console.log("drag set to: " + dragSetting)
 		}
@@ -372,32 +366,42 @@ class HTMLView{
   findIndexOfNode(node){
 	let index = 1
     while ( (node = node.previousSibling) ) {
-        if (node.tagName == "DIV") {
-			if (node.classList.contains("droptarget")) {
-				console.log(node.className)
-            	index++
-			}
-        }
+      if (node.tagName == "DIV") {
+				if (node.classList.contains("droptarget")) {
+					console.log("pce")
+          index++
+				}
+      }
     }
     return index
   }
 
 	drop(ev) {
-		if (this.isDragging){
-			console.log("dropped")
-			this.isDragging = false
-			console.log(ev.target.nodeName)
-			let data = ev.dataTransfer.getData("text")
-			if (ev.target.className == "droptarget") {
-				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
-			}else if (ev.target.nodeName == "INPUT" || ev.target.nodeName == "TEXTAREA" || ev.target.nodeName == "BUTTON"){
-				if(ev.target.parentNode.id != data) {
-					theController.updateTestItem(ev.target.parentNode.parentNode.id, data)
-				}
-			}else{
-				theController.updateTestItem(ev.target.id, data)
+		console.log("dropped")
+		this.isDragging = false
+		console.log(ev.target.nodeName)
+		let data = ev.dataTransfer.getData("text")
+		let incorrectDropElements = ["INPUT", "TEXTAREA", "BUTTON", "SELECT", "SPAN"]
+		if (ev.target.className == "droptarget") {
+			theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+		}else if (this.checkForIncorrectDropElement(incorrectDropElements, ev.target.nodeName)){
+			if(ev.target.parentNode.id != data) {
+				theController.updateTestItem(ev.target.parentNode.id, data)
+			}
+		}else{
+			theController.updateTestItem(ev.target.id, data)
+		}
+	}
+
+	checkForIncorrectDropElement(elementTypes, targetElementType) {
+		console.log(targetElementType)
+		for (let elementType of elementTypes){
+			if (elementType == targetElementType){
+				console.log(elementType == targetElementType)
+				return true
 			}
 		}
+		return false
 	}
 }
 
