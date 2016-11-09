@@ -35,7 +35,7 @@ class MiscCode {
 
     toString (tabNum) {
         let tab = "    "
-				let lines = this.contents.split("\r\n")
+				let lines = this.contents.split(/\r\n|\r|\n/)
         let resultStr = ""
 				for (let i = 0; i < lines.length; i++){
 					if (lines[i] == "") {
