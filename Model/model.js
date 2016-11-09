@@ -129,6 +129,7 @@ class Model{
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
 		this.setCurrentSuite(this.root)
+		this.setCurrentTestItem(this.root)
 	}
 
 	setCurrentSuite (suite) {
