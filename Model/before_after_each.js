@@ -24,7 +24,12 @@ class Setup extends Suite{
 		newText += '<a class="btnCut">Cut</a>'
 		newText += '<a class="btnPaste">Paste</a>'
 
-
+		if (this.parent !== "None"){
+			//up
+			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
+			//down
+			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
+		}
 		newText += '</div></div>'
 		newText += " " + name
 		theController.outputToDiv(Parent, newText)

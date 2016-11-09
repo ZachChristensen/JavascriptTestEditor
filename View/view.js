@@ -395,14 +395,15 @@ class HTMLView{
   }
 
   findIndexOfNode(node){
-	let index = 1
+	let index = 0
     while ( (node = node.previousSibling) ) {
-        if (node.tagName == "DIV") {
-			if (node.classList.contains("droptarget")) {
-            	index++
-			}
-        }
+      if (node.tagName == "DIV") {
+		if (node.classList.contains("droptarget") || node.classList.contains("TestItem")){
+  			index++
+		}
+      }
     }
+	console.log(index)
     return index
   }
 
@@ -412,8 +413,12 @@ class HTMLView{
 		console.log(ev.target.nodeName)
 		let data = ev.dataTransfer.getData("text")
 		let incorrectDropElements = ["INPUT", "TEXTAREA", "BUTTON", "SELECT", "SPAN"]
+		let draggedElement = document.getElementById(data)
 		if (ev.target.className == "droptarget") {
-			theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+			// 1 is deducted from the droptarget as it offsets the correct index
+			if(ev.target.parentNode != draggedElement.parentNode || this.findIndexOfNode(ev.target) - 1 != this.findIndexOfNode(draggedElement)) {
+				theController.updateTestItem(ev.target.parentNode.id, data, this.findIndexOfNode(ev.target))
+			}
 		}else if (this.checkForIncorrectDropElement(incorrectDropElements, ev.target.nodeName)){
 			if(ev.target.parentNode.id != data) {
 				theController.updateTestItem(ev.target.parentNode.id, data)
