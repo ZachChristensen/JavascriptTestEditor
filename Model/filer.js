@@ -32,7 +32,6 @@ class Filer{
   }
 
   saveToFile(currentFrameWork, filename){
-    console.log(currentFrameWork.toString())
     let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"});
     saveAs(blob, filename + ".js");
   }
@@ -49,7 +48,6 @@ class Filer{
       this.myModel = model
       let pattern = /(\}\))/i
       for (let item of splitFileArray){
-        console.log(item)
           if (pattern.test(item)){
               let splitLine = item.split("})")
               for (let i = 0; i < splitLine.length; i++){
@@ -85,8 +83,6 @@ class Filer{
   }
 
   createTestItem(item){
-    console.log(this.myModel.currentSuite)
-    console.log(this.myModel.currentTestItem)
       item = item.replace(/;/g, "")
       let items = item.split("\n")
       for (let i = 0; i < items.length; i++){
