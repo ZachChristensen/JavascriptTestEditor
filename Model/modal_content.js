@@ -3,16 +3,16 @@ jshint esversion:6, jshint asi:true
 */
 class modal_content{
 	static setAddSpec(){
-		var title = "Add New Spec"
-		var content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let title = "Add New Spec"
+		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
-		var modalAddBtn = document.getElementById("modalAddBtn")
-		var modalDescr = document.getElementById("modalDescription")
+		let modalAddBtn = document.getElementById("modalAddBtn")
+		let modalDescr = document.getElementById("modalDescription")
 		modalAddBtn.onclick = function(event) {
 			theController.myModel.addSpec(modalDescr.value)
 			theController.updateDisplay()
@@ -29,17 +29,17 @@ class modal_content{
 	}
 
 	static setAddSuite(){
-		var title = "Add New Suite"
-		var content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let title = "Add New Suite"
+		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
-		var modalAddBtn = document.getElementById("modalAddBtn")
+		let modalAddBtn = document.getElementById("modalAddBtn")
 		modalAddBtn.onclick = function(event) {
-			var modalDescr = document.getElementById("modalDescription")
+			let modalDescr = document.getElementById("modalDescription")
 			theController.myModel.addSuite(modalDescr.value)
 			theController.updateDisplay()
 			theController.myView.modal.style.display = "none"
@@ -54,8 +54,8 @@ class modal_content{
 	}
 
 	static setAddAssert(){
-		var title = "Add New Assert"
-		var content = `<div id="modalContent"><br>
+		let title = "Add New Assert"
+		let content = `<div id="modalContent"><br>
 		expect(<input type="text" id="modalDescription" placeholder="Assert Content"></input>)
 		 <span>.</span>
 		 <select id='modald1'>
@@ -78,17 +78,17 @@ class modal_content{
 		 (<input type="text" id="modalDescription2" placeholder="Assert Content 2"></input>)
  		<button id="modalAddBtn">Add</button>
 		</div>`
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
-		var modalAddBtn = document.getElementById("modalAddBtn")
+		let modalAddBtn = document.getElementById("modalAddBtn")
 		modalAddBtn.onclick = function(event) {
-			var modalDescr = document.getElementById("modalDescription")
-			var modalDescr2 = document.getElementById("modalDescription2")
-			var modald1 = document.getElementById("modald1")
+			let modalDescr = document.getElementById("modalDescription")
+			let modalDescr2 = document.getElementById("modalDescription2")
+			let modald1 = document.getElementById("modald1")
 
 			theController.myModel.addAssert(modalDescr.value, false, modald1.value, modalDescr2.value)
 			theController.updateDisplay()
@@ -104,15 +104,15 @@ class modal_content{
 	}
 
 	static setNewRootSuite(){
-		var title = "Add New Root Suite"
-		var content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let title = "Add New Root Suite"
+		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
-		var modalAddBtn = document.getElementById("modalAddBtn")
+		let modalAddBtn = document.getElementById("modalAddBtn")
 		modalAddBtn.onclick = function(event) {
 			document.getElementById('newRootBtn').style.display = "none"
 			let modalDescr = document.getElementById("modalDescription")
@@ -132,25 +132,25 @@ class modal_content{
 	}
 
 	static setSave(){
-		var title = "Save File"
-		var content = `<h5 style="margin-top:1em;">Filename</h5>
+		let title = "Save File"
+		let content = `<h5 style="margin-top:1em;">Filename</h5>
 		<input  value="TestCase" id='filenameInput'/>.js<br>
 		<button style="margin-top:1em;" id="modalSaveButton">Save File</button>
 		`
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
 
-		var filenameInput = document.getElementById("filenameInput")
+		let filenameInput = document.getElementById("filenameInput")
 
 		filenameInput.value = theController.myModel.filename.split('.')[0]
 
-		var modalSaveButton = document.getElementById("modalSaveButton")
+		let modalSaveButton = document.getElementById("modalSaveButton")
 		modalSaveButton.onclick = function(event) {
-			var filename = document.getElementById("filenameInput").value
+			let filename = document.getElementById("filenameInput").value
 			if (filename == "") return toast_msg.show("Filename cannot be empty")
 			theController.saveToFile(filename)
 		}
@@ -158,8 +158,8 @@ class modal_content{
 
 
 	static setHelp(){
-		var title = "Help"
-		var content = `<H3 style="margin-top:1em;">Multiple Select</H3>
+		let title = "Help"
+		let content = `<H3 style="margin-top:1em;">Multiple Select</H3>
 		<p>You can select multple test items with the same parent at once by pressing the ctrl key before clicking them.<br>
 		After doing this you can press ctrl + right click to show a menu that allows you to copy, clone, cut or delete them all at once.<br>
 		</p><br>
@@ -176,11 +176,11 @@ Check the box next to "Ask where to save each file before downloading."<br>
 		<br><br>Thank you for using this application if you find any issues feel free to submit it to our GitHub page at:<br>
 		<a href="https://github.com/ZachChristensen/JavascriptTestEditor">https://github.com/ZachChristensen/JavascriptTestEditor</a>
 		`
-		var titleID = "modalTitle"
-		var contentID = "modalContent"
-		var titleElement = document.getElementById(titleID)
+		let titleID = "modalTitle"
+		let contentID = "modalContent"
+		let titleElement = document.getElementById(titleID)
 		titleElement.innerHTML = title
-		var contentElement = document.getElementById(contentID)
+		let contentElement = document.getElementById(contentID)
 		contentElement.innerHTML = content
 	}
 }

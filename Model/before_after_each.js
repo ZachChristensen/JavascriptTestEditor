@@ -45,7 +45,7 @@ class Setup extends Suite{
 	    let tab = "    "
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
-		var theTab, child
+		let theTab, child
 		theTab = tabNum
 	    let resultStr = tab.repeat(tabNum) + name + "(function() {\r\n"
 	    for (child of this.allMyChildren) {

@@ -44,8 +44,8 @@ class Suite extends TestItem{
 	}
 
 	toString (tabNum) {
-		var resultStr, theTab, child
-		var tab = "    "
+		let resultStr, theTab, child
+		let tab = "    "
 		theTab = tabNum
 		resultStr = tab.repeat(theTab) + "describe(\"" + this.description + "\", function() {\r\n"
 		theTab = theTab + 1
@@ -58,7 +58,7 @@ class Suite extends TestItem{
 	}
 
 	findChild (theId){
-		for (var child of this.allMyChildren){
+		for (let child of this.allMyChildren){
 			if (child.id === theId){
 				return child
 			}
