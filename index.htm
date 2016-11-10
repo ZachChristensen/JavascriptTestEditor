@@ -64,14 +64,17 @@
 		<button id="modalAddBtn">Add</button></div>
 	  </div>
 	</div>
+	<!--Custom Context Menus-->
+	<div id='ctxMenu' style="position: absolute;"><div class="ctx-content">
+		<a id="ctxCopy">Copy Selected</a>
+        <a id="ctxCut">Cut Selected</a>
+		<a id="ctxClone">Clone Selected</a>
+		<a id="ctxDelete">Delete Selected</a>
+	</div></div>
 
-	<!-- Custom Context Menu -->
-	<menu id="ctxMenu">
-        <menu id="ctxCopy" title="Copy Selected"></menu>
-        <menu id="ctxCut" title="Cut Selected"></menu>
-		<menu id="ctxClone" title="Clone Selected"></menu>
-		<menu id="ctxDelete" title="Delete Selected"></menu>
-    </menu>
+	<div id='ctx2' style="position: absolute;"><div class="ctx2-content">
+		<a class="btnDelete">Default</a>
+	</div></div>
 </body>
 
 <script src="Model\filer.js"></script>
@@ -85,6 +88,7 @@
 <script src="Model\language.js"></script>
 <script src="Model\model.js"></script>
 <script src="Model\modal_content.js"></script>
+<script src="Model\set_context.js"></script>
 <script src="View\view.js"></script>
 <script src="View\toast_msg.js"></script>
 <script src="Controller\controller.js"></script>

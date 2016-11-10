@@ -15,11 +15,13 @@ class MiscCode {
 			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		if (backColour < 40) backColour = 40
-		var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+"); position: relative;' id='" + this.id + "'>"
+		var newText = "<div class='Misc TestItem' ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+");' id='" + this.id + "'>"
 		newText += '<div class="dropdown" style="position: absolute; top: 16px;"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 
 		newText += '<a class="btnDelete">Delete</a>'
 		newText += '<a class="btnClone">Clone</a>'
+		newText += '<a class="btnCopy">Copy</a>'
+		newText += '<a class="btnCut">Cut</a>'
 		if (this.parent !== "None"){
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
@@ -28,7 +30,7 @@ class MiscCode {
 		}
 
 		newText += '</div></div>'
-		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' ondragend='theController.myView.dragEndCheck()' onmouseleave='theController.myView.changeDrag(true)' rows=\"3\" id='" + this.id + "t' type='text' style='margin-left:2.5em; min-height:40px; width: calc(100% - 55px); resize: vertical;'>" + this.contents.replace(/\'/g,"&#8217;") + "</textArea> </div>"
+		newText += "&nbsp;&nbsp;" + "<textArea placeholder='Put your JavaScript code here...' class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' ondragend='theController.myView.dragEndCheck()' onmouseleave='theController.myView.changeDrag(true)' rows='3' id='" + this.id + "t'>" + this.contents + "</textArea> </div>"
 		theController.outputToDiv(Parent, newText)
 		theController.myView.setItemClickListeners(this.id)
 	}

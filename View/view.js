@@ -10,6 +10,8 @@ class HTMLView{
 		this.modal = undefined
 		this.currentItem = undefined
 		this.isMouseDown = false
+		this.contextTarget = undefined
+		this.hoveredItem = undefined
 		this.lastElem
 		this.initialise()
 	}
@@ -176,29 +178,53 @@ class HTMLView{
 	}
 
 	setItemClickListeners(elementID){
+		console.log(elementID)
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
 			var ctxMenu = document.getElementById("ctxMenu");
 			ctxMenu.style.display = "";
 			ctxMenu.style.left = "";
 			ctxMenu.style.top = "";
+			var ctxMenu2 = document.getElementById("ctx2")
+			ctxMenu2.style.display = "none"
+			ctxMenu2.style.left = "0"
+			ctxMenu2.style.top = "0"
 			if (e.ctrlKey) {
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))
-				e.stopPropagation()
 			}
+			e.stopPropagation()
 		});
 
 		theElement.addEventListener("contextmenu",function(event){
 			if (event.ctrlKey) {
 				event.preventDefault();
 				var ctxMenu = document.getElementById("ctxMenu");
-				ctxMenu.style.display = "block";
-				ctxMenu.style.left = (event.pageX - 10)+"px";
-				ctxMenu.style.top = (event.pageY - 10)+"px";
+				ctxMenu.style.display = "block"
+				ctxMenu.style.left = (event.pageX - 10)+"px"
+				ctxMenu.style.top = (event.pageY - 10)+"px"
 				return
 			}
-			if (event.target.className !== "input") {
-				//event.preventDefault();
+			if (event.target.classList.contains("TestItem")) {
+				event.preventDefault();
+				var ctxMenu2 = document.getElementById("ctx2");
+				if (event.target.classList.contains("Suite")){
+					set_context.setCtx1Suite(event.target.id)
+				}
+				else if (event.target.classList.contains("Spec")){
+					set_context.setCtx1Spec(event.target.id)
+				}
+				else if (event.target.classList.contains("Assert")){
+					set_context.setCtx1Assert(event.target.id)
+				}
+				else if (event.target.classList.contains("Misc")){
+					set_context.setCtx1Code(event.target.id)
+				}
+				else if (event.target.classList.contains("Setup")){
+					set_context.setCtx1Setup(event.target.id)
+				}
+				ctxMenu2.style.display = "block"
+				ctxMenu2.style.left = (event.pageX - 1)+"px"
+				ctxMenu2.style.top = (event.pageY - 1)+"px"
 			}
 		},false);
 	}
@@ -219,24 +245,26 @@ class HTMLView{
 	}
 
 	changeItemBackground(theElementId){
-		document.getElementById(theElementId).style.backgroundColor = '#9DD'
+		document.getElementById(theElementId).style.backgroundColor = '#B0D9D5'
 	}
 
 	resetItemBackground(theElementId){
-		let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
-		document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		if (theElementId.substr(0, 4) === "Item"){
+			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
+			if(theController.myModel.find(theElementId))
+			document.getElementById(theElementId).style.backgroundColor = "rgb("+backColour+", "+backColour+", "+backColour+")"
+		}
 	}
 
-	appendToDiv(divID, textContent){
+	appendToDiv(divID, content){
 		var HTMLdiv = document.getElementById(divID)
-		HTMLdiv.innerHTML += textContent
+		HTMLdiv.innerHTML += content
 	}
 
 	setToDiv(divID, textContent){
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML = textContent
 	}
-
 
 	allowDrop(ev) {
 		ev.preventDefault()
@@ -251,13 +279,14 @@ class HTMLView{
 	}
 
 	createDropElements(){
-  	let suites = document.getElementsByClassName("Suite")
-  	let specs = document.getElementsByClassName("Spec")
-  	let setups = document.getElementsByClassName("Setup")
-  	let asserts = document.getElementsByClassName("Assert")
-  	let miscs = document.getElementsByClassName("Misc")
+	  	let suites = document.getElementsByClassName("Suite")
+	  	let specs = document.getElementsByClassName("Spec")
+	  	let setups = document.getElementsByClassName("Setup")
+	  	let asserts = document.getElementsByClassName("Assert")
+	  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
-		let setupBtns = document.getElementsByClassName("setupBtn")
+		let setupNames = document.getElementsByClassName("setupName")
+
 		let onEnterFunc = function(e){
 			e.target.style.background = 'green'
 		}
@@ -266,12 +295,11 @@ class HTMLView{
 		}
 		for (let input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
-			  input.style.marginTop = '8px'
-			  input.style.marginBottom = '24.5px'
+				input.style.marginBottom = '24.5px'
 			}
 		}
-		for (let btn of setupBtns){
-			btn.style.marginBottom = '1em'
+		for (let name of setupNames){
+			name.style.marginBottom = '26.5px'
 		}
 		for (let misc of miscs){
 			let div = document.createElement("DIV")
@@ -284,14 +312,16 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-	  	for (let suite of suites){
-	  		let div = document.createElement("DIV")
-	  		div.className = "droptarget"
-	        div.ondragover = onEnterFunc
-	        div.ondragleave = onLeaveFunc
-			suite.parentNode.insertBefore(div, suite.nextSibling)
-	        suite.style.marginBottom = 0
-	        suite.style.marginTop = 0
+	  	for (let i = 0; i < suites.length; i++){
+			if (i!== 0){
+		  		let div = document.createElement("DIV")
+		  		div.className = "droptarget"
+		        div.ondragover = onEnterFunc
+		        div.ondragleave = onLeaveFunc
+				suites[i].parentNode.insertBefore(div, suites[i].nextSibling)
+		        suites[i].style.marginBottom = 0
+		        suites[i].style.marginTop = 0
+			}
 	  	}
 	  	for (let spec of specs){
 	  		let div = document.createElement("DIV")
@@ -333,7 +363,7 @@ class HTMLView{
 	}
 
 	changeDrag(dragSetting, mouseSetting = undefined) {
-		console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
+		//console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
 		if (mouseSetting !== undefined || this.isMouseDown){
 			let suites = document.getElementsByClassName("TestItem")
 			let specs = document.getElementsByClassName("Spec")
@@ -462,9 +492,7 @@ window.onkeypress = function(e) {
 				e.preventDefault()
 				return
 			}
-			else{
-				return
-			}
+			else return
 		}
 		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)+1
 		if (newIndex < theController.myView.inputs.length) theController.myView.inputs[newIndex].focus()
@@ -485,9 +513,7 @@ window.onkeypress = function(e) {
 				e.preventDefault()
 				return
 			}
-			else{
-				return
-			}
+			else return
 		}
  		let newIndex = theController.myView.inputs.findIndex(x => x.id == e.target.id)-1
  		if (newIndex >= 0)  theController.myView.inputs[newIndex].focus()
@@ -496,13 +522,27 @@ window.onkeypress = function(e) {
  	}
  }
 
- // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	if (event.target == theController.myView.modal) {
-		theController.myView.modal.style.display = "none"
+function hideContext(e){
+	if (e.target.className === "ctxItem"){
+		return
 	}
-	var ctxMenu = document.getElementById("ctxMenu")
-	ctxMenu.style.display = "none"
-	ctxMenu.style.left = "0"
-	ctxMenu.style.top = "0"
+	var ctxMenu2 = document.getElementById("ctx2")
+	ctxMenu2.style.display = "none"
 }
+
+ window.addEventListener("mousedown", hideContext);
+
+ // When the user clicks anywhere outside of the modal, close it
+ window.onclick = function(event) {
+     if (event.target == theController.myView.modal) {
+         theController.myView.modal.style.display = "none"
+     }
+ 	var ctxMenu = document.getElementById("ctxMenu")
+ 	ctxMenu.style.display = "none"
+ 	ctxMenu.style.left = "0"
+ 	ctxMenu.style.top = "0"
+	var ctxMenu2 = document.getElementById("ctx2")
+ 	ctxMenu2.style.display = "none"
+ 	ctxMenu2.style.left = "0"
+ 	ctxMenu2.style.top = "0"
+ }

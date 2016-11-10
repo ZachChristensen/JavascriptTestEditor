@@ -35,11 +35,11 @@ class TestItem {
 
 		if (this.type === "Suite"){
 			newText += '<a class="btnAddSpec">Add '+theController.myModel.currentLanguage.spec+'</a> <a class="btnAddSuite">Add '+theController.myModel.currentLanguage.suite+'</a>'
-			newText += '<a class="btnAddBeforeEach">Add '+theController.myModel.currentLanguage.beforeEach+'</a>'
-			newText += '<a class="btnAddAfterEach">Add '+theController.myModel.currentLanguage.afterEach+'</a>'
+			newText += '<a class="btnAddBeforeEach">Add beforeEach</a>'
+			newText += '<a class="btnAddAfterEach">Add afterEach</a>'
 		}
-		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add '+theController.myModel.currentLanguage.assert+'</a>'
-		newText += '<a class="btnAddMisc">Add code</a>'
+		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>'
+		newText += '<a class="btnAddMisc">Add Code</a>'
 
 		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
 		newText += '<a class="btnCopy">Copy</a>'
@@ -47,10 +47,10 @@ class TestItem {
 
 		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
 		if (this.parent !== "None"){
-			//in
-			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
+			//in
+			if (index !== 0 && this.parent.allMyChildren[index-1].type === "Suite") newText += "<a title='Move object into a suite above' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveIn()' >Move In</a>"
 			//up
 			if (index !== 0) newText += "<a title='Move object up' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveUp()'>Move Up</a>"
 			//down
