@@ -51,7 +51,7 @@ class Suite extends TestItem{
 		theTab = theTab + 1
 
 		for (child of this.allMyChildren) {
-			resultStr +=  child.toString(theTab) + "\n"
+			resultStr +=  child.toString(theTab) + "\r\n"
 		}
 		resultStr += tab.repeat(theTab - 1) + "});\r\n"
 		return resultStr

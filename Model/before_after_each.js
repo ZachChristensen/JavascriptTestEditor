@@ -51,7 +51,7 @@ class Setup extends Suite{
 	    for (child of this.allMyChildren) {
 	        resultStr += child.toString(theTab + 1) + "\r\n"
 	    }
-        resultStr += tab.repeat(theTab) + "})\r\n"
+        resultStr += tab.repeat(theTab) + "});\r\n"
         return resultStr
     }
 }
