@@ -13,7 +13,7 @@ class Filer{
     let suiteArray = []
     let result
     let that = this
-    var reader = new FileReader()
+    let reader = new FileReader()
     reader.onload = callback
     reader.readAsText(file)
   }
@@ -138,14 +138,14 @@ class Filer{
 
   splitAssert(str){
       console.log("TRY ADD ASSERT")
-      var arr = str.substring(str.indexOf('(')+1)
-      var not = false
-      var content = ""
-      var matcher = "toEqual"
-      var arr2 = arr.split("")
-      var numBrack = 1
-      var arr2Num = 0
-      var cycleLimit = 50
+      let arr = str.substring(str.indexOf('(')+1)
+      let not = false
+      let content = ""
+      let matcher = "toEqual"
+      let arr2 = arr.split("")
+      let numBrack = 1
+      let arr2Num = 0
+      let cycleLimit = 50
       while (numBrack >= 1){
           if (cycleLimit-- === 0){
               //prevent inf loop

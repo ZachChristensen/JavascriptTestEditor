@@ -58,7 +58,7 @@ class MiscCode {
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
-			var temp = this.parent.allMyChildren[index-1]
+			let temp = this.parent.allMyChildren[index-1]
 			this.parent.allMyChildren[index-1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
@@ -68,7 +68,7 @@ class MiscCode {
 	moveDown(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index != this.parent.allMyChildren.length-1){
-			var temp = this.parent.allMyChildren[index+1]
+			let temp = this.parent.allMyChildren[index+1]
 			this.parent.allMyChildren[index+1] = this.parent.allMyChildren[index]
 			this.parent.allMyChildren[index] = temp
 		}
@@ -77,7 +77,7 @@ class MiscCode {
 
 
 	findIndent(){
-		var current = this,
+		let current = this,
 		depth = 0
 		while (typeof current.parent != "string"){
 			depth++

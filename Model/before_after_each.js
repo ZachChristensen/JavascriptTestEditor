@@ -34,7 +34,7 @@ class Setup extends Suite{
 		newText += " " + '<span class="setupName">' + name +'</span>'
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
-			for (var baby of this.allMyChildren){
+			for (let baby of this.allMyChildren){
 				baby.toHTML(this.id)
 			}
 		}

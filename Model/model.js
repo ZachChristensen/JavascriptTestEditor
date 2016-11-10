@@ -43,7 +43,7 @@ class Model{
 			theController.myView.changeItemBackground(item.id)
 		}
 		else{
-			for (var i of this.selected){
+			for (let i of this.selected){
 				this.myController.myView.resetItemBackground(i.id)
 			}
 			//foreach selected change display back to unselected
@@ -153,12 +153,12 @@ class Model{
 	}
 
 	getCopiedItems () {
-		var item = this.copiedItems
+		let item = this.copiedItems
 		return item
 	}
 
 	addSuite (descriptionStr, disabled) {
-		var aSuite, parent
+		let aSuite, parent
 		parent = this.getCurrentSuite()
 		aSuite = new Suite(descriptionStr, parent, disabled)
 		parent.allMyChildren.push(aSuite)
@@ -168,7 +168,7 @@ class Model{
 	}
 
 	addSpec (descriptionStr) {
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
@@ -186,25 +186,25 @@ class Model{
 
 	addBeforeEachToEnd(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addBeforeToEnd()
 	}
 
 	addBeforeEach(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addBefore()
 	}
 
 	addAfterEachToEnd(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addAfterToEnd()
 	}
 
 	addAfterEach(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addAfter()
 	}
 
@@ -217,7 +217,7 @@ class Model{
 
 	updateItem(elementID, newStr){
 		console.log('update item')
-		var item = this.find(elementID)
+		let item = this.find(elementID)
 		if (item !== undefined){
 			if (item.type === "Assert"){
 				item.contents = newStr
@@ -235,7 +235,7 @@ class Model{
 	}
 
 	toHTML() {
-		var HTMLdiv = document.getElementById('main')
+		let HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
 		if (this.root !== undefined){
 
