@@ -130,18 +130,18 @@ class Assert {
         let tab = "    "
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "(" + this.contents2 + ")"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "(" + this.contents2 + ")"
 			}
 		}
 		else{
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ").not" + '.' + this.matcher + "()"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents + ")" + '.' + this.matcher + "()"
 			}
 
 		}
