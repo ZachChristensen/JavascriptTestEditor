@@ -39,7 +39,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' style='min-width:180px; width: calc(100% - 650px);' id='" + this.id + "t1' type='text' value='" + this.contents.replace(/\'/g,"&#8217;") + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' id='" + this.id + "t1' type='text' value='" + this.contents.replace(/\'/g,"&#8217;") + "'></input>)"
 		newText += "<span>.</span><select  id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
 		newText += "<option onmousedown='return false' disabled>Select...</option>"
 		newText += "<option onmousedown='return false' value='not'>not</option>"
@@ -80,7 +80,7 @@ class Assert {
 			newText += "</select>"
 		}
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
-			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' style='width: calc(100% - 660px); min-width:180px;' id='" + this.id + "t2' type='text' value='" + this.contents2.replace(/\'/g,"&#8217;") + "'></input>)"
+			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' id='" + this.id + "t2' type='text' value='" + this.contents2.replace(/\'/g,"&#8217;") + "'></input>)"
 		}
 		else newText += "( )"
 

@@ -333,49 +333,49 @@ class set_context{
             currentItem.findAssertForRemoval()
         }
 
-
         theController.updateDisplay()
         toast_msg.showCut()
     }
     static addSpecToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.setCurrentSuite(currentItem)
-        modal_content.setAddSpec()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        let newItem = theController.myModel.addSpec("")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't').focus()
     }
     static addSuiteToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.setCurrentSuite(currentItem)
-        modal_content.setAddSuite()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        let newItem = theController.myModel.addSuite("")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't').focus()
     }
     static addBeforeToThis(){
         theController.myModel.setCurrentSuite(theController.myView.contextTarget)
         theController.myModel.addBeforeEach()
-        theController.myModel.addMiscCode("")
+        let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
+        document.getElementById(newMisc.id + 't').focus()
     }
     static addAfterToThis() {
         theController.myModel.setCurrentSuite(theController.myView.contextTarget)
         theController.myModel.addAfterEach()
-        theController.myModel.addMiscCode("")
+        let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
+        document.getElementById(newMisc.id + 't').focus()
     }
     static addMiscToThis(){
         theController.myModel.setCurrentTestItem(theController.myView.contextTarget)
-        var newMisc = theController.myModel.addMiscCode("")
+        let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
-        //focus on new misc
-        var titleElement = document.getElementById(newMisc.id + 't').focus()
+        document.getElementById(newMisc.id + 't').focus()
     }
     static addAssertToThis(){
         console.log("assert func")
         theController.myModel.setCurrentTestItem(theController.myView.contextTarget)
-        modal_content.setAddAssert()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        let newItem = theController.myModel.addAssert("", false, "toContain", "")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't1').focus()
     }
 
 }

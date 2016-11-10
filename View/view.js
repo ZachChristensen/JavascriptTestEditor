@@ -178,7 +178,6 @@ class HTMLView{
 	}
 
 	setItemClickListeners(elementID){
-		console.log(elementID)
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
 			var ctxMenu = document.getElementById("ctxMenu");

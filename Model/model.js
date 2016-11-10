@@ -157,7 +157,7 @@ class Model{
 		return item
 	}
 
-	addSuite (descriptionStr, disabled) {
+	addSuite (descriptionStr, disabled = false) {
 		var aSuite, parent
 		parent = this.getCurrentSuite()
 		aSuite = new Suite(descriptionStr, parent, disabled)
@@ -170,11 +170,14 @@ class Model{
 	addSpec (descriptionStr) {
 		var parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
+		return this.currentTestItem
 	}
 
 	addAssert (contents="", not=false, matcher="", contents2="") {
 		if(this.currentTestItem != undefined){
-			this.asserts.push(this.currentTestItem.addAssert(contents, not, matcher, contents2))
+			let newAssert = this.currentTestItem.addAssert(contents, not, matcher, contents2)
+			this.asserts.push(newAssert)
+			return newAssert
 		}
 	}
 

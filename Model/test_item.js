@@ -288,9 +288,10 @@ class TestItem {
 				newArray.push(newSuite)
 			}
 			else if (i.type === "Assert"){
-				var newSuite = new Assert(i.contents, i.contents2, newParent, i.not, i.matcher)
+				var newAssert = new Assert(i.contents, i.contents2, newParent, i.not, i.matcher)
 				theController.myModel
-				newArray.push(newSuite)
+				newArray.push(newAssert)
+				theController.myModel.asserts.push(newAssert)
 			}
 			else if (i.type === "Misc"){
 				var newMisc = new MiscCode(i.contents, newParent)
