@@ -279,14 +279,13 @@ class HTMLView{
 	}
 
 	createDropElements(){
-  	let suites = document.getElementsByClassName("Suite")
-  	let specs = document.getElementsByClassName("Spec")
-  	let setups = document.getElementsByClassName("Setup")
-  	let asserts = document.getElementsByClassName("Assert")
-  	let miscs = document.getElementsByClassName("Misc")
+	  	let suites = document.getElementsByClassName("Suite")
+	  	let specs = document.getElementsByClassName("Spec")
+	  	let setups = document.getElementsByClassName("Setup")
+	  	let asserts = document.getElementsByClassName("Assert")
+	  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
-		let setupName = document.getElementsByClassName("setupName")
-
+		let setupNames = document.getElementsByClassName("setupName")
 
 		let onEnterFunc = function(e){
 			e.target.style.background = 'green'
@@ -296,11 +295,11 @@ class HTMLView{
 		}
 		for (let input of inputs){
 			if (input.parentNode.classList.contains("Suite") || input.parentNode.classList.contains("Spec")){
-			  input.style.marginBottom = '16px'
+				input.style.marginBottom = '24.5px'
 			}
 		}
-		for (let name of setupName){
-			name.style.marginBottom = '1em'
+		for (let name of setupNames){
+			name.style.marginBottom = '26.5px'
 		}
 		for (let misc of miscs){
 			let div = document.createElement("DIV")

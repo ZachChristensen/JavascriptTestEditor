@@ -200,7 +200,7 @@ class set_context{
     static setCtx1Setup(id){
         theController.myView.contextTarget = theController.myModel.find(id)
         var contextMenu = document.getElementsByClassName("ctx2-content")[0]
-        contextMenu.innerHTML = ""    
+        contextMenu.innerHTML = ""
 
         var a = document.createElement("a")
         a.onclick = set_context.deleteThis
@@ -327,8 +327,12 @@ class set_context{
         var parent = currentItem.parent
         theController.myModel.setCopiedItem(currentItem)
         parent.removeChild(index)
+        console.log("HERE")
+        console.log(currentItem)
+        if(currentItem.type === "Suite" || currentItem.type === "Spec"){
+            currentItem.findAssertForRemoval()
+        }
 
-        currentItem.findAssertForRemoval()
 
         theController.updateDisplay()
         toast_msg.showCut()

@@ -31,7 +31,7 @@ class Setup extends Suite{
 			if (index !== (this.parent.allMyChildren.length - 1)) newText += "<a title='Move object down' href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveDown()' >Move Down</a>"
 		}
 		newText += '</div></div>'
-		newText += " " + name
+		newText += " " + '<span class="setupName">' + name +'</span>'
 		theController.outputToDiv(Parent, newText)
 		if(this.hasOwnProperty("allMyChildren")){
 			for (var baby of this.allMyChildren){
