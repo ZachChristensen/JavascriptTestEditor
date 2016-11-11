@@ -177,7 +177,7 @@ input,select{
 
 .Assert > .input{
 	min-width:180px;
-	width: calc(100% - 525px);
+	width: calc(100% - 535px);
 }
 
 .Root{

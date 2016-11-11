@@ -222,6 +222,13 @@ class HTMLView{
 				else if (event.target.classList.contains("Setup")){
 					set_context.setCtx1Setup(event.target.id)
 				}
+				let distanceFromBottom = window.innerHeight - event.clientY
+				let distanceFromTop = event.clientY
+
+				let heightOfContextMenu = document.getElementsByClassName('ctx2-content')[0].offsetHeight
+				console.log(distanceFromBottom)
+				console.log(heightOfContextMenu)
+				ctxMenu2.style.display = "block"
 				ctxMenu2.style.display = "block"
 				ctxMenu2.style.left = (event.pageX - 1)+"px"
 				ctxMenu2.style.top = (event.pageY - 1)+"px"
