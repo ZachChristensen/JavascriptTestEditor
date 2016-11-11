@@ -330,6 +330,14 @@ class set_context{
                     toast_msg.show("Error Spec cannot contain BeforeEach")
                     return
                 }
+                if ( (item.type == "Suite" && currentItem.type == "AfterEach")){
+                    toast_msg.show("Error AfterEach cannot contain Suite")
+                    return
+                }
+                if ( (item.type == "Suite" && currentItem.type == "BeforeEach")){
+                    toast_msg.show("Error BeforeEach cannot contain Suite")
+                    return
+                }
                 if ( (item.type == "Assert" && currentItem.type == "Suite")){
                     toast_msg.show("Error Suite cannot contain Assert")
                     return
