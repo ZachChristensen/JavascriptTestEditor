@@ -255,32 +255,52 @@ class set_context{
     }
 
     static deleteThis(){
-        if (confirm('Are you sure you want to delete this item and all of its subitems?')) {
-            if (theController.myView.contextTarget !== undefined){
-                let item = theController.myView.contextTarget
-                //If deleting root suite
-                if (item === theController.myModel.root){
-                    theController.myModel.root = undefined
-                    theController.myModel.currentSuite = undefined
-                    theController.myModel.asserts = []
-                    idGenerator = new idCounter()
-                }
-                else{
-                    theController.myModel.currentSuite = item.parent
-                    let theParent = item.parent
-                    let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
-                    theParent.removeChild(index)
-                }
-                if (item.type === "Assert"){
-                    let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
-                    if (doesExist != -1){
-                        theController.myModel.asserts.splice(doesExist, 1)
-                    }
-                }
-                if (item.hasOwnProperty('allMyChildren')) item.findAssertForRemoval()
-                theController.updateDisplay()
-                toast_msg.showDeleted()
+        if (theController.myView.contextTarget === undefined){
+            return
+        }
+        let question = ""
+        if (theController.myView.contextTarget.type === "Suite"){
+            question = "Are you sure you want to delete this suite and all of its subitems?"
+        }
+        else if (theController.myView.contextTarget.type === "Spec"){
+            question = "Are you sure you want to delete this spec and all of its subitems?"
+        }
+        else if (theController.myView.contextTarget.type === "Assert"){
+            question = "Are you sure you want to delete this assert?"
+        }
+        else if (theController.myView.contextTarget.type === "Misc"){
+            question = "Are you sure you want to delete this code?"
+        }
+        else if (theController.myView.contextTarget.type === "BeforeEach"){
+            question = "Are you sure you want to delete this BeforeEach?"
+        }
+        else if (theController.myView.contextTarget.type === "AfterEach"){
+            question = "Are you sure you want to delete this AfterEach?"
+        }
+        if (confirm(question)) {
+            let item = theController.myView.contextTarget
+            //If deleting root suite
+            if (item === theController.myModel.root){
+                theController.myModel.root = undefined
+                theController.myModel.currentSuite = undefined
+                theController.myModel.asserts = []
+                idGenerator = new idCounter()
             }
+            else{
+                theController.myModel.currentSuite = item.parent
+                let theParent = item.parent
+                let index = theParent.allMyChildren.findIndex(x => x.id == item.id)
+                theParent.removeChild(index)
+            }
+            if (item.type === "Assert"){
+                let doesExist = theController.myModel.asserts.findIndex(x => x.id == item.id)
+                if (doesExist != -1){
+                    theController.myModel.asserts.splice(doesExist, 1)
+                }
+            }
+            if (item.hasOwnProperty('allMyChildren')) item.findAssertForRemoval()
+            theController.updateDisplay()
+            toast_msg.showDeleted()
         }
     }
 

@@ -42,7 +42,7 @@ class HTMLView{
 			btn.onclick = clearBtnFunction
 		}
 
-    let saveFunc = function(event) {
+    	let saveFunc = function(event) {
 				modal_content.setSave()
 				theController.myView.modal.style.display = "block"
 		}
@@ -51,7 +51,7 @@ class HTMLView{
 			btn.onclick = saveFunc
 		}
 
-    let loadFunc = function(event) {
+    	let loadFunc = function(event) {
 				document.getElementById("fileSelector").click();
 		}
 
@@ -59,7 +59,7 @@ class HTMLView{
 			btn.onclick = loadFunc
 		}
 
-    let helpFunc = function(event) {
+    	let helpFunc = function(event) {
 				modal_content.setHelp()
 				theController.myView.modal.style.display = "block"
 		}
@@ -85,6 +85,7 @@ class HTMLView{
 				return
 			}
 			else{
+				theController.myModel.copiedItems = []
 				let currentItems = theController.myModel.selected
 				if (currentItems[0].parent === "None"){
 					toast_msg.show("Cannot cut root suite")
