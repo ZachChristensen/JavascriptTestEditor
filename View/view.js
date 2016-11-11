@@ -85,6 +85,7 @@ class HTMLView{
 				return
 			}
 			else{
+				theController.myModel.copiedItems = []
 				let currentItems = theController.myModel.selected
 				if (currentItems[0].parent === "None"){
 					toast_msg.show("Cannot cut root suite")
