@@ -74,7 +74,7 @@ class HTMLView{
 				return
 			}
 			else{
-				theController.myModel.setCopiedItems(theController.myModel.selected)
+				theController.myModel.copiedItems = theController.myModel.selected
 				toast_msg.showCopy()
 			}
 		}

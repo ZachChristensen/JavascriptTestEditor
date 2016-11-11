@@ -3,19 +3,14 @@ jshint esversion:6, jshint asi:true
 */
 class TestItem {
 	constructor ( newDesc, newType, newParent = "None") {
-		this.description = newDesc
+		this._description = newDesc
 		this.type = newType
 		this.id = idGenerator()
 		this.parent = newParent
 	}
 
-	setDescription ( newDesc ){
-		this.description = newDesc
-	}
-
-	getDescription(){
-		return this.description
-	}
+	set description ( newDesc ){ this._description = newDesc }
+	get description () { return this._description }
 
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 22)

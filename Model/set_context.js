@@ -243,7 +243,7 @@ class set_context{
 
     //Button Fuctions
     static copyThis(){
-        theController.myModel.setCopiedItem(theController.myView.contextTarget)
+        theController.myModel.copiedItem = theController.myView.contextTarget
         toast_msg.showCopy()
     }
 
@@ -292,7 +292,7 @@ class set_context{
                 toast_msg.show("No item copied")
                 return
             }
-            var pastedItems = theController.myModel.getCopiedItems()
+            var pastedItems = theController.myModel.copiedItems
             for (var item of pastedItems){
                 if ( (item.type == "Suite" && currentItem.type == "Spec")){
                     toast_msg.show("Error Spec cannot contain Suites")
@@ -325,7 +325,7 @@ class set_context{
         let currentItem = theController.myView.contextTarget
         let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
         var parent = currentItem.parent
-        theController.myModel.setCopiedItem(currentItem)
+        theController.myModel.copiedItem = currentItem
         parent.removeChild(index)
         console.log("HERE")
         console.log(currentItem)
@@ -339,32 +339,32 @@ class set_context{
     }
     static addSpecToThis(){
         var currentItem = theController.myView.contextTarget
-        theController.myModel.setCurrentSuite(currentItem)
+        theController.myModel.currentSuite = currentItem
         modal_content.setAddSpec()
         theController.myView.modal.style.display = "block"
         document.getElementById("modalDescription").focus()
     }
     static addSuiteToThis(){
         var currentItem = theController.myView.contextTarget
-        theController.myModel.setCurrentSuite(currentItem)
+        theController.myModel.currentSuite = currentItem
         modal_content.setAddSuite()
         theController.myView.modal.style.display = "block"
         document.getElementById("modalDescription").focus()
     }
     static addBeforeToThis(){
-        theController.myModel.setCurrentSuite(theController.myView.contextTarget)
+        theController.myModel.currentSuite = theController.myView.contextTarget
         theController.myModel.addBeforeEach()
         theController.myModel.addMiscCode("")
         theController.updateDisplay()
     }
     static addAfterToThis() {
-        theController.myModel.setCurrentSuite(theController.myView.contextTarget)
+        theController.myModel.currentSuite = theController.myView.contextTarget
         theController.myModel.addAfterEach()
         theController.myModel.addMiscCode("")
         theController.updateDisplay()
     }
     static addMiscToThis(){
-        theController.myModel.setCurrentTestItem(theController.myView.contextTarget)
+        theController.myModel.currentTestItem =theController.myView.contextTarget
         var newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         //focus on new misc
@@ -372,7 +372,7 @@ class set_context{
     }
     static addAssertToThis(){
         console.log("assert func")
-        theController.myModel.setCurrentTestItem(theController.myView.contextTarget)
+        theController.myModel.currentTestItem = theController.myView.contextTarget
         modal_content.setAddAssert()
         theController.myView.modal.style.display = "block"
         document.getElementById("modalDescription").focus()

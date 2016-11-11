@@ -10,19 +10,27 @@ class Model{
 		this.myFiler = new Filer(this)
 
 		this.root = undefined
-		this.copiedItems = []
+		this._copiedItems = []
 
-		this.currentSuite = this.root
+		this._currentSuite = this.root
 
 		this.filename = 'newFile.js'
 
-		this.currentTestItem = undefined
+		this._currentTestItem = undefined
 
 		this.currentLanguage = new jasmineLanguage()
 		this.asserts = []
 		this.selected = []
 		this.selectedParent = undefined
 	}
+
+	    set currentSuite  (suite)  { this._currentSuite = suite             }
+		get currentSuite  ()  { return this._currentSuite  				   }
+		set currentTestItem  (testItem)  { this._currentTestItem = testItem }
+		get currentTestItem  ()  { return this._currentTestItem  	       }
+		set copiedItem (item) { this._copiedItems = [item]				   }
+		set copiedItems (items) { this._copiedItems = items				   }
+		get copiedItems () { return this._copiedItems					   }
 
 	selectItem(item){
 		//if exist remove them
@@ -120,55 +128,26 @@ class Model{
 
 	createNewRoot(descriptionStr){
 		this.root = new Suite(descriptionStr)
-		this.setCurrentSuite(this.root)
-		this.setCurrentTestItem(this.root)
-	}
-
-	setCurrentSuite (suite) {
-		this.currentSuite = suite
-	}
-
-	getCurrentSuite () {
-		return this.currentSuite
-	}
-
-	setCurrentTestItem (suite) {
-		this.currentTestItem = suite
-	}
-
-	getCurrentTestItem () {
-		return this.currentTestItem
-	}
-
-	setCopiedItem (item) {
-		this.copiedItems = [item]
+		this.currentSuite = this.root
+		this.currentTestItem = this.root
 	}
 
 	addCopiedItem (item) {
 		this.copiedItems.push(item)
 	}
 
-	setCopiedItems (items) {
-		this.copiedItems = items
-	}
-
-	getCopiedItems () {
-		let item = this.copiedItems
-		return item
-	}
-
 	addSuite (descriptionStr, disabled) {
 		let aSuite, parent
-		parent = this.getCurrentSuite()
+		parent = this.currentSuite
 		aSuite = new Suite(descriptionStr, parent, disabled)
 		parent.allMyChildren.push(aSuite)
-		this.setCurrentSuite(aSuite)
+		this.currentSuite = aSuite
 		this.currentTestItem = aSuite
 		return aSuite
 	}
 
 	addSpec (descriptionStr) {
-		let parentSuite = this.getCurrentSuite()
+		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 	}
 
@@ -186,25 +165,25 @@ class Model{
 
 	addBeforeEachToEnd(){
 		//set current suite before calling
-		let parentSuite = this.getCurrentSuite()
+		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addBeforeToEnd()
 	}
 
 	addBeforeEach(){
 		//set current suite before calling
-		let parentSuite = this.getCurrentSuite()
+		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addBefore()
 	}
 
 	addAfterEachToEnd(){
 		//set current suite before calling
-		let parentSuite = this.getCurrentSuite()
+		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addAfterToEnd()
 	}
 
 	addAfterEach(){
 		//set current suite before calling
-		let parentSuite = this.getCurrentSuite()
+		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addAfter()
 	}
 
