@@ -175,6 +175,11 @@ input,select{
 	cursor: grabbing;;
 }
 
+.Assert > .input{
+	min-width:180px;
+	width: calc(100% - 525px);
+}
+
 .Root{
 	margin:0;
 }

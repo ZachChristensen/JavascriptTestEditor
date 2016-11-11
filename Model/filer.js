@@ -39,8 +39,7 @@ class Filer{
   setCurrentTestItemToParent(){
     this.setPreviousTestItemMiscCode()
     if(this.myModel.currentTestItem != this.myModel.root) {
-      console.log(this.myModel.currentTestItem)
-      this.myModel.setCurrentTestItem(this.myModel.currentTestItem.parent)
+      this.myModel.currentTestItem = this.myModel.currentTestItem.parent
     }
   }
 
@@ -53,7 +52,7 @@ class Filer{
               for (let i = 0; i < splitLine.length; i++){
                 if(/^\s*$/.test(splitLine[i])){
                   if(this.myModel.currentSuite != this.myModel.root) {
-                    this.myModel.setCurrentSuite(this.myModel.currentSuite.parent)
+                    this.myModel.currentSuite = this.myModel.currentSuite.parent
                   }
                 }else{
                   this.createTestItem(splitLine[i])
@@ -93,11 +92,11 @@ class Filer{
               if (type == "describe"){
                   this.setPreviousTestItemMiscCode()
                   let suite = this.myModel.addSuite(this.getNodeDescription(items[i]), false)
-                  this.myModel.setCurrentSuite(suite)
+                  this.myModel.currentSuite = suite
               }else if (type == "xdescribe"){
                   this.setPreviousTestItemMiscCode()
                   let suite = this.myModel.addSuite(this.getNodeDescription(items[i]), true)
-                  this.myModel.setCurrentSuite(suite)
+                  this.myModel.currentSuite = suite
               }else if (type == "it"){
                   this.setPreviousTestItemMiscCode()
                   this.myModel.addSpec(this.getNodeDescription(items[i]))

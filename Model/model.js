@@ -136,7 +136,7 @@ class Model{
 		this.copiedItems.push(item)
 	}
 
-	addSuite (descriptionStr, disabled) {
+	addSuite (descriptionStr, disabled = false) {
 		let aSuite, parent
 		parent = this.currentSuite
 		aSuite = new Suite(descriptionStr, parent, disabled)
@@ -149,11 +149,14 @@ class Model{
 	addSpec (descriptionStr) {
 		let parentSuite = this.currentSuite
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
+		return this.currentTestItem
 	}
 
-	addAssert (contents="", not=false, matcher="", contents2="") {
+	addAssert (content="", not=false, matcher="", content2="") {
 		if(this.currentTestItem != undefined){
-			this.asserts.push(this.currentTestItem.addAssert(contents, not, matcher, contents2))
+			let newAssert = this.currentTestItem.addAssert(content, not, matcher, content2)
+			this.asserts.push(newAssert)
+			return newAssert
 		}
 	}
 
@@ -199,10 +202,10 @@ class Model{
 		let item = this.find(elementID)
 		if (item !== undefined){
 			if (item.type === "Assert"){
-				item.contents = newStr
+				item.content = newStr
 			}
 			else if(item.type === "Misc"){
-				item.contents = newStr
+				item.content = newStr
 			}
 			else item.description = newStr
 			console.log(item)

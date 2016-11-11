@@ -23,7 +23,7 @@ class TestItem {
 		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (typeof this.parent === "string") var newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='margin:1em 0' id='" + this.id + "'>"
+		if (this === theController.myModel.root) var newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='margin:1em 0 8em 0' id='" + this.id + "'>"
 		else var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete">Delete</a>'
@@ -36,12 +36,12 @@ class TestItem {
 		if (this.type === "Spec") newText += '<a class="btnAddAssert">Add Assert</a>'
 		newText += '<a class="btnAddMisc">Add Code</a>'
 
-		if (this.parent !== "None") newText += '<a class="btnClone">Clone</a>'
+		if (this !== theController.myModel.root) newText += '<a class="btnClone">Clone</a>'
 		newText += '<a class="btnCopy">Copy</a>'
-		if (this.parent !== "None") newText += '<a class="btnCut">Cut</a>'
+		if (this !== theController.myModel.root) newText += '<a class="btnCut">Cut</a>'
 
 		if (this.hasOwnProperty("allMyChildren")) newText += '<a class="btnPaste">Paste</a>'
-		if (this.parent !== "None"){
+		if (this !== theController.myModel.root){
 			//out
 			if (this.parent.parent !== "None") newText += "<a href='javascript:;' onclick='theController.myModel.find(\"" + this.id + "\").moveOut()' title='Move object out along side it&apos;s containing suite'>Move Out</a>"
 			//in
@@ -163,12 +163,12 @@ class TestItem {
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
-					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
+					var newAssert = new Assert(i.content, i.content2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
 					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
-					var newAssert = new MiscCode(i.contents, theClone)
+					var newAssert = new MiscCode(i.content, theClone)
 					theClone.allMyChildren.push(newAssert)
 				}
 				else if (i.type === "BeforeEach"){
@@ -184,11 +184,11 @@ class TestItem {
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, orig.contents2, this, orig.not, orig.matcher)
+			var theClone = new Assert(orig.content, orig.content2, this, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
-			var theClone = new MiscCode(orig.contents, this)
+			var theClone = new MiscCode(orig.content, this)
 		}
 		if (theClone.type === "BeforeEach" || theClone.type === "AfterEach"){
 			this.allMyChildren.unshift(theClone)
@@ -203,16 +203,16 @@ class TestItem {
 		var orig = this.allMyChildren[index]
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
-				var theClone = new Spec(orig.description, this)
+				var theClone = new Spec(orig.description, orig.parent)
 			}
 			else if (orig.type === "Suite"){
-				var theClone = new Suite(orig.description, this)
+				var theClone = new Suite(orig.description, orig.parent)
 			}
 			else if (orig.type === "BeforeEach"){
-				var theClone = new BeforeEach(this)
+				var theClone = new BeforeEach(orig.parent)
 			}
 			else if (orig.type === "AfterEach"){
-				var theClone = new AfterEach(this)
+				var theClone = new AfterEach(orig.parent)
 			}
 			console.log(orig)
 			for (var i of orig.allMyChildren){
@@ -228,32 +228,32 @@ class TestItem {
 					theClone.allMyChildren.push(newSuite)
 				}
 				else if (i.type === "Assert"){
-					var newAssert = new Assert(i.contents, i.contents2, theClone, i.not, i.matcher)
+					var newAssert = new Assert(i.content, i.content2, theClone, i.not, i.matcher)
 					theClone.allMyChildren.push(newAssert)
 					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
-					var newAssert = new MiscCode(i.contents, theClone)
+					var newAssert = new MiscCode(i.content, theClone)
 					theClone.allMyChildren.push(newAssert)
 				}
 				else if (i.type === "BeforeEach"){
 					var newSetup = new BeforeEach(theClone)
 					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.unshift(newSetup)
+					theClone.allMyChildren.push(newSetup)
 				}
 				else if (i.type === "AfterEach"){
 					var newSetup = new AfterEach(theClone)
 					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.unshift(newSetup)
+					theClone.allMyChildren.push(newSetup)
 				}
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.contents, orig.contents2, orig.parent, orig.not, orig.matcher)
+			var theClone = new Assert(orig.content, orig.content2, orig.parent, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
-			var theClone = new MiscCode(orig.contents, orig.parent)
+			var theClone = new MiscCode(orig.content, orig.parent)
 		}
 
 		//Place cloned item directly after its original?
@@ -283,23 +283,25 @@ class TestItem {
 				newArray.push(newSuite)
 			}
 			else if (i.type === "Assert"){
-				var newSuite = new Assert(i.contents, i.contents2, newParent, i.not, i.matcher)
+				var newAssert = new Assert(i.content, i.content2, newParent, i.not, i.matcher)
 				theController.myModel
-				newArray.push(newSuite)
+				newArray.push(newAssert)
+				theController.myModel.asserts.push(newAssert)
 			}
 			else if (i.type === "Misc"){
-				var newMisc = new MiscCode(i.contents, newParent)
+				console.log("CLONE MISC C")
+				var newMisc = new MiscCode(i.content, newParent)
 				newArray.push(newMisc)
 			}
 			else if (i.type === "BeforeEach"){
 				var newSetup = new BeforeEach(newParent)
-				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newParent)
-				newArray.unshift(newSetup)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+				newArray.push(newSetup)
 			}
 			else if (i.type === "AfterEach"){
 				var newSetup = new AfterEach(newParent)
-				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newParent)
-				newArray.unshift(newSetup)
+				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
+				newArray.push(newSetup)
 			}
 		}
 		return newArray

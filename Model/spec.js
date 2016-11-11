@@ -7,8 +7,8 @@ class Spec extends TestItem {
 		this.allMyChildren = []
 	}
 
-	addAssert (contents, not, matcher, contents2) {
-		let aAssert = new Assert(contents, contents2, this, not, matcher)
+	addAssert (content, not, matcher, content2) {
+		let aAssert = new Assert(content, content2, this, not, matcher)
 		this.allMyChildren.push(aAssert)
 		return aAssert
 	}
