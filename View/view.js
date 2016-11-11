@@ -451,7 +451,7 @@ window.addEventListener('input', function (e) {
 			console.log(item)
 			if (item.type === "Assert"){
 				console.log(3)
-				item.contents = e.target.value
+				item.content = e.target.value
 				console.log(item)
 			}
 			return
@@ -464,7 +464,7 @@ window.addEventListener('input', function (e) {
 			console.log(item)
 			if (item.type === "Assert"){
 				console.log(3)
-				item.contents2 = e.target.value
+				item.content2 = e.target.value
 				console.log(item)
 			}
 			return

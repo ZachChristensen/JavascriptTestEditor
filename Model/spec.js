@@ -7,15 +7,15 @@ class Spec extends TestItem {
 		this.allMyChildren = []
 	}
 
-	addAssert (contents, not, matcher, contents2) {
-		let aAssert = new Assert(contents, contents2, this, not, matcher)
+	addAssert (content, not, matcher, content2) {
+		let aAssert = new Assert(content, content2, this, not, matcher)
 		this.allMyChildren.push(aAssert)
 		return aAssert
 	}
 
   toString (tabNum) {
-    var resultStr, theTab, child
-    var tab = "    "
+    let resultStr, theTab, child
+    let tab = "    "
     theTab = tabNum
     resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
     theTab = theTab + 1
@@ -34,7 +34,7 @@ class Spec extends TestItem {
 	}
 
 	findChild (theId){
-		for (var child of this.allMyChildren){
+		for (let child of this.allMyChildren){
 			if (child.id === theId){
 				return child
 			}

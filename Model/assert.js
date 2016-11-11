@@ -2,10 +2,10 @@
 jshint esversion:6, jshint asi:true
 */
 class Assert {
-	constructor (contents="", contents2="", newParent = "None", not=false, matcher="toBe"){
+	constructor (content="", content2="", newParent = "None", not=false, matcher="toBe"){
 		this.id = idGenerator()
-		this.contents = contents
-		this.contents2 = contents2
+		this.content = content
+		this.content2 = content2
 		this.parent = newParent
 		this.type = "Assert"
 		this.not = not
@@ -39,7 +39,7 @@ class Assert {
 		}
 
 		newText += '</div></div>'
-		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' id='" + this.id + "t1' type='text' value='" + this.contents.replace(/\'/g,"&#8217;") + "'></input>)"
+		newText += " " + theController.myModel.currentLanguage.assert + "&nbsp;&nbsp;" + "(<input  class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='theController.myView.changeDrag(true)' id='" + this.id + "t1' type='text' value='" + this.content.replace(/\'/g,"&#8217;") + "'></input>)"
 		newText += "<span>.</span><select  id='"+this.id+"d1' onchange='theController.myView.assertDropdown(this)'>"
 		newText += "<option onmousedown='return false' disabled>Select...</option>"
 		newText += "<option onmousedown='return false' value='not'>not</option>"
@@ -80,7 +80,7 @@ class Assert {
 			newText += "</select>"
 		}
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
-			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' id='" + this.id + "t2' type='text' value='" + this.contents2.replace(/\'/g,"&#8217;") + "'></input>)"
+			newText += "(<input class='input' draggable='false' onmousedown='theController.myView.changeDrag(false, true)' onmouseup='theController.myView.changeDrag(true, false)' onmouseleave='(theController.myView.changeDrag(true))' id='" + this.id + "t2' type='text' value='" + this.content2.replace(/\'/g,"&#8217;") + "'></input>)"
 		}
 		else newText += "( )"
 
@@ -130,18 +130,18 @@ class Assert {
         let tab = "    "
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.content + ").not" + '.' + this.matcher + "(" + this.content2 + ")"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "(" + this.contents2.replace(/\'/g,"&#8217;") + ")"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.content + ")" + '.' + this.matcher + "(" + this.content2 + ")"
 			}
 		}
 		else{
 			if (this.not){
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ").not" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.content + ").not" + '.' + this.matcher + "()"
 			}
 			else{
-				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.contents.replace(/\'/g,"&#8217;") + ")" + '.' + this.matcher + "()"
+				var resultStr = tab.repeat(tabNum) + theController.myModel.currentLanguage.assert + "(" + this.content + ")" + '.' + this.matcher + "()"
 			}
 
 		}

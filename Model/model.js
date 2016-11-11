@@ -43,7 +43,7 @@ class Model{
 			theController.myView.changeItemBackground(item.id)
 		}
 		else{
-			for (var i of this.selected){
+			for (let i of this.selected){
 				this.myController.myView.resetItemBackground(i.id)
 			}
 			//foreach selected change display back to unselected
@@ -153,12 +153,13 @@ class Model{
 	}
 
 	getCopiedItems () {
-		var item = this.copiedItems
+		let item = this.copiedItems
 		return item
 	}
 
+
 	addSuite (descriptionStr, disabled = false) {
-		var aSuite, parent
+		let aSuite, parent
 		parent = this.getCurrentSuite()
 		aSuite = new Suite(descriptionStr, parent, disabled)
 		parent.allMyChildren.push(aSuite)
@@ -168,14 +169,14 @@ class Model{
 	}
 
 	addSpec (descriptionStr) {
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addSpec(descriptionStr, parentSuite)
 		return this.currentTestItem
 	}
 
-	addAssert (contents="", not=false, matcher="", contents2="") {
+	addAssert (content="", not=false, matcher="", content2="") {
 		if(this.currentTestItem != undefined){
-			let newAssert = this.currentTestItem.addAssert(contents, not, matcher, contents2)
+			let newAssert = this.currentTestItem.addAssert(content, not, matcher, content2)
 			this.asserts.push(newAssert)
 			return newAssert
 		}
@@ -189,25 +190,25 @@ class Model{
 
 	addBeforeEachToEnd(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addBeforeToEnd()
 	}
 
 	addBeforeEach(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addBefore()
 	}
 
 	addAfterEachToEnd(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addAfterToEnd()
 	}
 
 	addAfterEach(){
 		//set current suite before calling
-		var parentSuite = this.getCurrentSuite()
+		let parentSuite = this.getCurrentSuite()
 		this.currentTestItem = parentSuite.addAfter()
 	}
 
@@ -220,13 +221,13 @@ class Model{
 
 	updateItem(elementID, newStr){
 		console.log('update item')
-		var item = this.find(elementID)
+		let item = this.find(elementID)
 		if (item !== undefined){
 			if (item.type === "Assert"){
-				item.contents = newStr
+				item.content = newStr
 			}
 			else if(item.type === "Misc"){
-				item.contents = newStr
+				item.content = newStr
 			}
 			else item.description = newStr
 			console.log(item)
@@ -238,7 +239,7 @@ class Model{
 	}
 
 	toHTML() {
-		var HTMLdiv = document.getElementById('main')
+		let HTMLdiv = document.getElementById('main')
 		HTMLdiv.innerHTML = ""
 		if (this.root !== undefined){
 

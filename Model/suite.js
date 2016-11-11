@@ -40,6 +40,7 @@ class Suite extends TestItem{
 	addSuite (itStr, newParent) {
 		let aSuite = new Suite(itStr, newParent)
 		this.allMyChildren.push(aSuite)
+		return aSuite
 	}
 
 	toString (tabNum) {
