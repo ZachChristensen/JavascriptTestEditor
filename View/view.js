@@ -406,6 +406,7 @@ class HTMLView{
   }
 
 	drop(ev) {
+		ev.preventDefault()
 		console.log("dropped")
 		this.isDragging = false
 		console.log(ev.target.nodeName)
