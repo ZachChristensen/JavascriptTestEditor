@@ -206,32 +206,46 @@ class HTMLView{
 			}
 			if (event.target.classList.contains("TestItem")) {
 				event.preventDefault();
+				let ctxHeight
 				var ctxMenu2 = document.getElementById("ctx2");
 				if (event.target.classList.contains("Suite")){
 					set_context.setCtx1Suite(event.target.id)
+					ctxHeight = 440
+					if (event.target.id === "Item0") ctxHeight -= 88
 				}
 				else if (event.target.classList.contains("Spec")){
 					set_context.setCtx1Spec(event.target.id)
+					ctxHeight = 308
 				}
 				else if (event.target.classList.contains("Assert")){
 					set_context.setCtx1Assert(event.target.id)
+					ctxHeight = 132
 				}
 				else if (event.target.classList.contains("Misc")){
 					set_context.setCtx1Code(event.target.id)
+					ctxHeight = 132
 				}
 				else if (event.target.classList.contains("Setup")){
 					set_context.setCtx1Setup(event.target.id)
+					ctxHeight = 220
 				}
+				else ctxHeight = 0
 				let distanceFromBottom = window.innerHeight - event.clientY
 				let distanceFromTop = event.clientY
 
 				let heightOfContextMenu = document.getElementsByClassName('ctx2-content')[0].offsetHeight
-				console.log(distanceFromBottom)
-				console.log(heightOfContextMenu)
-				ctxMenu2.style.display = "block"
-				ctxMenu2.style.display = "block"
-				ctxMenu2.style.left = (event.pageX - 1)+"px"
-				ctxMenu2.style.top = (event.pageY - 1)+"px"
+				if((distanceFromBottom - ctxHeight)>0){
+					ctxMenu2.style.left = (event.pageX - 1)+"px"
+					ctxMenu2.style.top = (event.pageY - 1)+"px"
+					ctxMenu2.style.display = "block"
+				}
+				else{
+					ctxMenu2.style.left = (event.pageX - 1 )+"px"
+					ctxMenu2.style.top = (event.pageY - 1 - ctxHeight)+"px"
+					ctxMenu2.style.display = "block"
+				}
+				console.log((distanceFromBottom - ctxHeight))
+				console.log((distanceFromBottom - ctxHeight)>0)
 			}
 		},false);
 	}

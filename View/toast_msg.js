@@ -3,7 +3,12 @@ jshint esversion:6, asi:true
 */
 /*globals theController*/
 function HideErrorMsg2() {
-    setTimeout(function(){ theController.myView.errorElements[theController.myView.errorElementIndex].style.opacity = 0}, 2000);
+    setTimeout(function(){
+        theController.myView.errorElements[theController.myView.errorElementIndex].style.opacity = 0
+        setTimeout(function(){
+            theController.myView.errorElements[theController.myView.errorElementIndex].style.display = 'none'
+        }, 400);
+    }, 2000);
 }
 
 class toast_msg{
@@ -33,9 +38,10 @@ class toast_msg{
 
 	static show(msg){
 		var contentElement = theController.myView.errorElements[theController.myView.errorElementIndex]
-		contentElement.style.opacity = 0;
+		contentElement.style.opacity = 0
+        contentElement.style.display = 'block'
 		contentElement.innerHTML = msg
-		contentElement.style.opacity = 1;
+		contentElement.style.opacity = 1
 		HideErrorMsg2()
 	}
 }
