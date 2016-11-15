@@ -357,54 +357,56 @@ class set_context{
         parent.removeChild(index)
         console.log("HERE")
         console.log(currentItem)
+        if (currentItem.type === "Assert"){
+            let doesExist = theController.myModel.asserts.findIndex(x => x.id == currentItem.id)
+            if (doesExist != -1){
+                theController.myModel.asserts.splice(doesExist, 1)
+            }
+        }
         if(currentItem.type === "Suite" || currentItem.type === "Spec"){
             currentItem.findAssertForRemoval()
         }
-
         theController.updateDisplay()
         toast_msg.showCut()
     }
     static addSpecToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.currentSuite = currentItem
-        modal_content.setAddSpec()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        let newItem = theController.myModel.addSpec("")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't').focus()
     }
-
     static addSuiteToThis(){
         var currentItem = theController.myView.contextTarget
-        theController.myModel.currentSuite = currentItem
-        modal_content.setAddSuite()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        theController.myModel.setCurrentSuite(currentItem)
+        let newItem = theController.myModel.addSuite("")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't').focus()
     }
     static addBeforeToThis(){
-        theController.myModel.currentSuite = theController.myView.contextTarget
+        var currentItem = theController.myView.contextTarget
         theController.myModel.addBeforeEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
     static addAfterToThis() {
-        theController.myModel.currentSuite = theController.myView.contextTarget
+        var currentItem = theController.myView.contextTarget
         theController.myModel.addAfterEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
     static addMiscToThis(){
-        theController.myModel.currentTestItem = theController.myView.contextTarget
-        var newMisc = theController.myModel.addMiscCode("")
+        var currentItem = theController.myView.contextTarget
+        let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
     static addAssertToThis(){
-        console.log("assert func")
-        theController.myModel.currentTestItem = theController.myView.contextTarget
-        modal_content.setAddAssert()
-        theController.myView.modal.style.display = "block"
-        document.getElementById("modalDescription").focus()
+        var currentItem = theController.myView.contextTarget
+        let newItem = theController.myModel.addAssert("", false, "toContain", "")
+        theController.updateDisplay()
+        document.getElementById(newItem.id + 't1').focus()
     }
-
 }
