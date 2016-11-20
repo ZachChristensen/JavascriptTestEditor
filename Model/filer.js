@@ -32,8 +32,8 @@ class Filer{
   }
 
   saveToFile(currentFrameWork, filename){
-    let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"});
-    saveAs(blob, filename + ".js");
+    let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"})
+    saveAs(blob, filename + ".js")
   }
 
   setCurrentTestItemToParent(){

@@ -32,10 +32,8 @@ class HTMLView{
 			theController.myModel.root = undefined
 			theController.myModel.currentSuite = undefined
 			theController.myModel.asserts = []
-			idGenerator = new idCounter();
-
 			theController.updateDisplay()
-			idGenerator = new idCounter();
+			idGenerator = new idCounter()
 		}
 
 		for (let btn of clearBtns){
@@ -52,7 +50,7 @@ class HTMLView{
 		}
 
     	let loadFunc = function(event) {
-				document.getElementById("fileSelector").click();
+				document.getElementById("fileSelector").click()
 		}
 
 		for (let btn of loadBtns){
@@ -135,7 +133,7 @@ class HTMLView{
 				theController.myModel.root = undefined
 				theController.myModel.currentSuite = undefined
 				theController.myModel.asserts = []
-				idGenerator = new idCounter();
+				idGenerator = new idCounter()
 				theController.updateDisplay()
 				toast_msg.showDeleted()
 				return
@@ -169,7 +167,7 @@ class HTMLView{
 
 		document.getElementById("fileSelector").addEventListener("change", function() {
 		    theController = new Controller()
-			idGenerator = new idCounter();
+			idGenerator = new idCounter()
 			theController.loadFromFile()
 		})
 	}
@@ -181,10 +179,10 @@ class HTMLView{
 	setItemClickListeners(elementID){
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
-			var ctxMenu = document.getElementById("ctxMenu");
-			ctxMenu.style.display = "";
-			ctxMenu.style.left = "";
-			ctxMenu.style.top = "";
+			var ctxMenu = document.getElementById("ctxMenu")
+			ctxMenu.style.display = ""
+			ctxMenu.style.left = ""
+			ctxMenu.style.top = ""
 			var ctxMenu2 = document.getElementById("ctx2")
 			ctxMenu2.style.display = "none"
 			ctxMenu2.style.left = "0"
@@ -193,21 +191,21 @@ class HTMLView{
 				theController.myModel.selectItem(theController.myModel.find(e.target.id))
 			}
 			e.stopPropagation()
-		});
+		})
 
 		theElement.addEventListener("contextmenu",function(event){
 			if (event.ctrlKey) {
-				event.preventDefault();
-				var ctxMenu = document.getElementById("ctxMenu");
+				event.preventDefault()
+				var ctxMenu = document.getElementById("ctxMenu")
 				ctxMenu.style.display = "block"
 				ctxMenu.style.left = (event.pageX - 10)+"px"
 				ctxMenu.style.top = (event.pageY - 10)+"px"
 				return
 			}
 			if (event.target.classList.contains("TestItem")) {
-				event.preventDefault();
+				event.preventDefault()
 				let ctxHeight
-				var ctxMenu2 = document.getElementById("ctx2");
+				var ctxMenu2 = document.getElementById("ctx2")
 				if (event.target.classList.contains("Suite")){
 					set_context.setCtx1Suite(event.target.id)
 					ctxHeight = 440
@@ -231,9 +229,7 @@ class HTMLView{
 				}
 				else ctxHeight = 0
 				let distanceFromBottom = window.innerHeight - event.clientY
-				let distanceFromTop = event.clientY
 
-				let heightOfContextMenu = document.getElementsByClassName('ctx2-content')[0].offsetHeight
 				if((distanceFromBottom - ctxHeight)>0){
 					ctxMenu2.style.left = (event.pageX - 1)+"px"
 					ctxMenu2.style.top = (event.pageY - 1)+"px"
@@ -247,7 +243,7 @@ class HTMLView{
 				console.log((distanceFromBottom - ctxHeight))
 				console.log((distanceFromBottom - ctxHeight)>0)
 			}
-		},false);
+		},false)
 	}
 
 	assertDropdown(e){
@@ -498,7 +494,7 @@ window.addEventListener('input', function (e) {
 		console.log(theController.myModel.find(id))
 		theController.myModel.updateItem(id, e.target.value)
 	}
- }, false);
+ }, false)
 
 window.onkeypress = function(e) {
     if (e.key == 'ArrowDown') {
@@ -552,7 +548,7 @@ function hideContext(e){
 	ctxMenu2.style.display = "none"
 }
 
- window.addEventListener("mousedown", hideContext);
+ window.addEventListener("mousedown", hideContext)
 
  // When the user clicks anywhere outside of the modal, close it
  window.onclick = function(event) {

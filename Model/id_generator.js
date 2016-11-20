@@ -2,10 +2,10 @@
 jshint esversion:6, jshint asi:true
 */
 function idCounter() {
-    let i = 0;
+    let i = 0
     return function() {
-        return "Item" + i++;
+        return "Item" + i++
     }
 }
 
-var idGenerator = idCounter();
+var idGenerator = idCounter()

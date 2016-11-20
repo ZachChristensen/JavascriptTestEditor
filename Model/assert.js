@@ -14,9 +14,7 @@ class Assert {
 
 	toHTMLString(outerDiv = true){
 		let backColour = 240-(this.findIndent() * 22)
-		if (this.parent !== theController.myModel.root){
-			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
-		}
+		var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (backColour < 40) backColour = 40
 		if (outerDiv){
 			var newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"

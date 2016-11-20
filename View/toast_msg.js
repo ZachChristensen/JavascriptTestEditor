@@ -7,8 +7,8 @@ function HideErrorMsg2() {
         theController.myView.errorElements[theController.myView.errorElementIndex].style.opacity = 0
         setTimeout(function(){
             theController.myView.errorElements[theController.myView.errorElementIndex].style.display = 'none'
-        }, 400);
-    }, 2000);
+        }, 400)
+    }, 2000)
 }
 
 class toast_msg{

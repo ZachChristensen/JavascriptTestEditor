@@ -1,5 +1,5 @@
 /*
-jshint esversion:6, jshint asi:true
+jshint esversion:6, asi:true
 */
 class TestItem {
 	constructor ( newDesc, newType, newParent = "None") {
@@ -14,17 +14,19 @@ class TestItem {
 
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 22)
+		var index
+		var newText
 
 		if (this.parent !== "None"){
-			var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
+			index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		}
 		//Name used to display
-		if (this.type === "Suite") var name = theController.myModel.currentLanguage.suite
-		else if (this.type === "Spec") var name = theController.myModel.currentLanguage.spec
+		if (this.type === "Suite") name = theController.myModel.currentLanguage.suite
+		else if (this.type === "Spec") name = theController.myModel.currentLanguage.spec
 		//ToDo if text gets too dark change font color?
 		if (backColour < 60) backColour = 60
-		if (this === theController.myModel.root) var newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='margin:1em 0 8em 0' id='" + this.id + "'>"
-		else var newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
+		if (this === theController.myModel.root) newText = "<div ondrop='theController.myView.drop(event)' ondragend='theController.myView.dragEndCheck()' ondragstart='theController.myView.drag(event)' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='margin:1em 0 8em 0' id='" + this.id + "'>"
+		else newText = "<div ondrop='theController.myView.drop(event)' ondragstart='theController.myView.drag(event)' ondragend='theController.myView.dragEndCheck()' ondragover='theController.myView.allowDrop(event)' draggable='true' class='"+this.type+" TestItem' style='background-color:rgb("+backColour+", "+backColour+", "+backColour+")' id='" + this.id + "'>"
 		newText += '<div class="dropdown"><button class="dropbtn">⇓</button><div class="dropdown-content">'
 		newText += '<a class="btnDelete">Delete</a>'
 
@@ -72,7 +74,7 @@ class TestItem {
 		//item above it becomes parent
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		//check index not negative
-		if (index != 0 && this.parent.allMyChildren[index-1].type == "Suite"){
+		if (index !== 0 && this.parent.allMyChildren[index-1].type == "Suite"){
 			let newParent = this.parent.allMyChildren[index-1]
 			let me = this.parent.allMyChildren[index]
 			this.parent.allMyChildren.splice(index, 1)
@@ -137,18 +139,19 @@ class TestItem {
   }
 
 	addPastedItem(orig){
+		var theClone
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
-				var theClone = new Spec(orig.description, this)
+				theClone = new Spec(orig.description, this)
 			}
 			else if (orig.type === "Suite"){
-				var theClone = new Suite(orig.description, this)
+				theClone = new Suite(orig.description, this)
 			}
 			else if (orig.type === "BeforeEach"){
-				var theClone = new BeforeEach(this)
+				theClone = new BeforeEach(this)
 			}
 			else if (orig.type === "AfterEach"){
-				var theClone = new AfterEach(this)
+				theClone = new AfterEach(this)
 			}
 
 			for (var i of orig.allMyChildren){
@@ -168,27 +171,27 @@ class TestItem {
 					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
-					var newAssert = new MiscCode(i.content, theClone)
-					theClone.allMyChildren.push(newAssert)
+					var newCode = new MiscCode(i.content, theClone)
+					theClone.allMyChildren.push(newCode)
 				}
 				else if (i.type === "BeforeEach"){
-					var newSetup = new BeforeEach(theClone)
-					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.push(newSetup)
+					var newBefore = new BeforeEach(theClone)
+					newBefore.allMyChildren = newBefore.duplicateMyChildren(i, newBefore)
+					theClone.allMyChildren.push(newBefore)
 				}
 				else if (i.type === "AfterEach"){
-					var newSetup = new AfterEach(theClone)
-					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.push(newSetup)
+					var newAfter = new AfterEach(theClone)
+					newAfter.allMyChildren = newAfter.duplicateMyChildren(i, newAfter)
+					theClone.allMyChildren.push(newAfter)
 				}
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.content, orig.content2, this, orig.not, orig.matcher)
+			theClone = new Assert(orig.content, orig.content2, this, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
-			var theClone = new MiscCode(orig.content, this)
+			theClone = new MiscCode(orig.content, this)
 		}
 		if (theClone.type === "BeforeEach" || theClone.type === "AfterEach"){
 			this.allMyChildren.unshift(theClone)
@@ -201,18 +204,19 @@ class TestItem {
 
 	cloneChild(index, posAfterOrig = true){
 		var orig = this.allMyChildren[index]
+		var theClone
 		if (orig.hasOwnProperty('allMyChildren')){
 			if (orig.type === "Spec"){
-				var theClone = new Spec(orig.description, orig.parent)
+				theClone = new Spec(orig.description, orig.parent)
 			}
 			else if (orig.type === "Suite"){
-				var theClone = new Suite(orig.description, orig.parent)
+				theClone = new Suite(orig.description, orig.parent)
 			}
 			else if (orig.type === "BeforeEach"){
-				var theClone = new BeforeEach(orig.parent)
+				theClone = new BeforeEach(orig.parent)
 			}
 			else if (orig.type === "AfterEach"){
-				var theClone = new AfterEach(orig.parent)
+				theClone = new AfterEach(orig.parent)
 			}
 			console.log(orig)
 			for (var i of orig.allMyChildren){
@@ -233,8 +237,8 @@ class TestItem {
 					theController.myModel.asserts.push(newAssert)
 				}
 				else if (i.type === "Misc"){
-					var newAssert = new MiscCode(i.content, theClone)
-					theClone.allMyChildren.push(newAssert)
+					var newCode = new MiscCode(i.content, theClone)
+					theClone.allMyChildren.push(newCode)
 				}
 				else if (i.type === "BeforeEach"){
 					var newSetup = new BeforeEach(theClone)
@@ -242,18 +246,18 @@ class TestItem {
 					theClone.allMyChildren.push(newSetup)
 				}
 				else if (i.type === "AfterEach"){
-					var newSetup = new AfterEach(theClone)
-					newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-					theClone.allMyChildren.push(newSetup)
+					var newAfter = new AfterEach(theClone)
+					newAfter.allMyChildren = newAfter.duplicateMyChildren(i, newAfter)
+					theClone.allMyChildren.push(newAfter)
 				}
 			}
 		}
 		else if (orig.type === "Assert"){
-			var theClone = new Assert(orig.content, orig.content2, orig.parent, orig.not, orig.matcher)
+			theClone = new Assert(orig.content, orig.content2, orig.parent, orig.not, orig.matcher)
 			theController.myModel.asserts.push(theClone)
 		}
 		else if (orig.type === "Misc"){
-			var theClone = new MiscCode(orig.content, orig.parent)
+			theClone = new MiscCode(orig.content, orig.parent)
 		}
 
 		//Place cloned item directly after its original?
@@ -284,7 +288,6 @@ class TestItem {
 			}
 			else if (i.type === "Assert"){
 				var newAssert = new Assert(i.content, i.content2, newParent, i.not, i.matcher)
-				theController.myModel
 				newArray.push(newAssert)
 				theController.myModel.asserts.push(newAssert)
 			}
@@ -299,9 +302,9 @@ class TestItem {
 				newArray.push(newSetup)
 			}
 			else if (i.type === "AfterEach"){
-				var newSetup = new AfterEach(newParent)
-				newSetup.allMyChildren = newSetup.duplicateMyChildren(i, newSetup)
-				newArray.push(newSetup)
+				var newAfter = new AfterEach(newParent)
+				newAfter.allMyChildren = newAfter.duplicateMyChildren(i, newAfter)
+				newArray.push(newAfter)
 			}
 		}
 		return newArray

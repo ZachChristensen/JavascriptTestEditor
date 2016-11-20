@@ -1,5 +1,5 @@
 /*
-jshint esversion:6, jshint asi:true
+jshint esversion:6, asi:true
 */
 //MODEL
 
@@ -64,7 +64,7 @@ class Model{
 
 	moveItem(targetID, newChildID, newPosition = undefined){
 		console.log(targetID + ' ' + newChildID)
-		let newParent = undefined
+		let newParent
 		let childLocationInOldParent = 0
 		let newChild = this.root.findChild(newChildID)
 		if(this.root.id == targetID){
@@ -88,7 +88,7 @@ class Model{
 			console.log("set newparent")
 			oldParent.allMyChildren.splice(childLocationInOldParent, 1)
 			console.log(newPosition)
-			if (newPosition != undefined) {
+			if (newPosition !== undefined) {
 				console.log(newPosition)
 				newParent.allMyChildren.splice(newPosition, 0, newChild)
 				console.log("added new child to new parent")
@@ -101,7 +101,7 @@ class Model{
 	}
 
 	checkChildToParentCompatability(child, parent){
-		if (parent != undefined && child != undefined){
+		if (parent !== undefined && child !== undefined){
 			if (parent.type == "Suite"){
 				if (child.type == "Assert") {
 					toast_msg.show("Suite cannot contain " + child.type+"s")
@@ -153,7 +153,7 @@ class Model{
 	}
 
 	addAssert (content="", not=false, matcher="", content2="") {
-		if(this.currentTestItem != undefined){
+		if(this.currentTestItem !== undefined){
 			let newAssert = this.currentTestItem.addAssert(content, not, matcher, content2)
 			this.asserts.push(newAssert)
 			return newAssert
@@ -161,7 +161,7 @@ class Model{
 	}
 
 	addMiscCode (miscCode) {
-		if(this.currentTestItem != undefined){
+		if(this.currentTestItem !== undefined){
 			return this.currentTestItem.addMiscCode(miscCode, this.currentTestItem)
 		}
 	}
