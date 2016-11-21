@@ -1,7 +1,22 @@
 /*
 jshint esversion:6, asi:true
 */
+
+/**
+* A TestItem
+*
+* @class TestItem
+* @constructor
+*/
 class TestItem {
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {string} newDesc
+	* @param {string} newType
+	* @param {TestItem} newParent
+	*/
 	constructor ( newDesc, newType, newParent = "None") {
 		this._description = newDesc
 		this.type = newType
@@ -9,9 +24,27 @@ class TestItem {
 		this.parent = newParent
 	}
 
+	/**
+	* Sets this testitems's description
+	*
+	* @method description
+	* @param {string} description
+	*/
 	set description ( newDesc ){ this._description = newDesc }
+
+	/**
+	* Returns this testitems's description
+	*
+	* @method description
+	* @return {string} description
+	*/
 	get description () { return this._description }
 
+	/**
+	* Outputs this testitem to html
+	*
+	* @method toHTML
+	*/
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 22)
 		var index
@@ -70,6 +103,11 @@ class TestItem {
 		theController.myView.setItemClickListeners(this.id)
 	}
 
+	/**
+	* Moves this test item in
+	*
+	* @method moveIn
+	*/
 	moveIn(){
 		//item above it becomes parent
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
@@ -87,6 +125,11 @@ class TestItem {
 		}
 	}
 
+	/**
+	* Moves this test item out
+	*
+	* @method moveOut
+	*/
 	moveOut(){
 		//moves out and under parent unless parent is root.
 		if (this.parent.hasOwnProperty('parent') && this.parent.parent != "None"){
@@ -102,6 +145,11 @@ class TestItem {
 		}
 	}
 
+	/**
+	* Moves this test item up
+	*
+	* @method moveUp
+	*/
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
@@ -112,6 +160,11 @@ class TestItem {
 		theController.updateDisplay()
 	}
 
+	/**
+	* Moves this test item down
+	*
+	* @method moveDown
+	*/
 	moveDown(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index != this.parent.allMyChildren.length-1){
@@ -122,6 +175,12 @@ class TestItem {
 		theController.updateDisplay()
 	}
 
+	/**
+	* Finds the current indent of this item
+	*
+	* @method findIndent
+	* @return {int} depth
+	*/
 	findIndent(){
 		var current = this,
 		depth = 0
@@ -132,12 +191,23 @@ class TestItem {
 		return depth
 	}
 
+	/**
+	* Creates and adds a misccode object to allMyChildren
+	*
+	* @method addMiscCode
+	* @return {MiscCode} misccode
+	*/
 	addMiscCode (itStr, newParent) {
     let aMisc = new MiscCode(itStr, newParent)
     this.allMyChildren.push(aMisc)
 		return aMisc
   }
 
+	/**
+	* Adds the cloned item to allMyChildren
+	*
+	* @method addPastedItem
+	*/
 	addPastedItem(orig){
 		var theClone
 		if (orig.hasOwnProperty('allMyChildren')){
@@ -202,6 +272,11 @@ class TestItem {
 		theController.updateDisplay()
 	}
 
+	/**
+	* Clones the child item
+	*
+	* @method cloneChild
+	*/
 	cloneChild(index, posAfterOrig = true){
 		var orig = this.allMyChildren[index]
 		var theClone
@@ -272,6 +347,12 @@ class TestItem {
 
 	}
 
+	/**
+	* Duplicates all children
+	*
+	* @method duplicateMyChildren
+	* @return {array} newArray
+	*/
 	duplicateMyChildren(oldParent = this, newParent){
 		console.log(oldParent)
 		var newArray = []
@@ -310,6 +391,11 @@ class TestItem {
 		return newArray
 	}
 
+	/**
+	* Removes asserts
+	*
+	* @method findAssertForRemoval
+	*/
 	findAssertForRemoval(){
 		for (var item of this.allMyChildren){
 			if (item.type === "Assert"){
@@ -324,6 +410,12 @@ class TestItem {
 		}
 	}
 
+	/**
+	* Removes child
+	*
+	* @method removeChild
+	* @param {int} index
+	*/
 	removeChild(index){
 		if (index > -1) {
 			this.allMyChildren.splice(index, 1)

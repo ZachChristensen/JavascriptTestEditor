@@ -1,4 +1,15 @@
+/**
+* A set_context
+*
+* @class set_context
+*/
 class set_context{
+  /**
+  * Sets context 1 suite
+  *
+  * @method setCtx1Suite
+  * @param {int} id
+  */
     static setCtx1Suite(id){
         var theItem = theController.myModel.find(id)
         document.getElementById(id).backgroundColor = "red"
@@ -77,7 +88,12 @@ class set_context{
         contextMenu.appendChild(a)
 
     }
-
+    /**
+    * Sets context 1 spec
+    *
+    * @method setCtx1Spec
+    * @param {int} id
+    */
     static setCtx1Spec(id){
         var theItem = theController.myModel.find(id)
         document.getElementById(id).backgroundColor = "red"
@@ -135,6 +151,12 @@ class set_context{
         contextMenu.appendChild(a)
     }
 
+    /**
+    * Sets context 1 code
+    *
+    * @method setCtx1Spec
+    * @param {int} id
+    */
     static setCtx1Code(id){
         var theItem = theController.myModel.find(id)
         theController.myView.contextTarget = theItem
@@ -166,6 +188,12 @@ class set_context{
         contextMenu.appendChild(a)
     }
 
+    /**
+    * Sets context 1 assert
+    *
+    * @method setCtx1Assert
+    * @param {int} id
+    */
     static setCtx1Assert(id){
         var theItem = theController.myModel.find(id)
         theController.myView.contextTarget = theItem
@@ -197,6 +225,12 @@ class set_context{
         contextMenu.appendChild(a)
     }
 
+    /**
+    * Sets context 1 setup function
+    *
+    * @method setCtx1Setup
+    * @param {int} id
+    */
     static setCtx1Setup(id){
         theController.myView.contextTarget = theController.myModel.find(id)
         var contextMenu = document.getElementsByClassName("ctx2-content")[0]
@@ -242,11 +276,21 @@ class set_context{
     }
 
     //Button Fuctions
+    /**
+    * Toasts and sets copied item
+    *
+    * @method copyThis
+    */
     static copyThis(){
         theController.myModel.copiedItem = theController.myView.contextTarget
         toast_msg.showCopy()
     }
 
+    /**
+    * Toasts and creates cloned item
+    *
+    * @method cloneThis
+    */
     static cloneThis(){
         var currentItem = theController.myView.contextTarget
         let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
@@ -254,6 +298,11 @@ class set_context{
         toast_msg.showClone()
     }
 
+    /**
+    * Toasts and deletes cloned item
+    *
+    * @method deleteThis
+    */
     static deleteThis(){
         if (theController.myView.contextTarget === undefined){
             return
@@ -304,6 +353,11 @@ class set_context{
         }
     }
 
+    /**
+    * Toasts and pastes selected item
+    *
+    * @method pasteThis
+    */
     static pasteThis(){
         var currentItem = theController.myView.contextTarget
         //Check if paste legal
@@ -349,6 +403,12 @@ class set_context{
             toast_msg.showPaste()
         }
     }
+
+    /**
+    * Toasts and cuts selected item
+    *
+    * @method cutThis
+    */
     static cutThis(){
         let currentItem = theController.myView.contextTarget
         let index = currentItem.parent.allMyChildren.findIndex(x => x.id == currentItem.id)
@@ -369,6 +429,12 @@ class set_context{
         theController.updateDisplay()
         toast_msg.showCut()
     }
+
+    /**
+    * Adds spec to target
+    *
+    * @method addSpecToThis
+    */
     static addSpecToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.currentSuite = currentItem
@@ -376,6 +442,12 @@ class set_context{
         theController.updateDisplay()
         document.getElementById(newItem.id + 't').focus()
     }
+
+    /**
+    * Adds suite to target
+    *
+    * @method addSuiteToThis
+    */
     static addSuiteToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.setCurrentSuite(currentItem)
@@ -383,6 +455,12 @@ class set_context{
         theController.updateDisplay()
         document.getElementById(newItem.id + 't').focus()
     }
+
+    /**
+    * Adds before to target
+    *
+    * @method addBeforeToThis
+    */
     static addBeforeToThis(){
         var currentItem = theController.myView.contextTarget
         theController.myModel.addBeforeEach()
@@ -390,6 +468,12 @@ class set_context{
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
+
+    /**
+    * Adds after to target
+    *
+    * @method addAfterToThis
+    */
     static addAfterToThis() {
         var currentItem = theController.myView.contextTarget
         theController.myModel.addAfterEach()
@@ -397,12 +481,24 @@ class set_context{
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
+
+    /**
+    * Adds misc to target
+    *
+    * @method addMiscToThis
+    */
     static addMiscToThis(){
         var currentItem = theController.myView.contextTarget
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
     }
+
+    /**
+    * Adds assert to target
+    *
+    * @method addAssertToThis
+    */
     static addAssertToThis(){
         var currentItem = theController.myView.contextTarget
         let newItem = theController.myModel.addAssert("", false, "toContain", "")

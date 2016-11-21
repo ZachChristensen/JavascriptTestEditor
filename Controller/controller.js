@@ -1,9 +1,19 @@
 /*
 jshint esversion:6, jshint asi:true
 */
-//Controller
-
+/**
+* Controller
+*
+* @class Controller
+* @constructor
+*/
 class Controller{
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {boolean} testing
+	*/
 	constructor(testing = false){
 		this.myModel = new Model(this)
 		if (!testing){
@@ -12,6 +22,11 @@ class Controller{
 		console.log("controller")
 	}
 
+	/**
+	* Updates the view
+	*
+	* @method updateDisplay
+	*/
 	updateDisplay(){
 		this.myModel.toHTML()
 
@@ -23,6 +38,11 @@ class Controller{
 		this.disableDragOnButtons()
 	}
 
+	/**
+	* Disables drag on buttons
+	*
+	* @method disableDragOnButtons
+	*/
 	disableDragOnButtons(){
 		for (let button of document.getElementsByTagName('Button')){
 			button.setAttribute('draggable', false)
@@ -38,6 +58,11 @@ class Controller{
 		}
 	}
 
+	/**
+	* Set event listeners for buttons
+	*
+	* @method setButtonOnlicks
+	*/
 	setButtonOnlicks(){
 		//set onclick methods for dropdown addSpec/Suite btns
 		let specbtns = document.getElementsByClassName("btnAddSpec")
@@ -134,6 +159,13 @@ class Controller{
 		}
 	}
 
+	/**
+	* Output contents to specified div
+	*
+	* @method outputToDiv
+	* @param {int} divID
+	* @param {string} content
+	*/
 	outputToDiv(divID, content){
 		this.myView.appendToDiv(divID, content)
 		document.getElementById(divID).addEventListener('dragstart', function(event) {
@@ -141,11 +173,24 @@ class Controller{
 		})
 	}
 
+	/**
+	* Updates a testitems parent
+	*
+	* @method updateTestItem
+	* @param {int} targetID
+	* @param {int} newChildID
+	* @param {int} newPosition
+	*/
 	updateTestItem(targetID, newChildID, newPosition = undefined){
 		this.myModel.moveItem(targetID, newChildID, newPosition)
 		this.updateDisplay()
 	}
 
+	/**
+	* Loads test data
+	*
+	* @method loadTestData
+	*/
 	loadTestData(){
 		this.myModel.createNewRoot("VERY interesting test suite")
 		this.myModel.addSpec("Cook is wearing apron")
@@ -161,10 +206,21 @@ class Controller{
 
 	}
 
+	/**
+	* Saves current framework to a text file
+	*
+	* @method saveToFile
+	* @param {string} fileName
+	*/
 	saveToFile(fileName){
 		this.myModel.myFiler.saveToFile(this.myModel, fileName)
 	}
 
+	/**
+	* Loads the file selected in fileselector
+	*
+	* @method loadFromFile
+	*/
 	loadFromFile(){
 		let that = this
 		this.myModel.myFiler.loadSuiteFromFile("fileSelector", this.myModel, function(splitFileArray) {

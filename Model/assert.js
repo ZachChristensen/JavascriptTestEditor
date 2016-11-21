@@ -1,7 +1,23 @@
 /*
 jshint esversion:6, jshint asi:true
 */
+/**
+* Assert
+*
+* @class Assert
+* @constructor
+*/
 class Assert {
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {string} content
+	* @param {string} content2
+	* @param {TestItem} newParent
+	* @param {boolean} not
+	* @param {string} matcher
+	*/
 	constructor (content="", content2="", newParent = "None", not=false, matcher="toBe"){
 		this.id = idGenerator()
 		this.content = content
@@ -12,6 +28,13 @@ class Assert {
 		this.matcher = matcher
 	}
 
+	/**
+  * Returns this testitems html output
+  *
+  * @method toHTMLString
+  * @param {boolean} outerDiv
+	* @return {string} resultStr
+  */
 	toHTMLString(outerDiv = true){
 		let backColour = 240-(this.findIndent() * 22)
 		var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
@@ -89,7 +112,11 @@ class Assert {
 		return newText
 	}
 
-
+	/**
+  * Sets currentDropDown
+  *
+  * @method setCurrentDropdown
+  */
 	setCurrentDropdown(){
 		console.log('setdropdown')
 		console.log(this)
@@ -119,11 +146,24 @@ class Assert {
 		}
 	}
 
+	/**
+  * Ouputs this testitems html
+  *
+  * @method toHTML
+  * @param {TestItem} parent
+  */
 	toHTML(Parent){
 		theController.outputToDiv(Parent, this.toHTMLString())
 		theController.myView.setItemClickListeners(this.id)
 	}
 
+	/**
+  * Returns this testitems string output
+  *
+  * @method toString
+  * @param {int} tabNum
+	* @return {string} resultStr
+  */
 	toString (tabNum) {
         let tab = "    "
 		if (this.matcher === "toBe" || this.matcher === "toEqual" || this.matcher === "toMatch" || this.matcher === "toContain" || this.matcher === "toBeLessThan" || this.matcher === "toBeGreaterThan" || this.matcher === "toBeCloseTo" || this.matcher === "toThrowError"){
@@ -146,6 +186,11 @@ class Assert {
         return resultStr + ";"
     }
 
+	/**
+	* Moves this assert up
+	*
+	* @method moveUp
+	*/
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
@@ -156,6 +201,11 @@ class Assert {
 		theController.updateDisplay()
 	}
 
+	/**
+	* Moves this assert down
+	*
+	* @method moveDown
+	*/
 	moveDown(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index != this.parent.allMyChildren.length-1){
@@ -183,6 +233,12 @@ class Assert {
 		this.setCurrentDropdown()
 	}
 
+	/**
+	* Finds the current indent
+	*
+	* @method findIndent
+	* @return {int} depth
+	*/
 	findIndent(){
 		let current = this,
 		depth = 0

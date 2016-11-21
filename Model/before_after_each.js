@@ -1,12 +1,30 @@
 /*
 jshint esversion:6, jshint asi:true
 */
+/**
+* Setup
+*
+* @class Setup
+* @constructor
+*/
 class Setup extends Suite{
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {TestItem} newParent
+	*/
 	constructor (newParent) {
 		super("", newParent)
 		this.type = "Setup"
 	}
 
+	/**
+  * Ouputs this testitems html
+  *
+  * @method toHTML
+  * @param {TestItem} parent
+  */
 	toHTML(Parent){
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
 		else if (this.type === "AfterEach") var name = theController.myModel.currentLanguage.afterEach
@@ -41,6 +59,13 @@ class Setup extends Suite{
 		theController.myView.setItemClickListeners(this.id)
 	}
 
+	/**
+  * Returns this testitems string output
+  *
+  * @method toString
+  * @param {int} tabNum
+	* @return {string} resultStr
+  */
 	toString (tabNum) {
 	    let tab = "    "
 		if (this.type === "BeforeEach") var name = theController.myModel.currentLanguage.beforeEach
@@ -56,14 +81,38 @@ class Setup extends Suite{
     }
 }
 
+/**
+* BeforeEach
+*
+* @class BeforeEach
+* @constructor
+*/
 class BeforeEach extends Setup{
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {TestItem} newParent
+	*/
 	constructor (newParent) {
 		super(newParent)
 		this.type = "BeforeEach"
 	}
 }
 
+/**
+* AfterEach
+*
+* @class AfterEach
+* @constructor
+*/
 class AfterEach extends Setup{
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {TestItem} newParent
+	*/
 	constructor (newParent) {
 		super(newParent)
 		this.type = "AfterEach"

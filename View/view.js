@@ -1,6 +1,18 @@
 /*jshint esversion:6, asi:true, unused:false*/
 /*globals theController:true, idGenerator:true, idCounter, modal_content, toast_msg, Controller*/
+/**
+* HTMLView
+*
+* @class HTMLView
+* @constructor
+*/
 class HTMLView{
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {Controller} newController
+	*/
 	constructor(newController){
 		console.log("view")
 		this.controller = newController
@@ -16,6 +28,11 @@ class HTMLView{
 		this.initialise()
 	}
 
+	/**
+	* Gets buttons and sets onclicks
+	*
+	* @method initialise
+	*/
 	initialise(){
 		//Sets many on click methods
 		var clearBtns = document.getElementsByClassName("clearBtn")
@@ -172,10 +189,20 @@ class HTMLView{
 		})
 	}
 
+	/**
+	* Resets view html
+	*
+	* @method cleanView
+	*/
 	cleanView(){
 		document.getElementById('main').innerHTML = ""
 	}
 
+	/**
+	* Sets item click listeners
+	*
+	* @method setItemClickListeners
+	*/
 	setItemClickListeners(elementID){
 		var theElement = document.getElementById(elementID)
 		theElement.addEventListener('click', function(e) {
@@ -246,6 +273,11 @@ class HTMLView{
 		},false)
 	}
 
+	/**
+	* Loads assert dropdown
+	*
+	* @method assertDropdown
+	*/
 	assertDropdown(e){
 		let value = e.value
 		if (value === "not"){
@@ -261,10 +293,22 @@ class HTMLView{
 		}
 	}
 
+	/**
+	* Changes background color of an item
+	*
+	* @method changeItemBackground
+	* @param {string} theElementId
+	*/
 	changeItemBackground(theElementId){
 		document.getElementById(theElementId).style.backgroundColor = '#B0D9D5'
 	}
 
+	/**
+	* Resets background color of an item
+	*
+	* @method resetItemBackground
+	* @param {string} theElementId
+	*/
 	resetItemBackground(theElementId){
 		if (theElementId.substr(0, 4) === "Item"){
 			let backColour = 240 - (theController.myModel.find(theElementId).findIndent() * 20)
@@ -273,20 +317,45 @@ class HTMLView{
 		}
 	}
 
+	/**
+	* Appends content to specified div
+	*
+	* @method appendToDiv
+	* @param {string} divID
+	* @param {string} content
+	*/
 	appendToDiv(divID, content){
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML += content
 	}
 
+	/**
+	* Changes a divs innerhtml to specified content
+	*
+	* @method setToDiv
+	* @param {string} divID
+	* @param {string} textContent
+	*/
 	setToDiv(divID, textContent){
 		var HTMLdiv = document.getElementById(divID)
 		HTMLdiv.innerHTML = textContent
 	}
 
+	/**
+	* event to allowDrop
+	*
+	* @method allowDrop
+	*/
 	allowDrop(ev) {
 		ev.preventDefault()
 	}
 
+	/**
+	* Creates drop elements and sets data transfer of dragged element
+	*
+	* @method drag
+	* @param {Event} ev
+	*/
 	drag(ev) {
 		if (this.lastElem != ev.target){
 			this.lastElem = ev.target
@@ -295,12 +364,17 @@ class HTMLView{
 		}
 	}
 
+	/**
+	* Creates drop elements
+	*
+	* @method createDropElements
+	*/
 	createDropElements(){
-	  	let suites = document.getElementsByClassName("Suite")
-	  	let specs = document.getElementsByClassName("Spec")
-	  	let setups = document.getElementsByClassName("Setup")
-	  	let asserts = document.getElementsByClassName("Assert")
-	  	let miscs = document.getElementsByClassName("Misc")
+  	let suites = document.getElementsByClassName("Suite")
+  	let specs = document.getElementsByClassName("Spec")
+  	let setups = document.getElementsByClassName("Setup")
+  	let asserts = document.getElementsByClassName("Assert")
+  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
 		let setupNames = document.getElementsByClassName("setupName")
 
@@ -329,58 +403,69 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-	  	for (let i = 0; i < suites.length; i++){
+  	for (let i = 0; i < suites.length; i++){
 			if (i!== 0){
-		  		let div = document.createElement("DIV")
-		  		div.className = "droptarget"
-		        div.ondragover = onEnterFunc
-		        div.ondragleave = onLeaveFunc
+				let div = document.createElement("DIV")
+				div.className = "droptarget"
+				div.ondragover = onEnterFunc
+				div.ondragleave = onLeaveFunc
 				suites[i].parentNode.insertBefore(div, suites[i].nextSibling)
-		        suites[i].style.marginBottom = 0
-		        suites[i].style.marginTop = 0
+				suites[i].style.marginBottom = 0
+				suites[i].style.marginTop = 0
 			}
-	  	}
-	  	for (let spec of specs){
-	  		let div = document.createElement("DIV")
-	  		div.className = "droptarget"
+  	}
+  	for (let spec of specs){
+			let div = document.createElement("DIV")
+			div.className = "droptarget"
 			div.ondragover = onEnterFunc
 			div.ondragleave = onLeaveFunc
 
-	  		spec.parentNode.insertBefore(div, spec.nextSibling)
+			spec.parentNode.insertBefore(div, spec.nextSibling)
 			spec.style.marginBottom = 0
 			spec.style.marginTop = 0
 
-	  	}
-	  	for (let setup of setups){
-	  		let div = document.createElement("DIV")
-	  		div.className = "droptarget"
+  	}
+  	for (let setup of setups){
+			let div = document.createElement("DIV")
+			div.className = "droptarget"
 			div.ondragover = onEnterFunc
 			div.ondragleave = onLeaveFunc
 
-	  		setup.parentNode.insertBefore(div, setup.nextSibling)
+			setup.parentNode.insertBefore(div, setup.nextSibling)
 			setup.style.marginBottom = 0
 			setup.style.marginTop = 0
 
-	  	}
-	  	for (var assert of asserts){
-	  		let div = document.createElement("DIV")
-	  		div.className = "droptarget"
+  	}
+  	for (var assert of asserts){
+			let div = document.createElement("DIV")
+			div.className = "droptarget"
 			div.ondragover = onEnterFunc
 			div.ondragleave = onLeaveFunc
 
-	  		assert.parentNode.insertBefore(div, assert.nextSibling)
+			assert.parentNode.insertBefore(div, assert.nextSibling)
 			assert.style.marginBottom = 0
 			assert.style.marginTop = 0
-	  	}
+  	}
 	}
 
+	/**
+	* Checks if drag has ended
+	*
+	* @method dragEndCheck
+	* @param {Event} ev
+	*/
 	dragEndCheck(ev){
-		console.log("drag end check" )
 		theController.updateDisplay()
 	}
 
+	/**
+	* changes swaps setting for all other items if mouse is down
+	*
+	* @method changeDrag
+	* @param {boolean} dragSetting
+	* @param {boolean} mouseSetting
+	*/
 	changeDrag(dragSetting, mouseSetting = undefined) {
-		//console.log("Drag setting: " + dragSetting + " - Mouse down: " + mouseSetting)
 		if (mouseSetting !== undefined || this.isMouseDown){
 			let suites = document.getElementsByClassName("TestItem")
 			let specs = document.getElementsByClassName("Spec")
@@ -403,13 +488,19 @@ class HTMLView{
 			for (let misc of miscs){
 				misc.draggable = dragSetting
 			}
-			console.log("drag set to: " + dragSetting)
 		}
 		if (mouseSetting !== undefined){
 			this.isMouseDown = mouseSetting
 		}
   }
 
+	/**
+	* Finds the index of a node in its parent
+	*
+	* @method findIndexOfNode
+	* @param {element} node
+	* @return {int} index
+	*/
   findIndexOfNode(node){
 	let index = 0
     while ( (node = node.previousSibling) ) {
@@ -419,15 +510,18 @@ class HTMLView{
 		}
       }
     }
-	console.log(index)
     return index
   }
 
+	/**
+	* Moves the test item to the dropped location
+	*
+	* @method drop
+	* @param {event} ev
+	*/
 	drop(ev) {
 		ev.preventDefault()
-		console.log("dropped")
 		this.isDragging = false
-		console.log(ev.target.nodeName)
 		let data = ev.dataTransfer.getData("text")
 		let incorrectDropElements = ["INPUT", "TEXTAREA", "BUTTON", "SELECT", "SPAN"]
 		let draggedElement = document.getElementById(data)
@@ -445,8 +539,15 @@ class HTMLView{
 		}
 	}
 
+	/**
+	* Moves the test item to the dropped location
+	*
+	* @method checkForIncorrectDropElement
+	* @param {array} elementTypes
+	* @param {string} targetElementType
+	* @return {boolean} compatible
+	*/
 	checkForIncorrectDropElement(elementTypes, targetElementType) {
-		console.log(targetElementType)
 		for (let elementType of elementTypes){
 			if (elementType == targetElementType){
 				console.log(elementType == targetElementType)

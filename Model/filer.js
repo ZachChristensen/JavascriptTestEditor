@@ -1,14 +1,32 @@
 /*
 jshint esversion:6, jshint asi:true
 */
+/**
+* Filer
+*
+* @class Filer
+* @constructor
+*/
 class Filer{
+  /**
+  * Class Constructor
+  *
+  * @method Constructor
+  * @param {Model} myModel
+  */
   constructor (myModel) {
       this.currentTestItem = undefined
       this.myModel = myModel
       this.miscCode = ""
 	}
 
-
+  /**
+  * reads a text file
+  *
+  * @method readFile
+  * @param {string} file
+  * @param {function} callback
+  */
   readFile(file, callback){
     let suiteArray = []
     let result
@@ -18,10 +36,26 @@ class Filer{
     reader.readAsText(file)
   }
 
+  /**
+  * Splits a string on a specified parameter and returns it
+  *
+  * @method splitString
+  * @param {string} string
+  * @param {string} param
+  * @return {array} resultArr
+  */
   splitString(string, param){
     return string.split(param)
   }
 
+  /**
+  * Creates a callback for parsing the splitstring once it is read
+  *
+  * @method loadSuiteFromFile
+  * @param {int} inputElementId
+  * @param {Model} currentFrameWork
+  * @param {function} callback
+  */
   loadSuiteFromFile(inputElementId, currentFrameWork, callback){
     let file = document.getElementById(inputElementId).files[0]
     theController.myModel.filename = file.name
@@ -31,11 +65,23 @@ class Filer{
     })
   }
 
+  /**
+  * Saves the current framework to a text file
+  *
+  * @method loadSuiteFromFile
+  * @param {Model} currentFrameWork
+  * @param {string} filename
+  */
   saveToFile(currentFrameWork, filename){
     let blob = new Blob([currentFrameWork.toString()], {type: "text/javascript;charset=utf-8"})
     saveAs(blob, filename + ".js")
   }
 
+  /**
+  * Sets the currentTestItem to the currentTestItem's parent
+  *
+  * @method setCurrentTestItemToParent
+  */
   setCurrentTestItemToParent(){
     this.setPreviousTestItemMiscCode()
     if(this.myModel.currentTestItem != this.myModel.root) {
@@ -43,6 +89,13 @@ class Filer{
     }
   }
 
+  /**
+  * Parses the read file for test items and creates them
+  *
+  * @method createTestItems
+  * @param {array} splitFileArray
+  * @param {Model} model
+  */
   createTestItems(splitFileArray, model){
       this.myModel = model
       let pattern = /(\}\))/i
@@ -73,6 +126,12 @@ class Filer{
       }
   }
 
+  /**
+  * Creates a root suite if there currently isn't one
+  *
+  * @method createRootSuite
+  * @param {TestItem} item
+  */
   createRootSuite(item){
       if(this.getNodeDescription(item) != null){
           if (/[\w]+/i.exec(item) != null && /[\w]+/i.exec(item)[0].toLowerCase() == "describe"){
@@ -81,6 +140,12 @@ class Filer{
       }
   }
 
+  /**
+  * Creates a Testitem
+  *
+  * @method createTestItem
+  * @param {string} item
+  */
   createTestItem(item){
       item = item.replace(/;/g, "")
       let items = item.split("\n")
@@ -112,6 +177,12 @@ class Filer{
           }
       }
   }
+
+  /**
+  * Sets current MiscCode
+  *
+  * @method setPreviousTestItemMiscCode
+  */
   setPreviousTestItemMiscCode(){
     if (this.miscCode != ""){
         this.myModel.addMiscCode(this.miscCode)
@@ -119,6 +190,12 @@ class Filer{
     }
   }
 
+  /**
+  * Checks a line for miscCode
+  *
+  * @method checkForMiscCode
+  * @param {string} line
+  */
   checkForMiscCode(line){
       let items = line.split("\n")
       let functionIdentifier = /(function\(\))/
@@ -135,6 +212,12 @@ class Filer{
       }
   }
 
+  /**
+  * Splits a string into an assert
+  *
+  * @method splitAssert
+  * @param {string} str
+  */
   splitAssert(str){
       console.log("TRY ADD ASSERT")
       let arr = str.substring(str.indexOf('(')+1)
@@ -177,6 +260,12 @@ class Filer{
       this.myModel.addAssert(content, not, matcher, cnt2)
   }
 
+  /**
+  * Gets a TestItems description
+  *
+  * @method getNodeDescription
+  * @param {string} node
+  */
   getNodeDescription(node){
       if(/"[\s\S]+"/i.exec(node) != null){
           let description = /"[\s\S]+"/i.exec(node)[0]

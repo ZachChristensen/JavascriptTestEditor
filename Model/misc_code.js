@@ -1,7 +1,20 @@
 /*
 jshint esversion:6, asi:true
 */
+/**
+* MiscCode
+*
+* @class MiscCode
+* @constructor
+*/
 class MiscCode {
+	/**
+	* Class Constructor
+	*
+	* @method Constructor
+	* @param {string} content
+	* @param {TestItem} newParent
+	*/
 	constructor (content, newParent = "None"){
 		this.id = idGenerator()
 		this.content = content
@@ -9,6 +22,12 @@ class MiscCode {
 		this.type = "Misc"
 	}
 
+	/**
+	* Outputs this testitem to HTML
+	*
+	* @method toHTML
+	* @param {TestItem} Parent
+	*/
 	toHTML(Parent){
 		let backColour = 240-(this.findIndent() * 22)
 		var index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
@@ -31,26 +50,38 @@ class MiscCode {
 		theController.myView.setItemClickListeners(this.id)
 	}
 
-    toString (tabNum) {
-        let tab = "    "
-				let lines = this.content.split(/\r\n|\r|\n/)
-        let resultStr = ""
-				for (let i = 0; i < lines.length; i++){
-					if (lines[i] === "") {
-						lines.splice(i, 1)
-					}else{
-						lines[i] += ";"
-					}
-					if (i < lines.length - 1){
-						lines[i] += "\r\n"
-					}
+	/**
+	* returns this items description string
+	*
+	* @method toString
+	* @param {int} tabNum
+	* @return {string} resultStr
+	*/
+  toString (tabNum) {
+      let tab = "    "
+			let lines = this.content.split(/\r\n|\r|\n/)
+      let resultStr = ""
+			for (let i = 0; i < lines.length; i++){
+				if (lines[i] === "") {
+					lines.splice(i, 1)
+				}else{
+					lines[i] += ";"
 				}
-				for (let line of lines){
-					resultStr += tab.repeat(tabNum) + line
+				if (i < lines.length - 1){
+					lines[i] += "\r\n"
 				}
-        return resultStr
-    }
+			}
+			for (let line of lines){
+				resultStr += tab.repeat(tabNum) + line
+			}
+      return resultStr
+  }
 
+	/**
+	* Moves this miscCode up
+	*
+	* @method moveUp
+	*/
 	moveUp(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index !== 0){
@@ -61,6 +92,11 @@ class MiscCode {
 		theController.updateDisplay()
 	}
 
+	/**
+	* Moves this miscCode down
+	*
+	* @method moveDown
+	*/
 	moveDown(){
 		let index = this.parent.allMyChildren.findIndex(x => x.id == this.id)
 		if (index != this.parent.allMyChildren.length-1){
@@ -71,7 +107,12 @@ class MiscCode {
 		theController.updateDisplay()
 	}
 
-
+	/**
+	* Finds the current level of indentation
+	*
+	* @method findIndent
+	* @return {int} depth
+	*/
 	findIndent(){
 		let current = this,
 		depth = 0

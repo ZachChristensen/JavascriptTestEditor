@@ -1,7 +1,18 @@
 /*
 jshint esversion:6, jshint asi:true
 */
+/**
+* modal_content
+*
+* @class modal_content
+* @constructor
+*/
 class modal_content{
+	/**
+	* Sets modal to addspec
+	*
+	* @method setAddSpec
+	*/
 	static setAddSpec(){
 		let title = "Add New Spec"
 		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
@@ -28,6 +39,11 @@ class modal_content{
 		modalDescr.focus()
 	}
 
+	/**
+	* Sets modal to addSuite
+	*
+	* @method setAddSuite
+	*/
 	static setAddSuite(){
 		let title = "Add New Suite"
 		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
@@ -53,6 +69,11 @@ class modal_content{
 		})
 	}
 
+	/**
+	* Sets modal to addAssert
+	*
+	* @method setAddAssert
+	*/
 	static setAddAssert(){
 		let title = "Add New Assert"
 		let content = `<div id="modalContent"><br>
@@ -103,6 +124,11 @@ class modal_content{
 		})
 	}
 
+	/**
+	* Sets modal to addNewRootSuite
+	*
+	* @method setNewRootSuite
+	*/
 	static setNewRootSuite(){
 		let title = "Add New Root Suite"
 		let content = '<div id="modalContent"><input type="text" id="modalDescription" placeholder="Suite Description"></input><button id="modalAddBtn">Add</button></div>'
@@ -131,6 +157,11 @@ class modal_content{
 		})
 	}
 
+	/**
+	* Sets modal to save
+	*
+	* @method setSave
+	*/
 	static setSave(){
 		let title = "Save File"
 		let content = `<h5 style="margin-top:1em;">Filename</h5>
@@ -156,7 +187,11 @@ class modal_content{
 		}
 	}
 
-
+	/**
+	* Sets modal to help
+	*
+	* @method setHelp
+	*/
 	static setHelp(){
 		let title = "Help"
 		let content = `<H3 style="margin-top:1em;">Multiple Select</H3>
