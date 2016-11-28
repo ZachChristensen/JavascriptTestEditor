@@ -370,11 +370,11 @@ class HTMLView{
 	* @method createDropElements
 	*/
 	createDropElements(){
-  	let suites = document.getElementsByClassName("Suite")
-  	let specs = document.getElementsByClassName("Spec")
-  	let setups = document.getElementsByClassName("Setup")
-  	let asserts = document.getElementsByClassName("Assert")
-  	let miscs = document.getElementsByClassName("Misc")
+	  	let suites = document.getElementsByClassName("Suite")
+	  	let specs = document.getElementsByClassName("Spec")
+	  	let setups = document.getElementsByClassName("Setup")
+	  	let asserts = document.getElementsByClassName("Assert")
+	  	let miscs = document.getElementsByClassName("Misc")
 		let inputs = document.getElementsByClassName("input")
 		let setupNames = document.getElementsByClassName("setupName")
 
@@ -403,7 +403,7 @@ class HTMLView{
 			misc.style.marginTop = 0
 		}
 
-  	for (let i = 0; i < suites.length; i++){
+  		for (let i = 0; i < suites.length; i++){
 			if (i!== 0){
 				let div = document.createElement("DIV")
 				div.className = "droptarget"
@@ -413,8 +413,8 @@ class HTMLView{
 				suites[i].style.marginBottom = 0
 				suites[i].style.marginTop = 0
 			}
-  	}
-  	for (let spec of specs){
+  		}
+  		for (let spec of specs){
 			let div = document.createElement("DIV")
 			div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -424,8 +424,8 @@ class HTMLView{
 			spec.style.marginBottom = 0
 			spec.style.marginTop = 0
 
-  	}
-  	for (let setup of setups){
+  		}
+  		for (let setup of setups){
 			let div = document.createElement("DIV")
 			div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -435,8 +435,8 @@ class HTMLView{
 			setup.style.marginBottom = 0
 			setup.style.marginTop = 0
 
-  	}
-  	for (var assert of asserts){
+  		}
+  		for (var assert of asserts){
 			let div = document.createElement("DIV")
 			div.className = "droptarget"
 			div.ondragover = onEnterFunc
@@ -445,7 +445,7 @@ class HTMLView{
 			assert.parentNode.insertBefore(div, assert.nextSibling)
 			assert.style.marginBottom = 0
 			assert.style.marginTop = 0
-  	}
+  		}
 	}
 
 	/**

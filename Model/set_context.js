@@ -415,8 +415,6 @@ class set_context{
         var parent = currentItem.parent
         theController.myModel.copiedItem = currentItem
         parent.removeChild(index)
-        console.log("HERE")
-        console.log(currentItem)
         if (currentItem.type === "Assert"){
             let doesExist = theController.myModel.asserts.findIndex(x => x.id == currentItem.id)
             if (doesExist != -1){
@@ -450,7 +448,7 @@ class set_context{
     */
     static addSuiteToThis(){
         var currentItem = theController.myView.contextTarget
-        theController.myModel.setCurrentSuite(currentItem)
+        theController.myModel.currentSuite = currentItem
         let newItem = theController.myModel.addSuite("")
         theController.updateDisplay()
         document.getElementById(newItem.id + 't').focus()
@@ -463,6 +461,7 @@ class set_context{
     */
     static addBeforeToThis(){
         var currentItem = theController.myView.contextTarget
+        theController.myModel.currentTestItem = currentItem
         theController.myModel.addBeforeEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
@@ -476,6 +475,7 @@ class set_context{
     */
     static addAfterToThis() {
         var currentItem = theController.myView.contextTarget
+        theController.myModel.currentTestItem = currentItem
         theController.myModel.addAfterEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
@@ -489,6 +489,7 @@ class set_context{
     */
     static addMiscToThis(){
         var currentItem = theController.myView.contextTarget
+        theController.myModel.currentTestItem = currentItem
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
         document.getElementById(newMisc.id + 't').focus()
@@ -501,7 +502,8 @@ class set_context{
     */
     static addAssertToThis(){
         var currentItem = theController.myView.contextTarget
-        let newItem = theController.myModel.addAssert("", false, "toContain", "")
+        theController.myModel.currentTestItem = currentItem
+        let newItem = theController.myModel.addAssert("", false, "toBe", "")
         theController.updateDisplay()
         document.getElementById(newItem.id + 't1').focus()
     }
