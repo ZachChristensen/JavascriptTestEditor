@@ -183,6 +183,9 @@ class set_context{
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 
+        var a = document.createElement("a")
+        a.onclick = set_context.cutThis
+        var text = document.createTextNode("Cut")
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)
@@ -220,6 +223,9 @@ class set_context{
         a.className = "ctxItem"
         contextMenu.appendChild(a)
 
+        var a = document.createElement("a")
+        a.onclick = set_context.cutThis
+        var text = document.createTextNode("Cut")
         a.appendChild(text)
         a.className = "ctxItem"
         contextMenu.appendChild(a)
@@ -461,7 +467,7 @@ class set_context{
     */
     static addBeforeToThis(){
         var currentItem = theController.myView.contextTarget
-        theController.myModel.currentTestItem = currentItem
+        theController.myModel.currentSuite = currentItem
         theController.myModel.addBeforeEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()
@@ -475,7 +481,7 @@ class set_context{
     */
     static addAfterToThis() {
         var currentItem = theController.myView.contextTarget
-        theController.myModel.currentTestItem = currentItem
+        theController.myModel.currentSuite = currentItem
         theController.myModel.addAfterEach()
         let newMisc = theController.myModel.addMiscCode("")
         theController.updateDisplay()

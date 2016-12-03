@@ -198,10 +198,10 @@ class TestItem {
 	* @return {MiscCode} misccode
 	*/
 	addMiscCode (itStr, newParent) {
-    let aMisc = new MiscCode(itStr, newParent)
-    this.allMyChildren.push(aMisc)
+	    let aMisc = new MiscCode(itStr, newParent)
+	    this.allMyChildren.push(aMisc)
 		return aMisc
-  }
+  	}
 
 	/**
 	* Adds the cloned item to allMyChildren
@@ -354,7 +354,6 @@ class TestItem {
 	* @return {array} newArray
 	*/
 	duplicateMyChildren(oldParent = this, newParent){
-		console.log(oldParent)
 		var newArray = []
 		for (var i of oldParent.allMyChildren){
 			if (i.type === "Spec"){
@@ -373,7 +372,6 @@ class TestItem {
 				theController.myModel.asserts.push(newAssert)
 			}
 			else if (i.type === "Misc"){
-				console.log("CLONE MISC C")
 				var newMisc = new MiscCode(i.content, newParent)
 				newArray.push(newMisc)
 			}

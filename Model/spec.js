@@ -39,24 +39,24 @@ class Spec extends TestItem {
 	* @method toString
 	* @return {string} resultStr
 	*/
-  toString (tabNum) {
-    let resultStr, theTab, child
-    let tab = "    "
-    theTab = tabNum
-    resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
-    theTab = theTab + 1
+	toString (tabNum) {
+	    let resultStr, theTab, child
+	    let tab = "    "
+	    theTab = tabNum
+	    resultStr = tab.repeat(theTab) + "it(\"" + this.description + "\", function() {\r\n"
+	    theTab = theTab + 1
 		let prevChild
-    for (child of this.allMyChildren) {
-				if(child.type == "Misc" && prevChild == "Assert"){
-					resultStr += "\r\n"
-				}
-				console.log(resultStr)
-				console.log(prevChild)
-        resultStr +=  child.toString(theTab)  + "\r\n"
-				prevChild = child.type
-    }
-    resultStr += tab.repeat(theTab - 1) + "});\r\n"
-    return resultStr
+	    for (child of this.allMyChildren) {
+			if(child.type == "Misc" && prevChild == "Assert"){
+				resultStr += "\r\n"
+			}
+			console.log(resultStr)
+			console.log(prevChild)
+	        resultStr +=  child.toString(theTab)  + "\r\n"
+			prevChild = child.type
+	    }
+	    resultStr += tab.repeat(theTab - 1) + "});\r\n"
+	    return resultStr
 	}
 
 	/**
